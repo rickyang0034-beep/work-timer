@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f7fe">
+  <meta name="color-scheme" content="light">
+  <title>上班鼓勵器｜V5.8 驢子拉磨動畫版（26～25結算／5日領薪）</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;color:#252947;background:#f7f7fe;--ink:#262b4f;--blue:#3156ce;--muted:#727a96;--line:#e8eaf5;--surface:#fff;--accent:#f05b3f}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 110% -4%,#eeeaff 0,transparent 27rem),radial-gradient(circle at -10% 16%,#fff1e6 0,transparent 16rem),#f7f7fe}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:590px;margin:auto;padding:22px 17px 42px;padding-top:max(22px,env(safe-area-inset-top))}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:11px}.logo{width:54px;height:54px;display:grid;place-items:center;background:#fff0d5;border-radius:19px;font-size:31px;box-shadow:0 5px 18px #f3deb95a}h1{font-size:clamp(18px,5vw,25px);letter-spacing:.4px;margin:0;font-weight:880;line-height:1.24}.tagline{font-size:12px;color:#7d819c;margin:5px 0 0}.iconbtn{border:1px solid #ebeaf6;background:white;color:#353c6d;border-radius:16px;width:47px;height:47px;font-size:22px;box-shadow:0 4px 18px #2529530a}
+    .datebar{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;background:#eeedfb;border:1px solid #eae8fb;border-radius:16px;padding:12px 15px;color:#555d84;font-size:13px;font-weight:680;margin-bottom:16px;font-variant-numeric:tabular-nums}
+    .card{border-radius:27px;background:#fff;box-shadow:0 16px 44px rgba(48,53,104,.075);padding:23px 21px;margin:16px 0}.hero{padding-top:23px}.status-line{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.status-title{font-size:36px;font-weight:850;color:var(--blue);line-height:1.3;letter-spacing:.5px}.status-sub{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.6}.mascot{width:84px;height:84px;display:grid;place-items:center;border-radius:28px;background:#eef1ff;font-size:53px;flex-shrink:0;transform:rotate(3deg)}.money-label{margin:26px 0 7px;color:#7c6580;background:#fff0ec;border-radius:100px;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;font-size:14px;font-weight:730}.amount{font-size:clamp(30px,7.9vw,49px);line-height:1.13;color:var(--accent);font-weight:890;letter-spacing:-1.5px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.currency{font-size:.47em;vertical-align:10%;letter-spacing:0;margin-right:5px}.rate{display:flex;gap:9px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:13px;color:#555e83;font-weight:650;font-size:13px}.rate strong{font-size:16px;font-variant-numeric:tabular-nums;color:#384fb7}.pep{background:#f2f0ff;border-radius:14px;color:#55537b;padding:12px 13px;margin:23px 0 0;font-size:13px;line-height:1.65}.divider{height:1px;background:var(--line);margin:23px 0}.section-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.section-head b{font-size:16px}.strong-blue{font-weight:850;color:var(--blue);font-size:18px;font-variant-numeric:tabular-nums}.progress-text{color:var(--muted);font-size:13px;margin:9px 0 12px;font-variant-numeric:tabular-nums}.track{background:#e7eafd;height:11px;border-radius:100px;overflow:hidden}.fill{height:100%;width:0%;border-radius:100px;background:linear-gradient(90deg,#358af6,#4350d4);transition:width .2s linear}
+    .month-nav{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:12px 0 14px}.month-nav strong{font-size:14px;color:#43517c;flex:1;text-align:center;font-variant-numeric:tabular-nums}.month-navbtn{width:38px;height:37px;flex-shrink:0;border:1px solid #e1e7f6;background:#f4f6ff;border-radius:10px;color:#3657b8;font-weight:800;font-size:23px}.month-today{border:0;background:#e9edff;border-radius:10px;color:#3b54aa;padding:9px;font-weight:750;font-size:12px}.day{min-height:65px;padding:6px 1px 5px;gap:4px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center}.day .day-num{font-size:14px;line-height:18px}.day .ot-mini{font-size:10px;font-weight:800;white-space:nowrap;line-height:16px;padding:0 3px;border-radius:6px;background:#fff0df;color:#a15619;font-variant-numeric:tabular-nums;max-width:100%}.day .ot-mini.live{color:#0d7a56;background:#dff9ec}.day .ot-mini.zero{color:#8890aa;background:#e8ebf6}.day.off .ot-mini{background:transparent;color:#a6aaba}.day.changed:after{top:1px;right:2px;bottom:auto;font-size:13px}.dot.green{background:#43c39b}.ot-calendar-total{border-radius:12px;background:#f5f1ff;color:#4e548c;font-weight:750;font-size:13px;padding:12px 13px;margin-top:14px;font-variant-numeric:tabular-nums}.day-work-toggle{display:flex;align-items:center;gap:10px;margin-top:22px;padding:14px;border-radius:13px;background:#f3f6ff;color:#354782;font-size:15px;font-weight:800}.day-work-toggle input{width:21px;height:21px;accent-color:#345bd3}.ot-day-summary{font-size:13px;font-weight:750;margin-top:12px;padding:12px;border-radius:12px;background:#fff2e9;color:#a14f32}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{background:#f6f7ff;border-radius:17px;padding:14px 13px}.stat-label{font-size:12px;color:var(--muted)}.stat-value{font-size:21px;font-weight:830;font-variant-numeric:tabular-nums;margin-top:8px;letter-spacing:-.4px}.stat-value.sm{font-size:17px}.full{grid-column:1/-1}.full .stat-value{color:var(--blue)}.minor{font-size:11px;color:#989cb0;margin-top:6px}
+    .month-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:5px}.smallnote{font-size:12px;color:var(--muted);line-height:1.65;margin:9px 0 14px}.weekdays,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.weekdays div{text-align:center;color:#9298ae;font-size:12px;padding:4px 0 9px}.day{border:1px solid transparent;border-radius:12px;min-height:42px;background:#f3f5ff;color:#4b5681;display:grid;place-items:center;position:relative;font-weight:700;font-size:13px;transition:background .15s}.day.off{background:#f7f7f9;color:#acafbb}.day.today{border:2px solid #f8a459}.day.changed:after{content:'•';font-size:18px;line-height:10px;color:#f08643;position:absolute;bottom:1px}.day:active{transform:scale(.96)}.day.empty{background:transparent;pointer-events:none}.legend{display:flex;gap:12px;flex-wrap:wrap;align-items:center;color:#9598a8;font-size:11px;margin-top:14px}.dot{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:4px;background:#e7eafc}.dot.gray{background:#e4e4e8}.dot.orange{background:#f5a16c}.warning{border:1px solid #f6dfba;background:#fff9ea;color:#9c6825;border-radius:13px;padding:11px;font-size:12px;line-height:1.6;margin-top:14px}.foot{text-align:center;color:#989cb0;line-height:1.7;font-size:11px;padding:5px 12px}
+    .modal{position:fixed;inset:0;z-index:10;display:flex;align-items:flex-end;justify-content:center;background:#161b3e8e;backdrop-filter:blur(3px);padding:0}.modal[hidden]{display:none}.sheet{background:#fff;width:100%;max-width:590px;max-height:92dvh;overflow:auto;border-radius:26px 26px 0 0;padding:23px 21px max(24px,env(safe-area-inset-bottom));box-shadow:0 -12px 45px #11163535}.sheet-head{display:flex;justify-content:space-between;align-items:center}.sheet h2{font-size:22px;margin:0}.close{background:#f5f5fa;border:0;border-radius:11px;width:35px;height:35px;font-size:23px;color:#6d7092}.field{margin-top:18px}.field label{display:block;font-size:13px;font-weight:760;color:#454e70;margin-bottom:8px}.field input,.field select{width:100%;height:47px;padding:0 12px;color:var(--ink);background:#fbfbff;border:1px solid #dadfee;border-radius:12px;outline:none}.field input:focus,.field select:focus{border-color:#728ef2;box-shadow:0 0 0 3px #718cf21b}.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.field-grid .field{min-width:0}.checkrow{display:flex;gap:7px;flex-wrap:wrap}.week-chip{padding:9px 12px;border:1px solid #dfe1f2;border-radius:12px;background:#f7f7fc;color:#777d9b;font-weight:750}.week-chip.selected{background:#e8edff;color:#2346bf;border-color:#b7c6ff}.btn{border:0;border-radius:14px;padding:14px 17px;font-weight:760}.primary{width:100%;background:#3158d7;color:#fff;margin-top:24px;font-size:16px}.secondary{background:#eff1fc;color:#4558a2}.form-note{font-size:12px;color:#8389a1;line-height:1.6;margin-top:7px}.error{color:#c72e2e;font-size:13px;min-height:18px;margin-top:12px}.toast{pointer-events:none;position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#2e3561;color:#fff;border-radius:13px;padding:10px 18px;font-size:13px;z-index:30;box-shadow:0 6px 22px #1b205b44}
+    @media(max-width:599px){#dayModal{align-items:stretch}#dayModal .sheet{height:100dvh;max-height:100dvh;border-radius:0;padding-top:max(24px,env(safe-area-inset-top))}}
+    .stat[hidden]{display:none}
+    .cycle-notice{background:#eef2ff;color:#394e90;border:1px solid #dce4ff;border-radius:13px;padding:12px 14px;font-size:12px;line-height:1.65;margin:2px 0 14px}.cycle-notice strong{font-size:13px;color:#2848b3}.day .month-mini{font-size:9px;font-weight:800;color:#858fa9;line-height:11px}.day .day-num{line-height:16px}
+    .pay-period-note{font-size:12px;font-weight:720;color:#516094;background:#eef2ff;border:1px solid #dce5ff;border-radius:12px;padding:10px 12px;line-height:1.6;margin-bottom:14px}
+    .pay-result{border:1px solid #e9e9fa;border-radius:18px;background:linear-gradient(145deg,#f7f7ff,#f1f5ff);padding:17px 15px;margin:14px 0}
+    .pay-result.highlight{background:linear-gradient(135deg,#eef3ff,#f8f5ff);border-color:#cbd9ff}
+    .pay-kicker{font-weight:770;font-size:12px;color:#566498;line-height:1.55}
+    .pay-big{font-weight:890;color:#284bbf;font-size:clamp(27px,7vw,39px);font-variant-numeric:tabular-nums;letter-spacing:-.7px;overflow-wrap:anywhere;margin-top:8px}
+    .pay-sub{font-size:11px;color:#757e9f;margin-top:7px;line-height:1.65}
+    .salary-breakdown{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:13px 0}
+    .salary-cell{background:#f6f7ff;border-radius:14px;padding:12px;min-width:0}
+    .salary-cell b{font-size:17px;color:#344569;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+    .salary-cell small{display:block;font-size:11px;color:#8189a1;margin-bottom:7px;line-height:1.5}
+    .last-payout{background:#fff9ef;border:1px solid #f2e2c7;border-radius:15px;padding:14px 13px;margin-top:18px}
+    .last-payout .stat-value{color:#885117;margin-top:5px}
+    .jump-payout{margin-top:10px;border:1px solid #ecd6b7;background:#fff;border-radius:10px;color:#8e531c;font-weight:760;padding:8px 12px;font-size:12px}
+    .pay-forecast-explain{line-height:1.7;font-size:12px;color:#6c7897;margin:14px 0 0}
+    .salary-setup-banner{display:block;width:100%;border:1px solid #f0c893;background:#fff4db;color:#8b4b15;padding:14px 16px;border-radius:14px;margin:0 0 15px;font-size:14px;font-weight:800;line-height:1.6;text-align:left;touch-action:manipulation}.salary-setup-banner[hidden]{display:none}
+    .lunch-control{display:flex;align-items:center;width:100%;text-align:left;gap:12px;padding:16px;background:#fff6e9;border:2px solid #f4ddbd;border-radius:15px;cursor:pointer;font-weight:800;font-size:14px;color:#68492e;line-height:1.5;touch-action:manipulation;min-height:80px}
+    .lunch-control:active{transform:scale(.99)}
+    .lunch-control:focus-visible{outline:3px solid #587ddd;outline-offset:3px}
+    .lunch-control.active{background:#eafff2;border-color:#69c999;color:#125e3a}
+    .lunch-symbol{font-size:27px;flex-shrink:0}
+    .lunch-content{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+    .lunch-content small{font-size:12px;font-weight:500;color:#8b6b46}
+    .lunch-control.active .lunch-content small{color:#397952}
+    .lunch-switch{flex-shrink:0;font-weight:800;min-width:42px;text-align:center;padding:6px 7px;border-radius:10px;background:#f2dac0;color:#89561f}
+    .lunch-control.active .lunch-switch{background:#2e9f61;color:white}
+    .lunch-confirm{margin-top:11px;border-radius:12px;padding:10px 12px;background:#f4f6ff;color:#596284;font-size:13px;line-height:1.55;font-weight:650}
+    .lunch-confirm.active{background:#e9fff3;color:#1f6c46}
+    .lunch-breakdown{color:#a35e27}
+    .day .ot-lunch-mini{font-size:9px;color:#9e5b24;line-height:12px;font-weight:750}
+
+    .total-track{position:relative;margin-bottom:8px}
+    .normal-threshold{position:absolute;top:-3px;bottom:-3px;width:3px;border-radius:5px;background:#ffac69;transform:translateX(-1px);pointer-events:none}
+    .progress-breakdown{display:flex;justify-content:space-between;flex-wrap:wrap;gap:5px;color:#737b9b;font-size:11px;margin:8px 0 13px}
+    .progress-breakdown strong{color:#3559be}
+    .plan-panel{background:#f4f6ff;border-radius:16px;padding:14px 14px 12px;margin-top:12px}
+    .plan-panel-label{font-size:13px;font-weight:800;color:#414d7d;margin:0 0 9px}
+    .plan-row{display:flex;gap:8px;align-items:center}
+    .plan-row input{flex:1;min-width:0;height:44px;border:1px solid #cbd5f5;background:#fff;border-radius:11px;padding:0 10px;color:#29395e;font-size:16px}
+    .plan-row button{flex:0 0 auto;padding:12px 15px;border-radius:11px;font-size:13px;min-width:82px}
+    .plan-help{margin:9px 0 0;color:#737b96;font-size:12px;line-height:1.6}
+    @media(min-width:600px){.app{padding-top:38px}.sheet{border-radius:24px;margin-bottom:20px;max-height:87dvh}.modal{align-items:center}}
+    @media(max-width:365px){h1{font-size:19px}.app{padding-left:12px;padding-right:12px}.card{padding:20px 17px}.mascot{width:66px;height:66px;font-size:42px}.stat-value{font-size:18px}}
+    @media(prefers-reduced-motion:reduce){.fill,.day{transition:none}}
+  
+    .day-type-select{display:flex;gap:9px;align-items:center;margin-top:16px;padding:12px 14px;border-radius:14px;background:#eef2ff}
+    .day-type-select span{font-weight:800;font-size:13px;white-space:nowrap}
+    .day-type-select select{height:45px;min-width:0;width:100%;font-size:15px;padding:6px 9px;border-radius:10px;border:1px solid #ccd6f5;background:white;color:#27345c}
+    .day.rest{background:#fff3e5;color:#9e5e18}.day.leave{background:#f4eeee;color:#9a7b7b}
+    .day .ot-mini{z-index:1}.day-type-hint{font-size:12px;font-weight:700;color:#705f87;padding:9px 11px;border-radius:10px;background:#f5f0ff;margin-top:11px}
+    .rest-setup{background:#fffaf0;border:1px solid #f3dfb8;border-radius:13px;padding:10px;margin-top:13px}
+    .rest-setup .field{margin:4px 0}
+    .stop-auto{background:#e9f8ee;color:#23714b;font-weight:750;padding:10px 12px;border-radius:10px;margin:10px 0 0;font-size:12px;line-height:1.55}
+    .day-rest-note{margin-top:8px;font-size:12px;color:#84602f;line-height:1.5}
+    
+    .hide-home{display:none!important}
+
+    .hero-rate-row{display:grid;grid-template-columns:minmax(0,1fr) 152px;gap:10px;align-items:center;margin-top:10px}
+    .hero-rate-row .rate{margin:0;height:auto;min-height:97px;display:flex;flex-direction:column;justify-content:center;min-width:0}
+    .hero-rate-row .rate strong{overflow-wrap:anywhere}
+    .donkey-widget{min-width:0;overflow:hidden;background:linear-gradient(160deg,#fff9ec,#f9e7c9);border:1px solid #efdab7;border-radius:17px;padding:6px 5px 7px;box-shadow:0 6px 14px #a9783416}
+    .donkey-scene{position:relative;background:linear-gradient(180deg,#e8f3fb 0%,#fff4e4 70%,#eed9b5 71%);height:93px;overflow:hidden;border-radius:12px}
+    .donkey-scene svg{width:100%;height:100%;display:block;overflow:visible}
+    .donkey-caption{text-align:center;color:#80522b;font-weight:900;font-size:11px;line-height:1.25;margin-top:5px}
+    .donkey-caption small{display:block;font-size:10px;color:#a17047;margin-top:2px;font-weight:650}
+    .donkey-sway{transform-origin:76px 72px;animation:donkeyBob 1.05s ease-in-out infinite}
+    .donkey-front-leg{transform-box:fill-box;transform-origin:50% 0%;animation:donkeyStep .78s ease-in-out infinite}
+    .donkey-back-leg{transform-box:fill-box;transform-origin:50% 0%;animation:donkeyStep .78s ease-in-out infinite reverse}
+    .donkey-tail{transform-box:fill-box;transform-origin:0% 0%;animation:donkeyTail 1.4s ease-in-out infinite}
+    .donkey-ear{transform-box:fill-box;transform-origin:50% 100%;animation:donkeyEar 3.3s ease-in-out infinite}
+    .donkey-grinder{transform-box:fill-box;transform-origin:50% 50%;animation:millStone 3.8s linear infinite}
+    .donkey-rod{animation:donkeyRod 1.05s ease-in-out infinite;transform-origin:120px 71px}
+    .donkey-sweat{animation:donkeySweat 2.1s ease-out infinite;opacity:0}
+    .donkey-sweat.d2{animation-delay:1.05s}
+    .donkey-dust{animation:donkeyDust 1.5s ease-in-out infinite;opacity:0}
+    .donkey-blink{transform-box:fill-box;transform-origin:50% 50%;animation:donkeyBlink 4s linear infinite}
+    @keyframes donkeyBob{0%,100%{transform:translate(0,0)}50%{transform:translate(1px,2px)}}
+    @keyframes donkeyStep{0%,100%{transform:rotate(-11deg)}50%{transform:rotate(11deg)}}
+    @keyframes donkeyTail{0%,100%{transform:rotate(7deg)}50%{transform:rotate(-21deg)}}
+    @keyframes donkeyEar{0%,92%,100%{transform:rotate(0)}95%{transform:rotate(5deg)}}
+    @keyframes millStone{to{transform:rotate(360deg)}}
+    @keyframes donkeyRod{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+    @keyframes donkeySweat{0%{transform:translateY(-3px);opacity:0}20%{opacity:1}85%{opacity:0.7}100%{transform:translateY(18px);opacity:0}}
+    @keyframes donkeyDust{0%{transform:translateX(0) scale(.4);opacity:0}35%{opacity:.7}100%{transform:translateX(-12px) scale(1.3);opacity:0}}
+    @keyframes donkeyBlink{0%,43%,47%,100%{transform:scaleY(1)}45%{transform:scaleY(.14)}}
+    @media(max-width:420px){.hero-rate-row{grid-template-columns:minmax(0,1fr) 141px;gap:8px}.donkey-scene{height:88px}.donkey-widget{padding:5px 4px 6px}}
+    @media(max-width:360px){.hero-rate-row{grid-template-columns:minmax(0,1fr) 128px;gap:6px}.donkey-caption{font-size:10px}.donkey-caption small{font-size:9px}}
+    @media(prefers-reduced-motion:reduce){.donkey-widget *{animation:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header>
+    <div class="brand"><div class="logo" aria-hidden="true">💼</div><div><h1>上班鼓勵器</h1><p class="tagline">每一秒都在為薪水努力 ✨</p></div></div>
+    <button class="iconbtn" id="settingsBtn" title="設定薪資與時間" aria-label="設定薪資與時間">⚙️</button>
+  </header>
+    <button type="button" id="setupSalaryBanner" class="salary-setup-banner" hidden>💰 月薪目前為 0 元，點此設定自己的月薪，開始計算每秒收入</button>
+  <div class="datebar"><span id="todayDate">日期載入中</span><span id="nowTime">--:--:--</span><span>🇹🇼 台灣時間</span></div>
+  <section class="card hero" aria-label="今日薪水計時器">
+    <div class="status-line"><div><div class="status-title" id="workStatus">載入中</div><div class="status-sub" id="countdown">正在讀取工作時間…</div></div><div class="mascot" aria-hidden="true">🐱</div></div>
+    <div class="money-label">🪙 今日已賺（上班時段換算）</div>
+    <div class="amount"><span class="currency">NT$</span><span id="todayMoney">0.0000</span></div>
+<div class="hero-rate-row">
+      <div class="rate"><span>⚡ 現在賺錢速度</span><strong id="secondRate">NT$ 0.0000 / 秒</strong></div>
+      <div class="donkey-widget" aria-label="可愛驢子拉石磨，踏步、流汗、磨盤旋轉的動畫">
+        <div class="donkey-scene" aria-hidden="true">
+          <svg viewBox="0 0 200 135" role="img" aria-label="疲憊的小驢拉磨">
+            <defs>
+              <linearGradient id="donkeyFur" x1="0" y1="0" x2="0.9" y2="1"><stop stop-color="#ad8161"/><stop offset=".52" stop-color="#8f674e"/><stop offset="1" stop-color="#6b4a3c"/></linearGradient>
+              <linearGradient id="donkeyMuzzle" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0dc"/><stop offset="1" stop-color="#d8b9a3"/></linearGradient>
+              <linearGradient id="stoneSide" x1="0" y1="0" x2="0.9" y2="1"><stop stop-color="#c5c0b8"/><stop offset=".55" stop-color="#888987"/><stop offset="1" stop-color="#686e72"/></linearGradient>
+              <linearGradient id="millTop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ddd8d0"/><stop offset="1" stop-color="#898e90"/></linearGradient>
+            </defs>
+            <!-- stone courtyard and circular mill walking path -->
+            <ellipse cx="105" cy="113" rx="93" ry="15" fill="#d3b98b" opacity=".58"/>
+            <ellipse cx="119" cy="110" rx="74" ry="13" stroke="#bca17a" stroke-width="2" stroke-dasharray="3 6" fill="none" opacity=".7"/>
+            <path d="M4 114q16-6 36-2 M160 116q17-5 33 0" stroke="#cbb18b" stroke-width="2" fill="none"/>
+            <!-- grinding stone base -->
+            <ellipse cx="152" cy="111" rx="40" ry="11" fill="#8e7f6e" opacity=".25"/>
+            <path d="M116 87 Q116 75 152 75 Q189 75 189 87 L189 109 Q188 119 152 120 Q116 119 116 109Z" fill="url(#stoneSide)" stroke="#7c7f7d" stroke-width="1.5"/>
+            <path d="M116 88 C120 101 184 103 189 88" stroke="#747d80" stroke-width="2" opacity=".7" fill="none"/>
+            <ellipse cx="152" cy="86" rx="37" ry="14" fill="url(#millTop)" stroke="#777d7e" stroke-width="2"/>
+            <g class="donkey-grinder">
+              <path d="M152 86l30 3 M152 86l-24-7 M152 86l-5 12 M152 86l11-10 M152 86l-23 8" stroke="#777e7d" stroke-width="3" opacity=".67" stroke-linecap="round"/>
+              <ellipse cx="152" cy="86" rx="9" ry="3" fill="#797f81"/>
+            </g>
+            <!-- long wooden yoke linked to harness -->
+            <g class="donkey-rod"><path d="M96 66 L147 82" stroke="#735038" stroke-width="6" stroke-linecap="round"/><path d="M99 65 L146 80" stroke="#bd9261" stroke-width="2.6" stroke-linecap="round"/></g>
+            <!-- working donkey with animated legs, long ears and soft colored coat -->
+            <g class="donkey-sway">
+              <g class="donkey-back-leg"><path d="M91 85 L96 108 L92 119" fill="none" stroke="#654936" stroke-width="8" stroke-linecap="round"/><path d="M89 119l8 0" stroke="#3b342f" stroke-width="5" stroke-linecap="round"/></g>
+              <g class="donkey-front-leg"><path d="M60 86 L59 105 L57 119" fill="none" stroke="#76523a" stroke-width="8" stroke-linecap="round"/><path d="M54 119l8 0" stroke="#3b342f" stroke-width="5" stroke-linecap="round"/></g>
+              <!-- harness and tail -->
+              <g class="donkey-tail"><path d="M107 67 Q119 78 115 91" fill="none" stroke="#634739" stroke-width="5" stroke-linecap="round"/><path d="M115 90l-3 8 7-5" fill="#40332e"/></g>
+              <path d="M59 53 Q80 42 101 54 Q114 60 109 77 Q103 93 84 90 L59 85 Q49 78 52 67Z" fill="url(#donkeyFur)" stroke="#75523f" stroke-width="1.6"/>
+              <path d="M76 56 Q91 50 101 57" stroke="#c39c7c" stroke-width="5" opacity=".6" fill="none" stroke-linecap="round"/>
+              <path d="M98 58L103 86" stroke="#cf5d4b" stroke-width="5" opacity=".9"/><circle cx="101" cy="69" r="4" fill="#f0c988"/>
+              <g class="donkey-front-leg"><path d="M68 84 L70 103 L65 119" fill="none" stroke="#90684c" stroke-width="9" stroke-linecap="round"/><path d="M62 119h8" stroke="#47362f" stroke-width="5" stroke-linecap="round"/></g>
+              <g class="donkey-back-leg"><path d="M99 84 L100 104 L102 119" fill="none" stroke="#77533c" stroke-width="8" stroke-linecap="round"/><path d="M99 119h8" stroke="#45352f" stroke-width="5" stroke-linecap="round"/></g>
+              <!-- neck, head, donkey ears -->
+              <path d="M58 62 Q55 50 46 43 L33 47 Q43 72 52 78Z" fill="url(#donkeyFur)" stroke="#765340" stroke-width="1"/>
+              <g class="donkey-ear"><path d="M32 44Q20 20 26 7Q40 19 43 43Z" fill="#806047" stroke="#654b3c" stroke-width="1.5"/><path d="M33 40Q25 22 27 14Q35 25 38 42" fill="#c88e8e"/></g>
+              <g class="donkey-ear"><path d="M44 43Q40 12 50 4Q59 20 55 48Z" fill="#8e6852" stroke="#654b3c" stroke-width="1.5"/><path d="M48 41Q45 20 50 13Q54 26 52 43" fill="#cb9597"/></g>
+              <path d="M28 43 Q44 38 53 50 Q57 62 46 73 L27 73 Q17 63 28 43Z" fill="url(#donkeyFur)" stroke="#70503f" stroke-width="1.5"/>
+              <path d="M29 60Q14 57 14 70 Q14 81 30 82Q39 78 42 67Z" fill="url(#donkeyMuzzle)" stroke="#b79b8b" stroke-width="1.4"/>
+              <ellipse cx="20" cy="70" rx="2.3" ry="1.7" fill="#775e55"/>
+              <path d="M31 75q7 5 12-2" stroke="#b7847e" fill="none" stroke-width="1.5"/>
+              <path d="M29 51Q35 47 40 50" fill="none" stroke="#563b30" stroke-width="2.8" stroke-linecap="round"/>
+              <g class="donkey-blink"><path d="M30 55 Q35 60 41 54" fill="none" stroke="#41322c" stroke-width="2.7" stroke-linecap="round"/><path d="M34 59l1 2" stroke="#58443d" stroke-width="1"/></g>
+              <path d="M43 42l6 3 1-6 4 7" fill="none" stroke="#624334" stroke-width="2"/>
+              <!-- tiny necktie = employee -->
+              <path d="M51 68l6 1 -1 8 -4 6 -3-6Z" fill="#426ba0" stroke="#2b567f" stroke-width="1"/>
+            </g>
+            <!-- tired sweat + footstep dust -->
+            <g class="donkey-sweat" fill="#6dbde0"><path d="M17 39q-5 7 0 9q5-2 0-9"/></g>
+            <g class="donkey-sweat d2" fill="#85ccea"><path d="M61 22q-4 6 0 8q4-2 0-8"/></g>
+            <g class="donkey-dust" fill="#e7d7bc"><ellipse cx="72" cy="120" rx="7" ry="2.5"/><ellipse cx="85" cy="119" rx="6" ry="2"/></g>
+            <path d="M160 21l2-5m6 12 7-2" stroke="#fff5db" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="donkey-caption">🫏 驢子努力拉磨中<small>磨的是青春，賺的是時薪</small></div>
+      </div>
+    </div>
+    <div class="pep" id="encouragement">薪水不是等下班才出現，每一秒都算數！</div>
+    <div class="divider"></div>
+    <div class="section-head"><b>🎯 今日總工時進度</b><span class="strong-blue" id="dayPercent">0%</span></div>
+    <div class="progress-text" id="dayHours">已工作 0.00 / 預計 8.00 小時</div>
+    <div class="track total-track"><div class="fill" id="progressFill"></div><div class="normal-threshold" id="normalThreshold" hidden></div></div>
+    <div class="progress-breakdown"><span id="normalBreakdown">☀️ 正常 8.00 小時</span><span class="lunch-breakdown" id="lunchBreakdown">🍱 午休加班 0.00 小時</span><span id="otBreakdown">🌙 晚間預計 0.00 小時</span></div>
+    <div class="plan-panel"><p class="plan-panel-label">🕔 今天預計幾點下班？</p>
+      <div class="plan-row"><input id="plannedEndInput" type="time" min="17:00" max="23:59" step="60" aria-label="今日預計下班時間"><button class="btn secondary" type="button" id="savePlannedEnd">儲存時間</button></div>
+      <p class="plan-help" id="plannedProgressNote">設定加班結束時間，時間一到自動停止計費。</p><div class="stop-auto">✅ 設定並儲存預計下班時間後，到點自動停止計薪；不必手動按結束。休息日須先在日曆安排出勤與起始時間。</div>
+    </div>
+  </section>
+  <section class="card" aria-label="午休加班設定">
+    <div class="section-head" style="margin-bottom:11px"><b>🍱 午休加班</b><span class="strong-blue" id="lunchRateLabel" style="font-size:13px">按今日加班累計分段</span></div>
+    <button class="lunch-control" type="button" id="todayLunchToggle" aria-pressed="false">
+      <span class="lunch-symbol" aria-hidden="true">🍱</span>
+      <span class="lunch-content"><b id="lunchToggleText">啟用今天午休加班</b><small id="lunchToggleSummary">今天 12:00～13:00 沒有休息時點這裡</small></span>
+      <span class="lunch-switch" id="lunchSwitch">未啟用</span>
+    </button>
+    <div class="lunch-confirm" id="lunchConfirm" aria-live="polite">尚未登記午休加班</div>
+    <p class="smallnote" id="lunchHint">點一下啟用午休加班，再點一下取消。若在 13:00 後登記，今天的 1 小時加班費會立即補入；今日以外日期請到結算日曆補登。</p>
+  </section>
+  <section class="card" aria-label="26到25日薪資與加班費總覽">
+    <div class="section-head" style="margin-bottom:12px"><b>💼 本期薪水進度＋加班費</b><span id="monthTitle" class="smallnote" style="margin:0"></span></div>
+    <div class="pay-period-note" id="payPeriodNote">結算期載入中（上月26日～當月25日）</div>
+    <div class="section-head"><b>正常月薪完成進度</b><span class="strong-blue" id="monthPercent">0%</span></div>
+    <div class="progress-text" id="cycleHours">已完成 0 / 排定 0 小時；進度依本期正常工時計算</div>
+    <div class="track"><div class="fill" id="monthProgress"></div></div>
+    <div class="salary-breakdown hide-home">
+      <div class="salary-cell"><small>本期已完成基本薪資（進度分攤）</small><b id="monthMoney">NT$ 0.00</b></div>
+      <div class="salary-cell"><small>本期已累積加班費</small><b id="otMonthMoney">NT$ 0.00</b><div class="minor" id="cycleStatsLabel">加班 0.00 小時</div></div>
+    </div>
+    <div class="pay-result"><div class="pay-kicker">📈 本期目前已累積估算（基本薪資進度＋已計加班）</div><div class="pay-big" id="accruedGross">NT$ 0.00</div><div class="pay-sub">此數字是工作鼓勵進度，不是當下可領或正式應發金額。</div></div>
+    <div class="pay-result highlight"><div class="pay-kicker">💰 本期完整月薪＋截至目前加班費（預估發薪總額）</div><div class="pay-big" id="forecastGross">NT$ 0.00</div><div class="pay-sub" id="forecastNote">預計次月 5 日發薪；後續加班、請假、獎金與扣款會影響實際金額。</div></div>
+    <div class="last-payout hide-home"><div class="pay-kicker" id="lastPayoutTitle">🗓️ 最近一期已結算（5日領薪參考）</div><div class="stat-value" id="lastPayoutGross">NT$ 0.00</div><div class="pay-sub" id="lastPayoutDetail">已結算期金額，方便 5 日領薪前核對。</div><button type="button" id="jumpPayoutPeriod" class="jump-payout">在日曆查看這一期與補登加班</button></div>
+    <p class="pay-forecast-explain hide-home">本期進度以 <b>26 日～25 日</b> 排定正常工時為分母，完成後基本薪資進度達 100%，對應完整月薪；<b>加班時薪</b>仍固定月薪 ÷ 30 ÷ 8，並依每日加班倍率另算。估算為<b>未扣款、未加獎金的金額</b>，不代表實領金額。</p>
+    <div class="divider" style="margin:20px 0 15px"></div>
+    <div class="stats">
+      <div class="stat"><div class="stat-label">公司換算時薪（月薪÷30÷8）</div><div class="stat-value sm" id="hourWage">NT$ 0.00</div></div>
+      <div class="stat"><div class="stat-label">正常每秒累積</div><div class="stat-value sm" id="baseRate">NT$ 0.0000</div></div>
+      <div class="stat full"><div class="stat-label">加班時薪（×1.34／×1.67／休息日9h後 ×2.67）</div><div class="stat-value sm" id="otHourRate">NT$ 0.00</div></div>
+      <div class="stat" id="monthlySalaryCard" hidden><div class="stat-label">設定月薪（可隱藏）</div><div class="stat-value sm" id="monthlySalary">NT$ 0</div></div>
+      <div class="stat"><div class="stat-label">公司換算正常一天</div><div class="stat-value sm" id="fullDay">NT$ 0.00</div></div>
+    </div>
+  </section>
+  <section class="card hide-home" aria-label="17 點後加班">
+    <div class="section-head"><b>⏱️ 今日加班</b><span class="strong-blue" id="otRuleText" style="font-size:13px">平日 1.34 / 1.67</span></div>
+    <p class="smallnote" id="otHint">依預定下班時間自動停止計時，無須手動按結束。</p>
+    <div class="stats">
+      <div class="stat"><div class="stat-label">今日加班合計（含午休／休息日）</div><div class="stat-value sm" id="todayOTHours">0.00 小時</div><div class="minor" id="otHoursSplit">午休 0.00h＋17:00 後 0.00h</div></div>
+      <div class="stat"><div class="stat-label">今日加班費</div><div class="stat-value sm" id="todayOTMoney">NT$ 0.00</div></div>
+    </div>
+    <div class="ot-actions" id="otActions" hidden style="display:none!important">
+      <button type="button" id="stopOT" class="btn primary" style="margin-top:15px">✅ 結束加班，保存今天的金額</button>
+      <div style="display:flex;gap:9px;margin-top:9px">
+        <button type="button" id="noOT" class="btn secondary" style="flex:1">今晚沒有加班</button>
+        <button type="button" id="resumeOT" class="btn secondary" style="flex:1" hidden>取消晚間紀錄，從17:00重算</button>
+      </div>
+    </div>
+    <div class="divider" style="margin:19px 0 14px"></div>
+    <b style="font-size:14px">📝 加班補登／修正</b>
+    <div class="field-grid" style="margin-top:7px">
+      <div class="field" style="margin-top:6px"><label for="otDate">日期</label><input id="otDate" type="date"></div>
+      <div class="field" style="margin-top:6px"><label for="otEnd">實際下班時間</label><input id="otEnd" type="time" value="17:00"></div>
+    </div>
+    <button type="button" id="saveOT" class="btn secondary" style="width:100%;margin-top:10px">儲存這一天的加班時間</button>
+    <p class="form-note">平常日 17:00 後會按照已儲存的預計下班時間自動停止，不必按結束。這裡可以手動更正實際下班時間。休息日請在工作日曆設定出勤時段及時數。公司計薪時薪＝月薪 ÷ 30 ÷ 8；倍率採 1.34／1.67／2.67 作為估算。</p>
+  </section>
+  <section class="card" aria-label="本月工作日設定">
+    <div class="month-head"><b>📅 薪資結算日曆／每日加班</b><span id="workingDays" class="strong-blue" style="font-size:15px">-- 天</span></div>
+    <div class="month-nav" aria-label="切換加班結算期間">
+      <button type="button" id="prevMonth" class="month-navbtn" aria-label="上一個結算期間">‹</button>
+      <strong id="calendarMonthLabel">加班結算期載入中</strong>
+      <button type="button" id="nextMonth" class="month-navbtn" aria-label="下一個結算期間">›</button>
+      <button type="button" id="returnMonth" class="month-today">本期</button>
+    </div>
+    <div class="cycle-notice" id="cycleNotice">💼 薪資及加班費同一結算期：<strong>26 日～次月 25 日</strong>。可切換到已結算期補登，對應每月 5 日領薪。</div>
+    <p class="smallnote">點日期可切換<b>平常工作日／休息日／例假或休假</b>，並設定預計下班時間。完整月薪進度與加班費使用同一個 26～25 日結算期；歷史期間也能補登。注意：<b>首頁進度固定顯示正在進行的結算期</b>，下方日曆可切到上一期。</p>
+    <div class="weekdays"><div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div></div>
+    <div id="calendar" class="days"></div>
+    <div class="legend"><span><i class="dot"></i>工作日</span><span><i class="dot gray"></i>例假／休假</span><span>🟠 休息日</span><span><i class="dot orange"></i>已登記加班</span><span><i class="dot green"></i>今日加班即時累計</span></div>
+    <div class="ot-calendar-total" id="calendarOTTotal">本期加班合計 0.00 小時</div>
+    <div class="warning" id="manualWarning" hidden></div>
+  </section>
+  <p class="foot">時薪＝月薪 ÷30÷8；每日薪資＝月薪 ÷30（不是時薪）。今日逐秒計時僅為鼓勵用換算；本期完整月薪進度依 26～25 日排定正常工作時段分攤至 100%，不是每天月薪÷30累積。<br>平常日午休及晚間加班按當日合計前 2h ×1.34、其後 ×1.67；休息日出勤前 2h ×1.34、3～8h ×1.67、9～12h ×2.67。倍率為方便估算的近似值，不等同法定精確分數。<br>儲存預定下班時間後，計時到點自動停止；休息日要先在日曆安排出勤。星期日預設例假日，不自動以休息日倍率計算，國定假日及特殊變形工時請另行核對法定分類。<br>系統依手機日期時間重算，離線可用；每位同事的薪資及加班紀錄只儲存在各自裝置的瀏覽器內，分享此檔案不會包含個人設定。基本月薪進度和加班費統一按上月 26 日～當月 25 日結算；預估次月 5 日領薪。勞健保、稅款、請假、獎金及其他薪資項目須另核對；本程式不是正式打卡與薪資結算依據。</p>
+</main>
+<div class="modal" id="dayModal" hidden role="dialog" aria-modal="true" aria-labelledby="dayModalTitle">
+  <div class="sheet">
+    <div class="sheet-head"><h2 id="dayModalTitle">📅 編輯工作日與加班</h2><button type="button" class="close" id="closeDay" aria-label="關閉當日編輯">×</button></div>
+    <p class="smallnote" id="dayEditDate"></p>
+    <form id="dayForm" novalidate>
+      <label class="day-type-select"><span>當天類型</span><select id="dayTypeSelect"><option value="work">平常工作日</option><option value="rest">休息日（加班）</option><option value="leave">例假／休假（停止計薪）</option></select></label>
+      <p class="form-note">預設週一～五平常工作日、週六休息日、週日例假日；請依實際排班調整。國定假日的加給規則不同，不可直接選休息日代替。</p>
+      <div class="rest-setup" id="restStartWrap" hidden><label style="display:flex;gap:9px;align-items:center;font-size:13px;font-weight:800"><input id="dayRestPlanEnabled" type="checkbox" style="width:20px;height:20px">安排這一天休息日出勤（勾選才會啟動自動計費）</label><div class="field"><label for="dayRestStart">休息日預計上班時間</label><input id="dayRestStart" type="time" value="08:00" step="60"/></div><p class="day-rest-note">休息日按實際工作時間計加班；中午休息會扣除，若午休也工作請勾選午休加班。必須儲存上、下班時間才會啟動自動計時。</p></div>
+      <div class="field"><label for="dayPlannedEnd">預計下班時間（到點自動停止計薪）</label>
+        <input id="dayPlannedEnd" type="time" min="17:00" max="23:59" step="60" value="17:00">
+        <p class="form-note">平常日設定 17:00 代表不加班，18:30 代表只累積到 18:30。休息日需要先設定上班起始時間與預計結束時間，儲存後即會自動計時到該時間。</p>
+      </div>
+      <div class="field"><label for="dayLunchOT">午休加班時數（小時）</label>
+        <input id="dayLunchOT" type="number" inputmode="decimal" min="0" max="1" step="0.25" placeholder="0、0.5、1">
+        <p class="form-note" id="dayLunchHelp">12:00～13:00 沒有休息請填 1；部分時間工作可填 0.25、0.5 或 0.75。留空表示沒有登記。</p>
+      </div>
+      <div class="field"><label for="dayOTHours">17:00 後實際加班時數（平常日，小時）</label>
+        <input id="dayOTHours" type="number" inputmode="decimal" min="0" max="7" step="0.01" placeholder="例如 2.50（2 小時 30 分）">
+        <p class="form-note" id="dayOTHelp">此欄不含午休，晚間加班 1 小時 30 分填 1.5；輸入 0 表示 17:00 後沒有加班。</p>
+      </div>
+      <div class="field" id="restHoursWrap" hidden><label for="dayRestHours">休息日實際工作時數（手動修正，可留空）</label><input id="dayRestHours" type="number" min="0" max="12" step="0.01" inputmode="decimal" placeholder="留空＝依設定的起訖時間自動計算"><p class="form-note">例如工作 9.5 小時輸入 9.5；儲存後以手動紀錄為準。最多 12 小時。</p></div>
+      <div class="ot-day-summary" id="dayOTEstimate">加班費預估 NT$ 0.00</div>
+      <div class="error" id="dayFormError" role="alert"></div>
+      <button type="submit" class="btn primary">儲存這一天，更新加班費</button>
+      <button type="button" id="clearDayOT" class="btn secondary" style="width:100%;margin-top:10px">清除這一天手動加班紀錄（保留預計時間）</button>
+    </form>
+  </div>
+</div>
+<div class="modal" id="settingsModal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="sheet">
+    <div class="sheet-head"><h2 id="modalTitle">⚙️ 設定上班鼓勵器</h2><button class="close" id="closeBtn" aria-label="關閉設定">×</button></div>
+    <form id="settingsForm" novalidate>
+      <div class="field"><label for="salaryInput">月薪（新台幣）</label><input id="salaryInput" type="number" inputmode="decimal" min="0" step="0.01" required value="0"><div class="form-note">每日秒薪及加班時薪固定為月薪 ÷ 30 天 ÷ 8 小時。<b>薪資進度</b>另用 26～25 日排定正常工時把完整月薪分攤至 100%；加班費另計，兩者不混算。</div></div>
+      <label class="day-work-toggle" style="margin-top:12px"><input type="checkbox" id="showSalaryInput">在首頁顯示「當月月薪」（預設隱藏）</label>
+      <div class="field-grid">
+        <div class="field"><label for="startInput">上班時間</label><input id="startInput" type="time" required></div>
+        <div class="field"><label for="endInput">下班時間</label><input id="endInput" type="time" required></div>
+        <div class="field"><label for="lunchStart">休息開始</label><input id="lunchStart" type="time" required></div>
+        <div class="field"><label for="lunchEnd">休息結束</label><input id="lunchEnd" type="time" required></div>
+      </div>
+      <div class="form-note">固定使用 8 小時計算公司時薪；上下班及午休設定只控制實際計時區間和進度。午休有工作，請在主畫面或日曆登記為加班，勿把午休改成正常上班時段。平常日午休與 17:00 後加班合計：前 2 小時 ×1.34，其後 ×1.67；休息日另依三段加給倍率。</div>
+      <div class="field"><label>固定每週上班日</label><div class="checkrow" id="weekdaySelectors"></div><div class="form-note">下方月曆可以單獨補班、放假，並會優先採用你手動標記的日期。</div></div>
+      <div class="form-note" style="margin-top:14px;padding:12px;background:#eef2ff;border-radius:12px;color:#3d4e85">🔒 固定計算方式：月薪 ÷ 30 ÷ 8 ÷ 3600 = 正常每秒薪資。30 為固定換算天數，不使用本月實際上班天數；若月底只有 21～22 個工作日，不會影響時薪。</div>
+      <div class="error" id="formError" role="alert"></div><button class="btn primary" type="submit">儲存設定，立即更新</button>
+    </form>
+  </div>
+</div>
+<script>
+'use strict';
+(function(){
+  const STORAGE_KEY='yidong_colleague_salary_v53'; // 與先前同事分享版共用本機儲存設定
+  const defaults={salary:0,start:'08:00',end:'17:00',breakStart:'12:00',breakEnd:'13:00',weekdays:[1,2,3,4,5],mode:'auto',fixedDays:22,showSalary:false,overrides:{},overtimeEntries:{},lunchOvertimeEntries:{},plannedEnds:{},dayTypes:{},restDayPlans:{},restDayStarts:{},restHoursEntries:{}};
+  const $=id=>document.getElementById(id);
+  let config=loadConfig();let currentMonthKey='';let toastTimer;let calendarView=null;let calendarRenderMinute='';let editingDayKey='';let lastPlanInputKey='';
+  function loadConfig(){try{let o=JSON.parse(localStorage.getItem(STORAGE_KEY));if(o&&typeof o==='object')return {...defaults,...o,overrides:o.overrides&&typeof o.overrides==='object'?o.overrides:{},weekdays:Array.isArray(o.weekdays)?o.weekdays:defaults.weekdays,overtimeEntries:o.overtimeEntries&&typeof o.overtimeEntries==='object'?o.overtimeEntries:{},lunchOvertimeEntries:o.lunchOvertimeEntries&&typeof o.lunchOvertimeEntries==='object'?o.lunchOvertimeEntries:{},plannedEnds:o.plannedEnds&&typeof o.plannedEnds==='object'?o.plannedEnds:{},dayTypes:o.dayTypes&&typeof o.dayTypes==='object'?o.dayTypes:{},restDayPlans:o.restDayPlans&&typeof o.restDayPlans==='object'?o.restDayPlans:{},restDayStarts:o.restDayStarts&&typeof o.restDayStarts==='object'?o.restDayStarts:{},restHoursEntries:o.restHoursEntries&&typeof o.restHoursEntries==='object'?o.restHoursEntries:{}};}catch(e){}return {...defaults,overrides:{},overtimeEntries:{},lunchOvertimeEntries:{},plannedEnds:{},dayTypes:{},restDayPlans:{},restDayStarts:{},restHoursEntries:{},weekdays:[1,2,3,4,5]};}
+  function saveConfig(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(config));return true;}catch(e){return false;}}
+  function taipeiNow(now=new Date()){const t=new Date(now.getTime()+8*3600*1000);return {y:t.getUTCFullYear(),m:t.getUTCMonth()+1,d:t.getUTCDate(),h:t.getUTCHours(),mi:t.getUTCMinutes(),s:t.getUTCSeconds(),ms:t.getUTCMilliseconds(),weekday:t.getUTCDay()};}
+  const pad=n=>String(n).padStart(2,'0');
+  const dateKey=(y,m,d)=>`${y}-${pad(m)}-${pad(d)}`;
+  const monthKey=(y,m)=>`${y}-${pad(m)}`;
+  function monthLength(y,m){return new Date(Date.UTC(y,m,0)).getUTCDate();}
+  function dayOfWeek(y,m,d){return new Date(Date.UTC(y,m-1,d)).getUTCDay();}
+  // 加班結算期：當月25日結算上月26日至本月25日；26日起進入下一期。
+  function closingMonthFor(y,m,d){
+    const dt=new Date(Date.UTC(y,m-1+(d>25?1:0),1));
+    return {y:dt.getUTCFullYear(),m:dt.getUTCMonth()+1};
+  }
+  function cycleForClosing(y,m){
+    const prev=new Date(Date.UTC(y,m-2,26)),end=new Date(Date.UTC(y,m-1,25));
+    const make=d=>({y:d.getUTCFullYear(),m:d.getUTCMonth()+1,d:d.getUTCDate()});
+    return {y,m,start:make(prev),end:make(end)};
+  }
+  function cycleForToday(t){const closing=closingMonthFor(t.y,t.m,t.d);return cycleForClosing(closing.y,closing.m);}
+  function periodLabel(period){return `${period.start.y}/${pad(period.start.m)}/26 ～ ${period.end.y}/${pad(period.end.m)}/25`;}
+  function cycleDays(period){
+    const result=[],beg=Date.UTC(period.start.y,period.start.m-1,period.start.d),end=Date.UTC(period.end.y,period.end.m-1,period.end.d);
+    for(let stamp=beg;stamp<=end;stamp+=86400000){const dt=new Date(stamp);result.push({y:dt.getUTCFullYear(),m:dt.getUTCMonth()+1,d:dt.getUTCDate()});}
+    return result;
+  }
+  function cycleOvertimeStats(period,t,nowSec,regularRate){
+    let secs=0,money=0,confirmedDays=0;
+    const todayStr=dateKey(t.y,t.m,t.d);
+    for(const dt of cycleDays(period)){
+      const key=dateKey(dt.y,dt.m,dt.d),isToday=key===todayStr;
+      if(key>todayStr)continue;
+      const dayKind=dayType(dt.y,dt.m,dt.d);
+      const seconds=dailyOvertimeSeconds(dt.y,dt.m,dt.d,isToday,isToday?nowSec:86400);
+      secs+=seconds;money+=overtimePay(seconds,regularRate,dayKind);
+      if((dayKind==='rest'&&Number.isFinite(config.restHoursEntries[key]))||Number.isFinite(config.overtimeEntries[key])||Number(config.lunchOvertimeEntries[key])>0)confirmedDays++;
+    }
+    return {seconds:secs,money,confirmedDays};
+  }
+
+  // 固定月薪的「完成進度」採每期排定正常工時為分母：排班天數只用於分攤月薪，不用於時薪計算。
+  // 國定假日與請假是否扣薪須由正式薪資單決定，這裡將手動排為 leave 的日期視為不需正常打卡。
+  function cycleBaseSalaryStats(period,t,nowSec){
+    const sch=schedule(),today=dateKey(t.y,t.m,t.d);
+    let scheduledSeconds=0,completedSeconds=0,workdays=0;
+    for(const dt of cycleDays(period)){
+      if(!isWorkday(dt.y,dt.m,dt.d))continue;
+      workdays++;
+      scheduledSeconds+=sch.duration;
+      const key=dateKey(dt.y,dt.m,dt.d);
+      if(key<today)completedSeconds+=sch.duration;
+      else if(key===today)completedSeconds+=paidSecondsAt(nowSec,sch);
+    }
+    const fraction=scheduledSeconds>0?Math.min(1,completedSeconds/scheduledSeconds):0;
+    return {workdays,scheduledSeconds,completedSeconds,fraction,money:config.salary*fraction};
+  }
+  function lastClosedCycle(t){
+    const dt=new Date(Date.UTC(t.y,t.m-1+(t.d>=26?0:-1),1));
+    return cycleForClosing(dt.getUTCFullYear(),dt.getUTCMonth()+1);
+  }
+  function payoutDate(period){
+    const dt=new Date(Date.UTC(period.end.y,period.end.m,5));
+    return {y:dt.getUTCFullYear(),m:dt.getUTCMonth()+1,d:dt.getUTCDate()};
+  }
+  function payoutLabel(period){const dt=payoutDate(period);return `${dt.y}/${pad(dt.m)}/${pad(dt.d)}`;}
+  function cyclePayStats(period,t,nowSec,rate){
+    const base=cycleBaseSalaryStats(period,t,nowSec),ot=cycleOvertimeStats(period,t,nowSec,rate);
+    return {...base,ot,accrued:base.money+ot.money,forecast:config.salary+ot.money};
+  }
+  const toSec=s=>{let [h,m]=s.split(':').map(Number);return (h*60+m)*60;};
+  function schedule(){let start=toSec(config.start),end=toSec(config.end),a=toSec(config.breakStart),b=toSec(config.breakEnd);return {start,end,a,b,duration:end-start-(b-a),segments:b>a?[[start,a],[b,end]]:[[start,end]]};}
+  function defaultDayType(y,m,d){if(config.weekdays.includes(dayOfWeek(y,m,d)))return 'work';return dayOfWeek(y,m,d)===0?'leave':'rest';}
+  function dayType(y,m,d){const key=dateKey(y,m,d),type=config.dayTypes[key];if(type==='work'||type==='rest'||type==='leave')return type;const old=config.overrides[key];if(typeof old==='boolean')return old?'work':(dayOfWeek(y,m,d)===0?'leave':'rest');return defaultDayType(y,m,d);}
+  function isWorkday(y,m,d){return dayType(y,m,d)==='work';}
+  function isRestday(y,m,d){return dayType(y,m,d)==='rest';}
+
+  function countWorkdays(y,m){let n=0;for(let d=1;d<=monthLength(y,m);d++)if(isWorkday(y,m,d))n++;return n;}
+  function paidSecondsAt(t,sched){let secs=0;for(let [a,b] of sched.segments)secs+=Math.max(0,Math.min(t,b)-a);return Math.min(sched.duration,secs);}
+  const OVERTIME_START=17*3600;
+  const OVERTIME_FIRST_MULTIPLIER=1.34;
+  const OVERTIME_LATER_MULTIPLIER=1.67;
+  const REST_LATE_MULTIPLIER=2.67;
+  const REST_LIMIT=12*3600;
+  function overtimePay(seconds,regularSecondRate,kind='work'){
+    const s=Math.max(0,Number(seconds)||0);
+    if(kind==='rest'){
+      const first=Math.min(s,7200),middle=Math.min(Math.max(0,s-7200),21600),last=Math.min(Math.max(0,s-28800),14400);
+      return regularSecondRate*(first*OVERTIME_FIRST_MULTIPLIER+middle*OVERTIME_LATER_MULTIPLIER+last*REST_LATE_MULTIPLIER);
+    }
+    return regularSecondRate*(Math.min(s,7200)*OVERTIME_FIRST_MULTIPLIER+Math.max(0,s-7200)*OVERTIME_LATER_MULTIPLIER);
+  }
+  function overtimeRateAt(seconds,regularSecondRate,kind='work'){
+    const multiple=kind==='rest'?(seconds>=28800?REST_LATE_MULTIPLIER:seconds>=7200?OVERTIME_LATER_MULTIPLIER:OVERTIME_FIRST_MULTIPLIER):seconds>=7200?OVERTIME_LATER_MULTIPLIER:OVERTIME_FIRST_MULTIPLIER;
+    return regularSecondRate*multiple;
+  }
+  function overtimeMultiple(seconds,kind='work'){
+    return kind==='rest'?(seconds>=28800?'2.67':seconds>=7200?'1.67':'1.34'):(seconds>=7200?'1.67':'1.34');
+  }
+  function formatClock(seconds){return `${pad(Math.floor(seconds/3600))}:${pad(Math.floor(seconds%3600/60))}`;}
+  function plannedEndForDay(key){
+    const stored=Number(config.plannedEnds[key]);
+    return Number.isFinite(stored)&&stored>=OVERTIME_START&&stored<=86340?stored:OVERTIME_START;
+  }
+  function lunchDuration(){const sch=schedule();return Math.max(0,sch.b-sch.a);}
+  function restStartForDay(key){const v=Number(config.restDayStarts[key]);return Number.isFinite(v)&&v>=0&&v<=86340?v:schedule().start;}
+  function restEndForDay(key){const v=Number(config.restDayPlans[key]);return Number.isFinite(v)&&v>0&&v<=86340?v:null;}
+  function lunchOvertimeSeconds(y,m,d,currentDay,nowSec){
+    if(dayType(y,m,d)==='leave')return 0;
+    const stored=Number(config.lunchOvertimeEntries[dateKey(y,m,d)]);
+    if(!Number.isFinite(stored)||stored<=0)return 0;
+    const sch=schedule(),limit=Math.min(stored,lunchDuration());
+    return currentDay?Math.min(limit,Math.max(0,Math.min(nowSec,sch.b)-sch.a)):limit;
+  }
+  function overtimeSeconds(y,m,d,currentDay,nowSec){
+    if(!isWorkday(y,m,d))return 0;
+    const key=dateKey(y,m,d),stored=config.overtimeEntries[key];
+    const end=Number.isFinite(stored)?stored:plannedEndForDay(key);
+    return Math.max(0,Math.min(currentDay?nowSec:86400,end,86399.999)-OVERTIME_START);
+  }
+  function restTimeWorkedUntil(key,upTo){
+    const start=restStartForDay(key),end=restEndForDay(key),sch=schedule();
+    if(end===null||end<=start)return 0;
+    const stop=Math.min(end,upTo),elapsed=Math.max(0,stop-start);
+    const lunchOverlap=Math.max(0,Math.min(stop,sch.b)-Math.max(start,sch.a));
+    const lunchOn=Number(config.lunchOvertimeEntries[key])>0;
+    const counted=elapsed-(lunchOn?0:lunchOverlap);
+    return Math.min(REST_LIMIT,Math.max(0,counted));
+  }
+  function restDaySeconds(y,m,d,currentDay,nowSec){
+    if(!isRestday(y,m,d))return 0;
+    const key=dateKey(y,m,d),manual=config.restHoursEntries[key];
+    if(Number.isFinite(manual))return Math.max(0,Math.min(REST_LIMIT,manual,currentDay?nowSec>=restStartForDay(key)?manual:0:manual));
+    return restTimeWorkedUntil(key,currentDay?nowSec:86400);
+  }
+  function dailyOvertimeSeconds(y,m,d,currentDay,nowSec){
+    if(isWorkday(y,m,d))return lunchOvertimeSeconds(y,m,d,currentDay,nowSec)+overtimeSeconds(y,m,d,currentDay,nowSec);
+    if(isRestday(y,m,d))return restDaySeconds(y,m,d,currentDay,nowSec);
+    return 0;
+  }
+  function calculate(now){
+    const t=taipeiNow(now),sch=schedule(),count=countWorkdays(t.y,t.m),denom=30;
+    const nowSec=t.h*3600+t.mi*60+t.s+t.ms/1000;
+    const kind=dayType(t.y,t.m,t.d),working=kind==='work',resting=kind==='rest';
+    const key=dateKey(t.y,t.m,t.d);
+    const rate=config.salary/(30*8*3600);
+    let regularSeconds=0,calendarOTSeconds=0,calendarOTMoney=0,workedToday=0;
+    for(let d=1;d<t.d;d++){
+      const type=dayType(t.y,t.m,d);
+      if(type==='work')regularSeconds+=sch.duration;
+      const s=dailyOvertimeSeconds(t.y,t.m,d,false,86400);
+      calendarOTSeconds+=s;calendarOTMoney+=overtimePay(s,rate,type);
+    }
+    if(working){workedToday=paidSecondsAt(nowSec,sch);regularSeconds+=workedToday;}
+    const lunchToday=working?lunchOvertimeSeconds(t.y,t.m,t.d,true,nowSec):0;
+    const eveningToday=working?overtimeSeconds(t.y,t.m,t.d,true,nowSec):0;
+    const restToday=resting?restDaySeconds(t.y,t.m,t.d,true,nowSec):0;
+    const otToday=lunchToday+eveningToday+restToday;
+    const otTodayMoney=overtimePay(otToday,rate,kind);
+    calendarOTSeconds+=otToday;calendarOTMoney+=otTodayMoney;
+    const currentCycle=cycleForToday(t);
+    const currentCycleStats=cyclePayStats(currentCycle,t,nowSec,rate);
+    const lastCycle=lastClosedCycle(t);
+    const lastCycleStats=cyclePayStats(lastCycle,t,nowSec,rate);
+    const recorded=working?Number.isFinite(config.overtimeEntries[key]):resting?Number.isFinite(config.restHoursEntries[key]):false;
+    const plannedEnd=working?plannedEndForDay(key):restEndForDay(key);
+    const plannedLunchToday=working?Math.min(lunchDuration(),Math.max(0,Number(config.lunchOvertimeEntries[key])||0)):0;
+    const plannedOTSeconds=working?Math.max(0,plannedEnd-OVERTIME_START):resting?restTimeWorkedUntil(key,86400):0;
+    const totalTarget=working?sch.duration+plannedLunchToday+plannedOTSeconds:resting?plannedOTSeconds:0;
+    const totalWorked=working?workedToday+otToday:resting?restToday:0;
+    const totalProgress=totalTarget>0?Math.min(1,totalWorked/totalTarget):0;
+    const lunchActive=working&&plannedLunchToday>0&&nowSec>=sch.a&&nowSec<sch.a+plannedLunchToday;
+    const overtimeActive=working&&nowSec>=OVERTIME_START&&nowSec<plannedEnd&&!recorded;
+    const restStart=restStartForDay(key);
+    const restActive=resting&&restEndForDay(key)!==null&&!recorded&&nowSec>=restStart&&nowSec<plannedEnd&&(Number(config.lunchOvertimeEntries[key])>0||!(nowSec>=sch.a&&nowSec<sch.b))&&restToday<REST_LIMIT;
+    const normalActive=working&&sch.segments.some(([a,b])=>nowSec>=a&&nowSec<b);
+    const currentRate=(overtimeActive||lunchActive||restActive)?overtimeRateAt(otToday,rate,kind):normalActive?rate:0;
+    return {t,sch,count,denom,rate,otRate:rate*OVERTIME_FIRST_MULTIPLIER,currentRate,working,resting,kind,nowSec,workedToday,
+      plannedEnd,restStart,plannedOTSeconds,plannedLunchSeconds:plannedLunchToday,totalTarget,totalWorked,totalProgress,
+      lunchToday,eveningToday,restToday,lunchActive,restActive,otToday,otTodayMoney,monthOTSeconds:currentCycleStats.ot.seconds,monthOTMoney:currentCycleStats.ot.money,currentCycle,currentCycleStats,lastCycle,lastCycleStats,recorded,overtimeActive,
+      todayEarned:workedToday*rate+otTodayMoney,monthEarned:regularSeconds*rate+calendarOTMoney,monthlyTarget:config.salary,
+      fullDay:sch.duration*rate,hourRate:rate*3600,progress:totalProgress,
+      monthProgress:currentCycleStats.fraction};
+  }
+  function fmt(n,d=2){return new Intl.NumberFormat('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);}
+  function money(n,d=2){return 'NT$ '+fmt(n,d);}
+  function durationDisplay(s){s=Math.max(0,Math.ceil(s));let h=Math.floor(s/3600),m=Math.floor(s%3600/60),sec=s%60;return `${h} 小時 ${m} 分 ${sec} 秒`;}
+  function statusFor(c){
+    const {working,resting,sch,nowSec}=c;
+    if(c.kind==='leave')return ['例假／休假中','今天不自動計費；若為休息日出勤請從日曆修改日期類型'];
+    if(resting){
+      if(c.plannedEnd===null)return ['休息日','尚未安排休息日出勤；在工作日曆設定上班與下班時間'];
+      if(nowSec<c.restStart)return ['休息日待上班',`距離加班開始還有 ${durationDisplay(c.restStart-nowSec)}`];
+      if(nowSec>=c.plannedEnd)return ['休息日已下班',`已到 ${formatClock(c.plannedEnd)}，自動停止計費 ✅`];
+      if(c.recorded)return ['休息日已登記',`以手動登記的 ${fmt(c.otToday/3600)} 小時為準，停止即時計時`];
+      if(!c.restActive)return ['休息日午休中','午休未登記加班，這段時間停止計費'];
+      return ['休息日加班中',`目前 ×${overtimeMultiple(c.otToday,'rest')}；預定 ${formatClock(c.plannedEnd)} 自動停止`];
+    }
+    if(nowSec<sch.start)return ['準備上班',`距離上班還有 ${durationDisplay(sch.start-nowSec)}`];
+    if(c.lunchActive)return ['午休加班中',`目前 ×${overtimeMultiple(c.otToday)}；午休計入加班`];
+    if(c.overtimeActive)return ['加班中',`目前 ×${overtimeMultiple(c.otToday)}；預定 ${formatClock(c.plannedEnd)} 自動停止，剩餘 ${durationDisplay(c.plannedEnd-nowSec)}`];
+    if(nowSec>=OVERTIME_START)return ['今天下班了',`已到預定下班時間（${formatClock(c.plannedEnd)}），自動停止計費 ✅`];
+    if(nowSec>=sch.end)return ['正常下班了',c.plannedOTSeconds>0?`預定 ${formatClock(c.plannedEnd)} 停止加班計費`:'今天沒有預定晚間加班'];
+    if(sch.b>sch.a&&nowSec>=sch.a&&nowSec<sch.b)return ['午休中',`午休不計薪，剩餘 ${durationDisplay(sch.b-nowSec)}`];
+    return ['上班中',`距離正常下班還有 ${durationDisplay(sch.end-nowSec)}`];
+  }
+  function render(now=new Date()){
+    const c=calculate(now),t=c.t,month=monthKey(t.y,t.m);
+    const cycleKey=monthKey(c.currentCycle.y,c.currentCycle.m);if(currentMonthKey!==cycleKey){currentMonthKey=cycleKey;if(!calendarView||calendarView.followToday)calendarView={y:c.currentCycle.y,m:c.currentCycle.m,followToday:true};calendarRenderMinute='';}
+    const tickKey=`${month}:${t.d}:${t.h}:${t.mi}:${calendarView.y}-${calendarView.m}`;
+    if(calendarRenderMinute!==tickKey){calendarRenderMinute=tickKey;renderCalendar(c);}
+    const weekdays=['日','一','二','三','四','五','六'];
+    $('todayDate').textContent=`📅 ${t.y}/${pad(t.m)}/${pad(t.d)}（週${weekdays[t.weekday]}）`;
+    $('nowTime').textContent=`🕒 ${pad(t.h)}:${pad(t.mi)}:${pad(t.s)}`;
+    const [status,sub]=statusFor(c);$('workStatus').textContent=status;$('countdown').textContent=sub;
+    $('todayMoney').textContent=fmt(c.todayEarned,4);
+    $('secondRate').textContent=c.currentRate>0?`${money(c.currentRate,4)} / 秒${(c.overtimeActive||c.lunchActive||c.restActive)?`（加班 ×${overtimeMultiple(c.otToday,c.kind)}）`:''}`:'NT$ 0.0000 / 秒（目前停止）';
+    $('dayPercent').textContent=fmt(c.progress*100,1)+'%';
+    $('dayHours').textContent=`已工作 ${fmt(c.totalWorked/3600)} / 預計 ${fmt(c.totalTarget/3600)} 小時`;
+    $('progressFill').style.width=Math.max(0,Math.min(100,c.progress*100))+'%';
+    $('normalBreakdown').textContent=c.working?`☀️ 正常 ${fmt(c.sch.duration/3600)} 小時`:c.resting?'🟠 休息日加班':'🌿 休假日';
+    $('lunchBreakdown').textContent=c.resting?'🍱 午休依登記扣除或計入':`🍱 午休加班 ${fmt(c.plannedLunchSeconds/3600)} 小時`;
+    $('otBreakdown').textContent=c.resting?`🕔 休息日預計 ${fmt(c.plannedOTSeconds/3600)} 小時`:`🌙 晚間預計 ${fmt(c.plannedOTSeconds/3600)} 小時`;
+    const marker=$('normalThreshold');marker.hidden=!c.working||c.plannedOTSeconds<=0;
+    marker.style.left=(c.totalTarget>0?(c.sch.duration/c.totalTarget)*100:100)+'%';
+    // Main-screen lunch control uses an explicit button. Do not mutate a live checkbox every 100ms:
+    // on some touch browsers that can visually overwrite an in-progress user toggle.
+    const lunchOn=Number(config.lunchOvertimeEntries[dateKey(t.y,t.m,t.d)])>0&&c.kind!=='leave';
+    $('todayLunchToggle').classList.toggle('active',lunchOn);
+    $('todayLunchToggle').setAttribute('aria-pressed',String(lunchOn));
+    $('lunchSwitch').textContent=lunchOn?'已啟用':'未啟用';
+    $('lunchToggleText').textContent=lunchOn?'取消今天午休加班':'啟用今天午休加班';
+    $('lunchToggleSummary').textContent=c.kind==='leave'?'例假／休假不能計薪，請先從日曆調整':lunchOn?'已登記今天午休有工作，點擊可取消':'今天 12:00～13:00 沒有休息時，點擊這裡';
+    $('lunchConfirm').classList.toggle('active',lunchOn);
+    $('lunchConfirm').textContent=c.kind==='leave'?'例假／休假不自動計薪，請先在日曆確認日期類型。':
+      c.resting?(lunchOn?'✅ 休息日午休列入實際工時，整天按休息日累計倍率':'休息日午休未計入，會從實際工時扣除'):
+      lunchOn?`✅ 已登記午休加班 ${fmt(c.plannedLunchSeconds/3600)} 小時｜截至現在已計薪 ${fmt(c.lunchToday/3600)} 小時`:
+      '❌ 未登記午休加班，12:00～13:00 不計薪';
+    $('lunchRateLabel').textContent=c.resting?'休息日 1.34 / 1.67 / 2.67':'前2h ×1.34｜其後 ×1.67';
+    $('lunchHint').textContent=c.resting?'休息日出勤：不勾選則午休從總工時扣除，勾選代表午休也工作；休息日倍率分為 1.34、1.67、2.67。':`目前午休設定為 ${config.breakStart}～${config.breakEnd}；點擊按鈕即可啟用或取消。午休與晚間加班合併分段計算。`;
+    const currentDay=dateKey(t.y,t.m,t.d);
+    if(lastPlanInputKey!==currentDay){lastPlanInputKey=currentDay;$('plannedEndInput').value=formatClock(c.plannedEnd??OVERTIME_START);}
+    $('plannedEndInput').disabled=c.kind==='leave';$('plannedEndInput').min=c.resting?formatClock(c.restStart):'17:00';
+    $('savePlannedEnd').disabled=c.kind==='leave';
+    const planNote=$('plannedProgressNote');
+    if(c.kind==='leave')planNote.textContent='今天是例假／休假，不計自動薪資；若為休息日出勤，請從日曆修改日期類型。';
+    else if(c.resting&&c.plannedEnd===null)planNote.textContent='休息日尚未安排出勤。請在工作日曆設定起始時間及預計下班時間。';
+    else if(c.resting)planNote.textContent=`休息日 ${formatClock(c.restStart)}～${formatClock(c.plannedEnd)}；到點自動停止計費，午休依是否登記工作計入。`;
+    else if(c.plannedOTSeconds<=0)planNote.textContent='預計 17:00 正常下班，不計晚間加班；有加班請修改並儲存預計時間。';
+    else if(c.recorded)planNote.textContent=`預計 ${formatClock(c.plannedEnd)} 下班；目前使用人工補登時間。`;
+    else if(c.nowSec<c.plannedEnd)planNote.textContent=`預計 ${formatClock(c.plannedEnd)} 下班；剩餘 ${durationDisplay(c.plannedEnd-c.nowSec)}，到點自動停止。`;
+    else planNote.textContent=`✅ 已到預定 ${formatClock(c.plannedEnd)}，今日晚間加班已自動停止累積。`;
+    $('monthTitle').textContent=`${c.currentCycle.end.y} 年 ${c.currentCycle.end.m} 月結算`;
+    $('payPeriodNote').textContent=`結算期間 ${periodLabel(c.currentCycle)}｜預估 ${payoutLabel(c.currentCycle)} 發薪`;
+    $('monthMoney').textContent=money(c.currentCycleStats.money);
+    $('monthPercent').textContent=`${fmt(c.currentCycleStats.fraction*100,1)}%`;
+    $('cycleHours').textContent=`已完成 ${fmt(c.currentCycleStats.completedSeconds/3600)} / 排定 ${fmt(c.currentCycleStats.scheduledSeconds/3600)} 小時（${c.currentCycleStats.workdays} 個正常工作日；不含加班）`;
+    $('monthProgress').style.width=Math.max(0,Math.min(100,c.currentCycleStats.fraction*100))+'%';
+    $('hourWage').textContent=money(c.hourRate);
+    $('baseRate').textContent=money(c.rate,4);
+    $('otHourRate').textContent=`${money(c.hourRate*1.34)} / ${money(c.hourRate*1.67)} / ${money(c.hourRate*2.67)}`;
+    $('otMonthMoney').textContent=money(c.monthOTMoney);
+    $('cycleStatsLabel').textContent=`本期 ${fmt(c.monthOTSeconds/3600)} 小時`;
+    $('accruedGross').textContent=money(c.currentCycleStats.accrued);
+    $('forecastGross').textContent=money(c.currentCycleStats.forecast);
+    $('forecastNote').textContent=`預估 ${payoutLabel(c.currentCycle)} 領薪｜完整基本月薪＋截至現在已計加班 ${money(c.currentCycleStats.ot.money)}；尚未加入未來加班，也未扣勞健保及請假等項目。`;
+    $('lastPayoutTitle').textContent=`🗓️ 最近已結算：${periodLabel(c.lastCycle)}｜${payoutLabel(c.lastCycle)} 發薪`;
+    $('lastPayoutGross').textContent=money(c.lastCycleStats.forecast);
+    $('lastPayoutDetail').textContent=`基本月薪＋該期已記錄加班 ${fmt(c.lastCycleStats.ot.seconds/3600)} 小時（${money(c.lastCycleStats.ot.money)}）。屬稅前估算，未計請假、獎金及扣款。`;
+    $('todayOTMoney').textContent=money(c.otTodayMoney);
+    $('todayOTHours').textContent=fmt(c.otToday/3600,2)+' 小時';
+    $('otHoursSplit').textContent=c.resting?`休息日實際／推估 ${fmt(c.restToday/3600)}h`:`🍱 午休 ${fmt(c.lunchToday/3600)}h ＋ 🌙 晚間 ${fmt(c.eveningToday/3600)}h`;
+    renderOvertimeActions(c);
+    $('setupSalaryBanner').hidden=config.salary>0;
+    $('monthlySalary').textContent=money(config.salary,0);
+    $('monthlySalaryCard').hidden=!config.showSalary;
+    $('fullDay').textContent=money(c.fullDay);
+    // 工作日曆目前可能切到上期，工作天數由 renderCalendar() 依所選結算期設定。
+    $('otRuleText').textContent=c.resting?'休息日 1.34 / 1.67 / 2.67':'平日 1.34 / 1.67';
+    $('encouragement').textContent=c.resting?'🟠 休息日加班會依累積時數分段，儲存預計下班時間後自動停止。':status==='加班中'?'🌙 預定下班時間到點停止計費，不用自己按結束！':status==='上班中'?'💪 每一秒都在累積！也要記得安全第一。':status==='午休加班中'?'🍱 午休有工作，已列入加班時數。':'🌟 按照排班與預定時間，自動記錄每一天。';
+    const warning=$('manualWarning');
+    if(c.count===0){warning.hidden=false;warning.textContent='本月尚未設定工作日，請到設定選擇星期，或點月曆標記上班日。公司時薪仍固定以月薪 ÷30÷8 計算。';}
+    else warning.hidden=true;
+  }
+  function renderOvertimeActions(c){
+    $('otActions').hidden=true;
+    $('otHint').textContent=c.resting?'休息日加班已分段計費，預定下班時間到點自動停止；可點工作日曆補登實際時數。':
+    c.kind==='leave'?'例假／休假不使用一般休息日計薪方式。':
+    '平常日午休與 17:00 後合併計算，前 2 小時 1.34 倍、其後 1.67 倍；預計下班時間到點自動停止。';
+  }
+  function setOvertimeEnd(dateStr,endSec){
+    config.overtimeEntries[dateStr]=endSec;
+    const saved=saveConfig();calendarRenderMinute='';render();
+    toast(saved?'加班時間已儲存':'已更新，但瀏覽器不允許永久儲存');
+  }
+  function shiftCalendarMonth(delta){
+    const c=calculate(new Date());
+    if(!calendarView)calendarView={y:c.currentCycle.y,m:c.currentCycle.m,followToday:true};
+    const dt=new Date(Date.UTC(calendarView.y,calendarView.m-1+delta,1));
+    calendarView={y:dt.getUTCFullYear(),m:dt.getUTCMonth()+1,followToday:false};
+    calendarRenderMinute='';renderCalendar(c);
+  }
+  function renderCalendar(c=calculate(new Date())){
+    if(!calendarView)calendarView={y:c.currentCycle.y,m:c.currentCycle.m,followToday:true};
+    const period=cycleForClosing(calendarView.y,calendarView.m),days=cycleDays(period),grid=$('calendar');
+    const {t}=c,nowKey=dateKey(t.y,t.m,t.d);
+    grid.innerHTML='';
+    $('calendarMonthLabel').textContent=`${period.end.y} 年 ${period.end.m} 月結算期`;
+    $('cycleNotice').innerHTML=`💼 <strong>${periodLabel(period)}</strong> 薪資結算｜預估 <strong>${payoutLabel(period)}</strong> 發薪｜可直接修改歷史加班時數。`;
+    const workCount=days.reduce((num,dt)=>num+(isWorkday(dt.y,dt.m,dt.d)?1:0),0);
+    $('workingDays').textContent=`本期 ${workCount} 天工作日`;
+    const first=dayOfWeek(period.start.y,period.start.m,period.start.d);
+    for(let i=0;i<first;i++){const el=document.createElement('div');el.className='day empty';grid.appendChild(el);}
+    let otTotal=0,otMoney=0,confirmedDays=0;
+    const regularRate=config.salary/(30*8*3600);
+    for(const dt of days){
+      const {y,m,d}=dt,key=dateKey(y,m,d),type=dayType(y,m,d),isToday=key===nowKey,isFuture=key>nowKey;
+      const hasPlan=type==='rest'?restEndForDay(key)!==null:plannedEndForDay(key)>OVERTIME_START;
+      const recorded=type==='rest'?Number.isFinite(config.restHoursEntries[key]):Number.isFinite(config.overtimeEntries[key])||Number(config.lunchOvertimeEntries[key])>0;
+      const secs=!isFuture?dailyOvertimeSeconds(y,m,d,isToday,c.nowSec):0;
+      if(recorded&&!isFuture)confirmedDays++;
+      if(!isFuture){otTotal+=secs;otMoney+=overtimePay(secs,regularRate,type);}
+      const btn=document.createElement('button');btn.type='button';btn.className='day'+(type==='rest'?' rest':type==='leave'?' leave':'')+(isToday?' today':'')+(config.dayTypes[key]?' changed':'');
+      const num=document.createElement('span');num.className='day-num';num.textContent=d;btn.appendChild(num);
+      if(d===26||d===1){const monthTag=document.createElement('span');monthTag.className='month-mini';monthTag.textContent=`${m}月`;btn.appendChild(monthTag);}
+      const mini=document.createElement('span');mini.className='ot-mini';
+      if(type==='leave'){mini.textContent='例假／休';mini.classList.add('zero');}
+      else if(isFuture){mini.textContent=hasPlan?'已排班':'待上班';mini.classList.add('zero');}
+      else if(type==='rest'&&!hasPlan&&!recorded){mini.textContent='休息日';mini.classList.add('zero');}
+      else if(secs>0||recorded||hasPlan){mini.textContent=fmt(secs/3600,2)+'h';if(isToday&&!recorded)mini.classList.add('live');}
+      else{mini.textContent=type==='rest'?'休息日':'—';mini.classList.add('zero');}
+      btn.appendChild(mini);
+      if(Number(config.lunchOvertimeEntries[key])>0&&type!=='leave'){const tag=document.createElement('span');tag.className='ot-lunch-mini';tag.textContent='🍱';btn.appendChild(tag);}
+      const category=type==='work'?'平常工作日':type==='rest'?'休息日':'例假／休假';
+      btn.title=`${key} ${category} 加班 ${fmt(secs/3600,2)} 小時，點選可編輯`;btn.setAttribute('aria-label',btn.title);
+      btn.onclick=()=>openDayEditor(key);grid.appendChild(btn);
+    }
+    $('calendarOTTotal').textContent=`本期 ${periodLabel(period)}：加班 ${fmt(otTotal/3600,2)} 小時｜估算加班費 ${money(otMoney)}（手動登記 ${confirmedDays} 天）`;
+  }
+  function openDayEditor(key){
+    editingDayKey=key;
+    const [y,m,d]=key.split('-').map(Number),today=taipeiNow(),todayStr=dateKey(today.y,today.m,today.d),type=dayType(y,m,d);
+    const nowSec=today.h*3600+today.mi*60+today.s+today.ms/1000;
+    const recordedEvening=Number.isFinite(config.overtimeEntries[key]);
+    const live=key===todayStr&&!recordedEvening&&type==='work';
+    const eveningHours=recordedEvening?Math.max(0,(config.overtimeEntries[key]-OVERTIME_START)/3600):live?Math.max(0,(Math.min(nowSec,plannedEndForDay(key))-OVERTIME_START)/3600):0;
+    $('dayEditDate').textContent=`${y} 年 ${m} 月 ${d} 日（週${labels[dayOfWeek(y,m,d)]}）`;
+    $('dayTypeSelect').value=type;
+    $('dayPlannedEnd').value=formatClock(type==='rest'?(restEndForDay(key)||OVERTIME_START):plannedEndForDay(key));
+    $('dayRestStart').value=formatClock(restStartForDay(key));$('dayRestPlanEnabled').checked=restEndForDay(key)!==null;
+    $('dayRestHours').value=Number.isFinite(config.restHoursEntries[key])?String(Number((config.restHoursEntries[key]/3600).toFixed(4))):'';
+    $('dayOTHours').value=recordedEvening?String(Number(eveningHours.toFixed(4))):'';
+    $('dayLunchOT').value=Number(config.lunchOvertimeEntries[key])>0?String(Number((config.lunchOvertimeEntries[key]/3600).toFixed(4))):'';
+    $('dayLunchOT').max=(lunchDuration()/3600).toFixed(4);
+    $('dayLunchHelp').textContent=`午休 ${config.breakStart}～${config.breakEnd}；休息日有工作可填 ${fmt(lunchDuration()/3600)}，會把午休也算入全天工時。`;
+    $('dayFormError').textContent='';
+    updateDayTypeFields();updateDayEstimate();
+    $('clearDayOT').hidden=!(recordedEvening||Number(config.lunchOvertimeEntries[key])>0||Number.isFinite(config.restHoursEntries[key]));
+    $('dayModal').hidden=false;document.body.style.overflow='hidden';
+  }
+  function updateDayTypeFields(){
+    const type=$('dayTypeSelect').value,rest=type==='rest',work=type==='work';
+    const now=taipeiNow(),todayStr=dateKey(now.y,now.m,now.d),past=editingDayKey<=todayStr;
+    $('restStartWrap').hidden=!rest;$('restHoursWrap').hidden=!rest;
+    $('dayOTHours').closest('.field').hidden=!work;
+    $('dayPlannedEnd').disabled=type==='leave';$('dayPlannedEnd').min=rest?'00:01':'17:00';
+    $('dayOTHours').disabled=!work||!past;
+    $('dayLunchOT').disabled=type==='leave'||!past||lunchDuration()<=0;
+    $('dayRestHours').disabled=!rest||!past;
+    $('dayRestStart').disabled=!rest;$('dayRestPlanEnabled').disabled=!rest;
+    $('dayOTHelp').textContent='平常日 17:00 後實際加班，可留空依預定下班時間自動結算；輸入 0 表示沒有晚間加班。';
+  }
+  function closeDayEditor(){$('dayModal').hidden=true;editingDayKey='';document.body.style.overflow='';}
+  function updateDayEstimate(){
+    const type=$('dayTypeSelect').value,rate=config.salary/(30*8*3600);
+    const evening=Number($('dayOTHours').value)||0,lunch=Number($('dayLunchOT').value)||0;
+    if(type==='rest'){
+      const manual=$('dayRestHours').value;
+      const start=toSec($('dayRestStart').value||'08:00'),end=toSec($('dayPlannedEnd').value||'17:00'),sch=schedule();
+      const overlap=Math.max(0,Math.min(end,sch.b)-Math.max(start,sch.a));
+      const autoHours=Math.max(0,end-start-overlap+(lunch>0?overlap:0))/3600;
+      const hours=manual!==''?Number(manual):($('dayRestPlanEnabled').checked?autoHours:0);
+      $('dayOTEstimate').textContent=`🟠 休息日${manual!==''?'手動時數':'預計時數'} ${fmt(Math.min(12,Math.max(0,hours)))}h；估算加班費 ${money(overtimePay(Math.min(12,Math.max(0,hours))*3600,rate,'rest'))}（前2h ×1.34、3～8h ×1.67、9～12h ×2.67）`;
+    }else if(type==='work'){
+      $('dayOTEstimate').textContent=`🍱 午休 ${fmt(lunch)}h ＋ 🌙 晚間 ${fmt(evening)}h；手動部分估算加班費 ${money(overtimePay((lunch+evening)*3600,rate,'work'))}，留空的晚間時數會依預定時間自動計費。`;
+    }else $('dayOTEstimate').textContent='例假／休假不自動計算一般加班費。';
+  }
+  const labels=['日','一','二','三','四','五','六'];
+  let selectedWeekdays=[];
+  function renderWeekdayChoices(){const root=$('weekdaySelectors');root.innerHTML='';for(let d=0;d<7;d++){let btn=document.createElement('button');btn.type='button';btn.className='week-chip'+(selectedWeekdays.includes(d)?' selected':'');btn.textContent='週'+labels[d];btn.setAttribute('aria-pressed',selectedWeekdays.includes(d));btn.onclick=()=>{selectedWeekdays=selectedWeekdays.includes(d)?selectedWeekdays.filter(x=>x!==d):[...selectedWeekdays,d];renderWeekdayChoices();};root.appendChild(btn);}}
+  function openSettings(){selectedWeekdays=[...config.weekdays];$('salaryInput').value=config.salary;$('showSalaryInput').checked=!!config.showSalary;$('startInput').value=config.start;$('endInput').value=config.end;$('lunchStart').value=config.breakStart;$('lunchEnd').value=config.breakEnd;$('formError').textContent='';renderWeekdayChoices();$('settingsModal').hidden=false;document.body.style.overflow='hidden';}
+  function closeSettings(){$('settingsModal').hidden=true;document.body.style.overflow='';}
+  function toast(message){let old=$('statusToast');if(old)old.remove();let el=document.createElement('div');el.id='statusToast';el.className='toast';el.textContent=message;document.body.appendChild(el);clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.remove(),2600);}
+  function todayKey(){const t=taipeiNow();return dateKey(t.y,t.m,t.d);}
+  $('savePlannedEnd').addEventListener('click',()=>{
+    const key=todayKey(),t=taipeiNow(),val=$('plannedEndInput').value;
+    const end=val?toSec(val):NaN,kind=dayType(t.y,t.m,t.d);
+    if(kind==='leave'){toast('例假／休假不能直接使用一般加班費，請先在日曆確認類型');return;}
+    const min=kind==='rest'?restStartForDay(key):OVERTIME_START;
+    if(!Number.isFinite(end)||end<min||end>86340||(kind==='rest'&&end<=min)){toast(kind==='rest'?'休息日預計下班必須晚於開始時間':'請輸入 17:00～23:59 的預計下班時間');return;}
+    if(kind==='rest'){config.restDayPlans[key]=end;}else{if(end===OVERTIME_START)delete config.plannedEnds[key];else config.plannedEnds[key]=end;}
+    const saved=saveConfig();calendarRenderMinute='';render();toast(saved?'已儲存：到預定下班時間將自動停止計費':'時間已更新，但瀏覽器可能無法永久保存');
+  });
+  $('stopOT').addEventListener('click',()=>{
+    const c=calculate(new Date());if(!c.working||c.nowSec<OVERTIME_START)return;
+    setOvertimeEnd(todayKey(),Math.min(86399.999,c.nowSec));
+  });
+  $('noOT').addEventListener('click',()=>setOvertimeEnd(todayKey(),OVERTIME_START));
+  $('resumeOT').addEventListener('click',()=>{
+    delete config.overtimeEntries[todayKey()];saveConfig();calendarRenderMinute='';renderCalendar();render();toast('已取消結束紀錄，從 17:00 重新計算');
+  });
+  $('saveOT').addEventListener('click',()=>{
+    const key=$('otDate').value,end=$('otEnd').value,t=taipeiNow(),today=dateKey(t.y,t.m,t.d);
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(key)||!end){toast('請輸入有效日期與實際下班時間');return;}
+    const [y,m,d]=key.split('-').map(Number),val=toSec(end),days=monthLength(y,m);
+    if(d<1||d>days||dateKey(y,m,d)!==key||key>today){toast('日期不可晚於今天');return;}
+    if(!isWorkday(y,m,d)){toast('請先在月曆將這天標記為工作日');return;}
+    if(val<OVERTIME_START){toast('加班結束時間不得早於 17:00');return;}
+    if(key===today&&val>t.h*3600+t.mi*60+t.s){toast('今天的結束時間不可晚於現在');return;}
+    setOvertimeEnd(key,val);
+  });
+  // Populate the correction date on startup; leave it editable for past-day entries.
+  $('otDate').value=todayKey();
+  $('prevMonth').addEventListener('click',()=>shiftCalendarMonth(-1));
+  $('nextMonth').addEventListener('click',()=>shiftCalendarMonth(1));
+  $('returnMonth').addEventListener('click',()=>{const t=taipeiNow(),closing=closingMonthFor(t.y,t.m,t.d);calendarView={y:closing.y,m:closing.m,followToday:true};calendarRenderMinute='';renderCalendar();});
+  $('jumpPayoutPeriod').addEventListener('click',()=>{
+    const c=calculate(new Date());calendarView={y:c.lastCycle.y,m:c.lastCycle.m,followToday:false};calendarRenderMinute='';renderCalendar(c);
+    document.querySelector('[aria-label="本月工作日設定"]').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  $('closeDay').addEventListener('click',closeDayEditor);
+  $('dayModal').addEventListener('click',e=>{if(e.target===$('dayModal'))closeDayEditor();});
+  $('dayTypeSelect').addEventListener('change',()=>{
+    updateDayTypeFields();updateDayEstimate();
+  });
+  $('dayPlannedEnd').addEventListener('input',updateDayEstimate);
+  $('dayRestStart').addEventListener('input',updateDayEstimate);$('dayRestPlanEnabled').addEventListener('change',updateDayEstimate);
+  $('dayRestHours').addEventListener('input',updateDayEstimate);
+  $('dayOTHours').addEventListener('input',updateDayEstimate);
+  $('dayLunchOT').addEventListener('input',updateDayEstimate);
+  $('todayLunchToggle').addEventListener('click',()=>{
+    const t=taipeiNow(),key=dateKey(t.y,t.m,t.d);
+    if(dayType(t.y,t.m,t.d)==='leave'){
+      toast('今天目前是例假／休假，請先在工作日曆確認日期類型');return;
+    }
+    if(lunchDuration()<=0){toast('未設定午休時段，請先到設定調整');return;}
+    const alreadyOn=Number(config.lunchOvertimeEntries[key])>0;
+    if(alreadyOn)delete config.lunchOvertimeEntries[key];
+    else config.lunchOvertimeEntries[key]=lunchDuration();
+    const saved=saveConfig();calendarRenderMinute='';render();
+    toast(saved?(alreadyOn?'已取消今天午休加班':'已啟用今天午休加班，金額立即更新'):(alreadyOn?'已取消，但瀏覽器無法永久儲存':'已啟用，但瀏覽器無法永久儲存'));
+  });
+  $('dayForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const key=editingDayKey,kind=$('dayTypeSelect').value;
+    const raw=$('dayOTHours').value.trim(),lunchRaw=$('dayLunchOT').value.trim(),restRaw=$('dayRestHours').value.trim();
+    const t=taipeiNow(),todayStr=dateKey(t.y,t.m,t.d),nowSec=t.h*3600+t.mi*60+t.s+t.ms/1000;
+    const [y,m,d]=key.split('-').map(Number),val=$('dayPlannedEnd').value;
+    const end=val?toSec(val):NaN,restStart=toSec($('dayRestStart').value||config.start);
+    let error='';
+    const numeric=(s)=>s===''?null:Number(s);
+    const evening=numeric(raw),lunch=numeric(lunchRaw),restHours=numeric(restRaw);
+    if(!key||d<1||d>monthLength(y,m))error='日期無效。';
+    else if(kind==='work'&&(!Number.isFinite(end)||end<OVERTIME_START||end>86340))error='平常日預計下班時間須在 17:00～23:59。';
+    else if(kind==='rest'&&$('dayRestPlanEnabled').checked&&(!Number.isFinite(end)||end<=restStart||end>86340))error='休息日的預定下班時間必須晚於開始時間。';
+    else if(key>todayStr&&(raw!==''||lunchRaw!==''||restRaw!==''))error='未來日期只可安排預計時間，不可預先登記實際工作時數。';
+    else if(raw!==''&&(!Number.isFinite(evening)||evening<0||evening>7))error='平常日晚間加班時數請填 0～7。';
+    else if(lunchRaw!==''&&(!Number.isFinite(lunch)||lunch<0||lunch*3600>lunchDuration()+.01))error='午休加班時數不可超過午休長度。';
+    else if(restRaw!==''&&(!Number.isFinite(restHours)||restHours<0||restHours>12))error='休息日實際工作時數不可超過 12 小時。';
+    else if(kind==='work'&&key===todayStr&&evening!==null&&evening*3600>Math.max(0,nowSec-OVERTIME_START)+.25)error='今天實際晚間加班不能超過已經過的時間。';
+    else if(kind==='rest'&&restRaw!==''&&key===todayStr&&restHours*3600>Math.max(0,nowSec-restStart)+.25)error='今天手動工作時數不可超過從上班時間至今的時長。';
+    if(error){$('dayFormError').textContent=error;return;}
+    const original=defaultDayType(y,m,d);
+    if(kind===original)delete config.dayTypes[key];else config.dayTypes[key]=kind;
+    delete config.overrides[key];
+    if(kind==='work'){
+      if(raw==='')delete config.overtimeEntries[key];else config.overtimeEntries[key]=OVERTIME_START+evening*3600;
+      if(lunchRaw==='')delete config.lunchOvertimeEntries[key];else config.lunchOvertimeEntries[key]=lunch*3600;
+      if(end===OVERTIME_START)delete config.plannedEnds[key];else config.plannedEnds[key]=end;
+    }else if(kind==='rest'){
+      config.restDayStarts[key]=restStart;if($('dayRestPlanEnabled').checked)config.restDayPlans[key]=end;else delete config.restDayPlans[key];
+      if(restRaw==='')delete config.restHoursEntries[key];else config.restHoursEntries[key]=restHours*3600;
+      if(lunchRaw==='')delete config.lunchOvertimeEntries[key];else config.lunchOvertimeEntries[key]=lunch*3600;
+    }
+    const saved=saveConfig();closeDayEditor();calendarRenderMinute='';render();
+    toast(saved?'日期類型、預定時間與加班資料已儲存':'已更新，但目前瀏覽器不允許永久儲存');
+  });
+  $('clearDayOT').addEventListener('click',()=>{
+    if(!editingDayKey)return;
+    delete config.overtimeEntries[editingDayKey];delete config.lunchOvertimeEntries[editingDayKey];delete config.restHoursEntries[editingDayKey];const saved=saveConfig();closeDayEditor();calendarRenderMinute='';renderCalendar();render();
+    toast(saved?'加班紀錄已清除':'已清除，但瀏覽器不允許永久儲存');
+  });
+  $('setupSalaryBanner').addEventListener('click',openSettings);
+  $('settingsBtn').addEventListener('click',openSettings);$('closeBtn').addEventListener('click',closeSettings);
+  $('settingsModal').addEventListener('click',e=>{if(e.target===$('settingsModal'))closeSettings();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('dayModal').hidden)closeDayEditor();else closeSettings();}});
+  $('settingsForm').addEventListener('submit',e=>{
+    e.preventDefault();const salary=Number($('salaryInput').value);
+    const start=$('startInput').value,end=$('endInput').value,a=$('lunchStart').value,b=$('lunchEnd').value;
+    let msg='';if(!Number.isFinite(salary)||salary<0)msg='月薪不可為負數。';
+    else if(!start||!end||!a||!b)msg='請輸入所有上班與休息時間。';
+    else if(toSec(start)>=toSec(end))msg='下班時間必須晚於上班時間（暫不支援跨夜班）。';
+    else if(toSec(end)>OVERTIME_START)msg='正常下班時間不可晚於 17:00；17:00 後屬加班時段。';
+    else if(!(toSec(start)<=toSec(a)&&toSec(a)<=toSec(b)&&toSec(b)<=toSec(end)))msg='午休時間必須在上下班時間內，且休息結束不可早於開始。';
+    else if(selectedWeekdays.length===0)msg='請至少勾選一個每週上班日。';
+    if(msg){$('formError').textContent=msg;return;}
+    config={...config,salary,showSalary:$('showSalaryInput').checked,start,end,breakStart:a,breakEnd:b,weekdays:[...selectedWeekdays].sort()};
+    const saved=saveConfig();closeSettings();calendarRenderMinute='';renderCalendar();render();toast(saved?'設定已儲存在這台手機瀏覽器':'設定已更新，但瀏覽器不允許永久儲存');
+  });
+  render();setInterval(()=>render(),100);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)render();});
+  // Public helper for automated smoke tests. V5.3 uses capped estimated end-times.
+  window.__salaryTimerTest={calculate,overtimePay,overtimeRateAt,taipeiNow,isWorkday,isRestday,dayType,countWorkdays,paidSecondsAt,lunchOvertimeSeconds,dailyOvertimeSeconds,restDaySeconds,restTimeWorkedUntil,renderCalendar,openDayEditor,plannedEndForDay,closingMonthFor,cycleForClosing,cycleForToday,cycleDays,cycleOvertimeStats,cycleBaseSalaryStats,cyclePayStats,lastClosedCycle,payoutDate,payoutLabel};
+})();
+</script>
+</body>
+</html>
