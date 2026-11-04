@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f7fe">
   <meta name="color-scheme" content="light">
-  <title>上班鼓勵器｜V5.8 驢子拉磨動畫版（26～25結算／5日領薪）</title>
+  <title>上班鼓勵器｜V5.9 驢子同步拉磨版（26～25結算／5日領薪）</title>
   <style>
     :root{font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;color:#252947;background:#f7f7fe;--ink:#262b4f;--blue:#3156ce;--muted:#727a96;--line:#e8eaf5;--surface:#fff;--accent:#f05b3f}
     *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 110% -4%,#eeeaff 0,transparent 27rem),radial-gradient(circle at -10% 16%,#fff1e6 0,transparent 16rem),#f7f7fe}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:590px;margin:auto;padding:22px 17px 42px;padding-top:max(22px,env(safe-area-inset-top))}
@@ -78,33 +78,28 @@
     .hero-rate-row{display:grid;grid-template-columns:minmax(0,1fr) 152px;gap:10px;align-items:center;margin-top:10px}
     .hero-rate-row .rate{margin:0;height:auto;min-height:97px;display:flex;flex-direction:column;justify-content:center;min-width:0}
     .hero-rate-row .rate strong{overflow-wrap:anywhere}
-    .donkey-widget{min-width:0;overflow:hidden;background:linear-gradient(160deg,#fff9ec,#f9e7c9);border:1px solid #efdab7;border-radius:17px;padding:6px 5px 7px;box-shadow:0 6px 14px #a9783416}
-    .donkey-scene{position:relative;background:linear-gradient(180deg,#e8f3fb 0%,#fff4e4 70%,#eed9b5 71%);height:93px;overflow:hidden;border-radius:12px}
-    .donkey-scene svg{width:100%;height:100%;display:block;overflow:visible}
+    .donkey-widget{min-width:0;overflow:hidden;background:linear-gradient(160deg,#fffaf0,#f6e7ce);border:1px solid #ebd3ae;border-radius:17px;padding:6px 5px 7px;box-shadow:0 6px 14px #a9783416}
+    .donkey-scene{position:relative;background:linear-gradient(180deg,#dff2fa 0%,#faf2de 55%,#ebd4ac 100%);height:99px;overflow:hidden;border-radius:12px}
+    .donkey-scene svg{width:100%;height:100%;display:block;overflow:hidden}
     .donkey-caption{text-align:center;color:#80522b;font-weight:900;font-size:11px;line-height:1.25;margin-top:5px}
     .donkey-caption small{display:block;font-size:10px;color:#a17047;margin-top:2px;font-weight:650}
-    .donkey-sway{transform-origin:76px 72px;animation:donkeyBob 1.05s ease-in-out infinite}
-    .donkey-front-leg{transform-box:fill-box;transform-origin:50% 0%;animation:donkeyStep .78s ease-in-out infinite}
-    .donkey-back-leg{transform-box:fill-box;transform-origin:50% 0%;animation:donkeyStep .78s ease-in-out infinite reverse}
-    .donkey-tail{transform-box:fill-box;transform-origin:0% 0%;animation:donkeyTail 1.4s ease-in-out infinite}
-    .donkey-ear{transform-box:fill-box;transform-origin:50% 100%;animation:donkeyEar 3.3s ease-in-out infinite}
-    .donkey-grinder{transform-box:fill-box;transform-origin:50% 50%;animation:millStone 3.8s linear infinite}
-    .donkey-rod{animation:donkeyRod 1.05s ease-in-out infinite;transform-origin:120px 71px}
-    .donkey-sweat{animation:donkeySweat 2.1s ease-out infinite;opacity:0}
-    .donkey-sweat.d2{animation-delay:1.05s}
-    .donkey-dust{animation:donkeyDust 1.5s ease-in-out infinite;opacity:0}
-    .donkey-blink{transform-box:fill-box;transform-origin:50% 50%;animation:donkeyBlink 4s linear infinite}
-    @keyframes donkeyBob{0%,100%{transform:translate(0,0)}50%{transform:translate(1px,2px)}}
-    @keyframes donkeyStep{0%,100%{transform:rotate(-11deg)}50%{transform:rotate(11deg)}}
-    @keyframes donkeyTail{0%,100%{transform:rotate(7deg)}50%{transform:rotate(-21deg)}}
-    @keyframes donkeyEar{0%,92%,100%{transform:rotate(0)}95%{transform:rotate(5deg)}}
-    @keyframes millStone{to{transform:rotate(360deg)}}
-    @keyframes donkeyRod{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
-    @keyframes donkeySweat{0%{transform:translateY(-3px);opacity:0}20%{opacity:1}85%{opacity:0.7}100%{transform:translateY(18px);opacity:0}}
-    @keyframes donkeyDust{0%{transform:translateX(0) scale(.4);opacity:0}35%{opacity:.7}100%{transform:translateX(-12px) scale(1.3);opacity:0}}
-    @keyframes donkeyBlink{0%,43%,47%,100%{transform:scaleY(1)}45%{transform:scaleY(.14)}}
-    @media(max-width:420px){.hero-rate-row{grid-template-columns:minmax(0,1fr) 141px;gap:8px}.donkey-scene{height:88px}.donkey-widget{padding:5px 4px 6px}}
-    @media(max-width:360px){.hero-rate-row{grid-template-columns:minmax(0,1fr) 128px;gap:6px}.donkey-caption{font-size:10px}.donkey-caption small{font-size:9px}}
+    /* One rigid axle: donkey + tether turn around the same center. */
+    .donkey-orbit,.donkey-grooves{transform-box:view-box;transform-origin:120px 80px;animation:donkeyCircle 12s linear infinite}
+    .donkey-trot-a,.donkey-trot-b{transform-box:fill-box;transform-origin:center;animation:donkeyTrot .75s ease-in-out infinite alternate}
+    .donkey-trot-b{animation-direction:alternate-reverse}
+    .donkey-torso{transform-box:fill-box;transform-origin:center;animation:donkeyBreathe .75s ease-in-out infinite}
+    .donkey-sad-tail{transform-box:fill-box;transform-origin:50% 0%;animation:donkeySwish 2.3s ease-in-out infinite}
+    .donkey-sweat{animation:donkeySweat 2.4s ease-out infinite;opacity:0}
+    .donkey-sweat.d2{animation-delay:1.2s}
+    .donkey-blink{transform-box:fill-box;transform-origin:center;animation:donkeyBlink 4.8s linear infinite}
+    @keyframes donkeyCircle{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    @keyframes donkeyTrot{0%{transform:translateY(-3px)}100%{transform:translateY(3px)}}
+    @keyframes donkeyBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}
+    @keyframes donkeySwish{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(10deg)}}
+    @keyframes donkeySweat{0%{transform:translate(0,-3px);opacity:0}20%{opacity:.9}80%{opacity:.5}100%{transform:translate(4px,13px);opacity:0}}
+    @keyframes donkeyBlink{0%,40%,44%,100%{transform:scaleY(1)}42%{transform:scaleY(.12)}}
+    @media(max-width:420px){.hero-rate-row{grid-template-columns:minmax(0,1fr) 148px;gap:8px}.donkey-scene{height:93px}.donkey-widget{padding:5px 4px 6px}}
+    @media(max-width:360px){.hero-rate-row{grid-template-columns:minmax(0,1fr) 134px;gap:6px}.donkey-scene{height:86px}.donkey-caption{font-size:10px}.donkey-caption small{font-size:9px}}
     @media(prefers-reduced-motion:reduce){.donkey-widget *{animation:none!important}}
 </style>
 </head>
@@ -122,63 +117,65 @@
     <div class="amount"><span class="currency">NT$</span><span id="todayMoney">0.0000</span></div>
 <div class="hero-rate-row">
       <div class="rate"><span>⚡ 現在賺錢速度</span><strong id="secondRate">NT$ 0.0000 / 秒</strong></div>
-      <div class="donkey-widget" aria-label="可愛驢子拉石磨，踏步、流汗、磨盤旋轉的動畫">
+      <div class="donkey-widget" aria-label="驢子繞著石磨走，拉桿和磨盤同步旋轉的動畫">
         <div class="donkey-scene" aria-hidden="true">
-          <svg viewBox="0 0 200 135" role="img" aria-label="疲憊的小驢拉磨">
+          <svg viewBox="0 0 240 160" role="img" aria-label="疲累可愛的小驢繞石磨拉磨">
             <defs>
-              <linearGradient id="donkeyFur" x1="0" y1="0" x2="0.9" y2="1"><stop stop-color="#ad8161"/><stop offset=".52" stop-color="#8f674e"/><stop offset="1" stop-color="#6b4a3c"/></linearGradient>
-              <linearGradient id="donkeyMuzzle" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0dc"/><stop offset="1" stop-color="#d8b9a3"/></linearGradient>
-              <linearGradient id="stoneSide" x1="0" y1="0" x2="0.9" y2="1"><stop stop-color="#c5c0b8"/><stop offset=".55" stop-color="#888987"/><stop offset="1" stop-color="#686e72"/></linearGradient>
-              <linearGradient id="millTop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ddd8d0"/><stop offset="1" stop-color="#898e90"/></linearGradient>
+              <radialGradient id="newDonkeyFur"><stop stop-color="#ba8b66"/><stop offset=".72" stop-color="#956a4c"/><stop offset="1" stop-color="#74503b"/></radialGradient>
+              <linearGradient id="newMuzzle" x2="0" y2="1"><stop stop-color="#fff2e2"/><stop offset="1" stop-color="#cfaa8c"/></linearGradient>
+              <radialGradient id="newStone"><stop stop-color="#e6e4dd"/><stop offset=".67" stop-color="#b6b4ae"/><stop offset="1" stop-color="#868c8c"/></radialGradient>
+              <linearGradient id="newWood" x2="0" y2="1"><stop stop-color="#bb9164"/><stop offset="1" stop-color="#6e4d33"/></linearGradient>
             </defs>
-            <!-- stone courtyard and circular mill walking path -->
-            <ellipse cx="105" cy="113" rx="93" ry="15" fill="#d3b98b" opacity=".58"/>
-            <ellipse cx="119" cy="110" rx="74" ry="13" stroke="#bca17a" stroke-width="2" stroke-dasharray="3 6" fill="none" opacity=".7"/>
-            <path d="M4 114q16-6 36-2 M160 116q17-5 33 0" stroke="#cbb18b" stroke-width="2" fill="none"/>
-            <!-- grinding stone base -->
-            <ellipse cx="152" cy="111" rx="40" ry="11" fill="#8e7f6e" opacity=".25"/>
-            <path d="M116 87 Q116 75 152 75 Q189 75 189 87 L189 109 Q188 119 152 120 Q116 119 116 109Z" fill="url(#stoneSide)" stroke="#7c7f7d" stroke-width="1.5"/>
-            <path d="M116 88 C120 101 184 103 189 88" stroke="#747d80" stroke-width="2" opacity=".7" fill="none"/>
-            <ellipse cx="152" cy="86" rx="37" ry="14" fill="url(#millTop)" stroke="#777d7e" stroke-width="2"/>
-            <g class="donkey-grinder">
-              <path d="M152 86l30 3 M152 86l-24-7 M152 86l-5 12 M152 86l11-10 M152 86l-23 8" stroke="#777e7d" stroke-width="3" opacity=".67" stroke-linecap="round"/>
-              <ellipse cx="152" cy="86" rx="9" ry="3" fill="#797f81"/>
+            <ellipse cx="121" cy="90" rx="108" ry="55" fill="#f0dfbe" opacity=".76"/>
+            <circle cx="120" cy="80" r="48" fill="none" stroke="#c8aa7a" stroke-width="6" opacity=".42"/>
+            <circle cx="120" cy="80" r="48" fill="none" stroke="#faedd7" stroke-width="2.5" stroke-dasharray="3 9" opacity=".9"/>
+            <g opacity=".45" fill="#c6a475"><ellipse cx="19" cy="123" rx="5" ry="2"/><ellipse cx="216" cy="38" rx="7" ry="2"/><ellipse cx="204" cy="137" rx="4" ry="2"/></g>
+            <!-- A low circular millstone seen from above: the grooves and the lever share the cycle. -->
+            <ellipse cx="120" cy="88" rx="33" ry="31" fill="#8e8d85" opacity=".25"/>
+            <circle cx="120" cy="82" r="30" fill="#777d80" stroke="#6e7477" stroke-width="2"/>
+            <circle cx="120" cy="77" r="30" fill="url(#newStone)" stroke="#989d9d" stroke-width="2"/>
+            <circle cx="120" cy="77" r="24" fill="none" stroke="#d9d7d0" stroke-width="1.5" opacity=".9"/>
+            <g class="donkey-grooves" stroke="#949999" stroke-linecap="round" fill="none" opacity=".72">
+              <path d="M120 80 L142 68 M120 80 L99 65 M120 80 L116 102 M120 80 L139 92 M120 80 L98 88" stroke-width="3"/>
             </g>
-            <!-- long wooden yoke linked to harness -->
-            <g class="donkey-rod"><path d="M96 66 L147 82" stroke="#735038" stroke-width="6" stroke-linecap="round"/><path d="M99 65 L146 80" stroke="#bd9261" stroke-width="2.6" stroke-linecap="round"/></g>
-            <!-- working donkey with animated legs, long ears and soft colored coat -->
-            <g class="donkey-sway">
-              <g class="donkey-back-leg"><path d="M91 85 L96 108 L92 119" fill="none" stroke="#654936" stroke-width="8" stroke-linecap="round"/><path d="M89 119l8 0" stroke="#3b342f" stroke-width="5" stroke-linecap="round"/></g>
-              <g class="donkey-front-leg"><path d="M60 86 L59 105 L57 119" fill="none" stroke="#76523a" stroke-width="8" stroke-linecap="round"/><path d="M54 119l8 0" stroke="#3b342f" stroke-width="5" stroke-linecap="round"/></g>
-              <!-- harness and tail -->
-              <g class="donkey-tail"><path d="M107 67 Q119 78 115 91" fill="none" stroke="#634739" stroke-width="5" stroke-linecap="round"/><path d="M115 90l-3 8 7-5" fill="#40332e"/></g>
-              <path d="M59 53 Q80 42 101 54 Q114 60 109 77 Q103 93 84 90 L59 85 Q49 78 52 67Z" fill="url(#donkeyFur)" stroke="#75523f" stroke-width="1.6"/>
-              <path d="M76 56 Q91 50 101 57" stroke="#c39c7c" stroke-width="5" opacity=".6" fill="none" stroke-linecap="round"/>
-              <path d="M98 58L103 86" stroke="#cf5d4b" stroke-width="5" opacity=".9"/><circle cx="101" cy="69" r="4" fill="#f0c988"/>
-              <g class="donkey-front-leg"><path d="M68 84 L70 103 L65 119" fill="none" stroke="#90684c" stroke-width="9" stroke-linecap="round"/><path d="M62 119h8" stroke="#47362f" stroke-width="5" stroke-linecap="round"/></g>
-              <g class="donkey-back-leg"><path d="M99 84 L100 104 L102 119" fill="none" stroke="#77533c" stroke-width="8" stroke-linecap="round"/><path d="M99 119h8" stroke="#45352f" stroke-width="5" stroke-linecap="round"/></g>
-              <!-- neck, head, donkey ears -->
-              <path d="M58 62 Q55 50 46 43 L33 47 Q43 72 52 78Z" fill="url(#donkeyFur)" stroke="#765340" stroke-width="1"/>
-              <g class="donkey-ear"><path d="M32 44Q20 20 26 7Q40 19 43 43Z" fill="#806047" stroke="#654b3c" stroke-width="1.5"/><path d="M33 40Q25 22 27 14Q35 25 38 42" fill="#c88e8e"/></g>
-              <g class="donkey-ear"><path d="M44 43Q40 12 50 4Q59 20 55 48Z" fill="#8e6852" stroke="#654b3c" stroke-width="1.5"/><path d="M48 41Q45 20 50 13Q54 26 52 43" fill="#cb9597"/></g>
-              <path d="M28 43 Q44 38 53 50 Q57 62 46 73 L27 73 Q17 63 28 43Z" fill="url(#donkeyFur)" stroke="#70503f" stroke-width="1.5"/>
-              <path d="M29 60Q14 57 14 70 Q14 81 30 82Q39 78 42 67Z" fill="url(#donkeyMuzzle)" stroke="#b79b8b" stroke-width="1.4"/>
-              <ellipse cx="20" cy="70" rx="2.3" ry="1.7" fill="#775e55"/>
-              <path d="M31 75q7 5 12-2" stroke="#b7847e" fill="none" stroke-width="1.5"/>
-              <path d="M29 51Q35 47 40 50" fill="none" stroke="#563b30" stroke-width="2.8" stroke-linecap="round"/>
-              <g class="donkey-blink"><path d="M30 55 Q35 60 41 54" fill="none" stroke="#41322c" stroke-width="2.7" stroke-linecap="round"/><path d="M34 59l1 2" stroke="#58443d" stroke-width="1"/></g>
-              <path d="M43 42l6 3 1-6 4 7" fill="none" stroke="#624334" stroke-width="2"/>
-              <!-- tiny necktie = employee -->
-              <path d="M51 68l6 1 -1 8 -4 6 -3-6Z" fill="#426ba0" stroke="#2b567f" stroke-width="1"/>
+            <!-- A single rigid wooden arm connects the mill axle to the donkey harness. -->
+            <g class="donkey-orbit">
+              <path d="M120 80L72 80" stroke="#64442d" stroke-width="8" stroke-linecap="round"/>
+              <path d="M119 77L74 77" stroke="url(#newWood)" stroke-width="4" stroke-linecap="round"/>
+              <g transform="translate(72 80)">
+                <ellipse cx="0" cy="4" rx="19" ry="28" fill="#73513d" opacity=".14"/>
+                <!-- diagonal pairs step in opposition -->
+                <g class="donkey-trot-a" fill="#664735" stroke="#664735" stroke-width="2">
+                  <path d="M-14-14L-21-23L-19-29L-13-29L-9-15Z"/><path d="M12 13L18 20L17 27L11 27L8 15Z"/>
+                </g>
+                <g class="donkey-trot-b" fill="#7e563d" stroke="#6c4b37" stroke-width="2">
+                  <path d="M13-14L21-23L19-30L13-29L8-15Z"/><path d="M-13 12L-19 20L-18 27L-12 27L-9 13Z"/>
+                </g>
+                <g class="donkey-sad-tail"><path d="M0 18Q9 31 0 38" fill="none" stroke="#76503d" stroke-width="4" stroke-linecap="round"/><path d="M-3 34Q2 39-1 42L-4 40Z" fill="#49372e"/></g>
+                <g class="donkey-torso">
+                  <ellipse cx="0" cy="3" rx="16" ry="24" fill="url(#newDonkeyFur)" stroke="#74513b" stroke-width="1.6"/>
+                  <path d="M-6-11Q0-16 6-11 M-9 11Q0 17 9 11" stroke="#d0a684" stroke-width="3" opacity=".45" fill="none" stroke-linecap="round"/>
+                  <path d="M-14 -1Q0 -7 14 -1" stroke="#445777" stroke-width="5" fill="none"/><circle cx="0" cy="-3" r="3.4" fill="#d3b15d"/>
+                </g>
+                <path d="M-9-25Q-20-41-16-52Q-4-44-4-27Z" fill="#8c654e" stroke="#6b4d3a" stroke-width="1.6"/>
+                <path d="M-10-29Q-17-40-15-47" stroke="#d99d9b" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <path d="M9-25Q20-42 16-52Q4-44 4-27Z" fill="#916d57" stroke="#6b4d3a" stroke-width="1.6"/>
+                <path d="M10-29Q17-41 16-47" stroke="#d99d9b" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <ellipse cx="0" cy="-23" rx="11.5" ry="15" fill="url(#newDonkeyFur)" stroke="#75523e" stroke-width="1.5"/>
+                <ellipse cx="0" cy="-34" rx="10.5" ry="7.8" fill="url(#newMuzzle)" stroke="#b99b86" stroke-width="1.1"/>
+                <ellipse cx="-4.3" cy="-34.5" rx="1.1" ry="1.7" fill="#826451"/><ellipse cx="4.3" cy="-34.5" rx="1.1" ry="1.7" fill="#826451"/>
+                <g class="donkey-blink" fill="none" stroke="#43342d" stroke-width="2" stroke-linecap="round"><path d="M-9 -24q4-3 7 0 M2-24q4-3 7 0"/></g>
+                <path d="M-6-15L0-8 6-15" fill="#35689d"/><path d="M0-7L-3 1 1 4 3 1Z" fill="#3e78aa"/>
+                <g class="donkey-sweat"><path d="M18-28q-4 6 0 8q4-2 0-8" fill="#50b7db"/></g>
+                <g class="donkey-sweat d2"><path d="M-20-19q-3 6 0 8q4-3 0-8" fill="#6cc6df"/></g>
+              </g>
             </g>
-            <!-- tired sweat + footstep dust -->
-            <g class="donkey-sweat" fill="#6dbde0"><path d="M17 39q-5 7 0 9q5-2 0-9"/></g>
-            <g class="donkey-sweat d2" fill="#85ccea"><path d="M61 22q-4 6 0 8q4-2 0-8"/></g>
-            <g class="donkey-dust" fill="#e7d7bc"><ellipse cx="72" cy="120" rx="7" ry="2.5"/><ellipse cx="85" cy="119" rx="6" ry="2"/></g>
-            <path d="M160 21l2-5m6 12 7-2" stroke="#fff5db" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+            <!-- Mill axle sits above the rotating arm pivot. -->
+            <circle cx="120" cy="80" r="8" fill="#5e6466"/><circle cx="120" cy="80" r="4" fill="#dad4c3"/>
+            <path d="M18 22l3-7 M24 23l5-5" fill="none" stroke="#ffffff" stroke-width="2.5" opacity=".55" stroke-linecap="round"/>
           </svg>
         </div>
-        <div class="donkey-caption">🫏 驢子努力拉磨中<small>磨的是青春，賺的是時薪</small></div>
+        <div class="donkey-caption">🫏 驢子繞圈拉磨中<small>磨一圈，薪水又多一點</small></div>
       </div>
     </div>
     <div class="pep" id="encouragement">薪水不是等下班才出現，每一秒都算數！</div>
