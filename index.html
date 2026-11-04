@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f7fe">
   <meta name="color-scheme" content="light">
-  <title>上班鼓勵器｜V5.9 驢子同步拉磨版（26～25結算／5日領薪）</title>
+  <title>上班鼓勵器｜V5.10 驢子耳朵定位修正版（26～25結算／5日領薪）</title>
   <style>
     :root{font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;color:#252947;background:#f7f7fe;--ink:#262b4f;--blue:#3156ce;--muted:#727a96;--line:#e8eaf5;--surface:#fff;--accent:#f05b3f}
     *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 110% -4%,#eeeaff 0,transparent 27rem),radial-gradient(circle at -10% 16%,#fff1e6 0,transparent 16rem),#f7f7fe}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:590px;margin:auto;padding:22px 17px 42px;padding-top:max(22px,env(safe-area-inset-top))}
@@ -157,14 +157,17 @@
                   <path d="M-6-11Q0-16 6-11 M-9 11Q0 17 9 11" stroke="#d0a684" stroke-width="3" opacity=".45" fill="none" stroke-linecap="round"/>
                   <path d="M-14 -1Q0 -7 14 -1" stroke="#445777" stroke-width="5" fill="none"/><circle cx="0" cy="-3" r="3.4" fill="#d3b15d"/>
                 </g>
-                <path d="M-9-25Q-20-41-16-52Q-4-44-4-27Z" fill="#8c654e" stroke="#6b4d3a" stroke-width="1.6"/>
-                <path d="M-10-29Q-17-40-15-47" stroke="#d99d9b" stroke-width="3" stroke-linecap="round" fill="none"/>
-                <path d="M9-25Q20-42 16-52Q4-44 4-27Z" fill="#916d57" stroke="#6b4d3a" stroke-width="1.6"/>
-                <path d="M10-29Q17-41 16-47" stroke="#d99d9b" stroke-width="3" stroke-linecap="round" fill="none"/>
-                <ellipse cx="0" cy="-23" rx="11.5" ry="15" fill="url(#newDonkeyFur)" stroke="#75523e" stroke-width="1.5"/>
-                <ellipse cx="0" cy="-34" rx="10.5" ry="7.8" fill="url(#newMuzzle)" stroke="#b99b86" stroke-width="1.1"/>
-                <ellipse cx="-4.3" cy="-34.5" rx="1.1" ry="1.7" fill="#826451"/><ellipse cx="4.3" cy="-34.5" rx="1.1" ry="1.7" fill="#826451"/>
-                <g class="donkey-blink" fill="none" stroke="#43342d" stroke-width="2" stroke-linecap="round"><path d="M-9 -24q4-3 7 0 M2-24q4-3 7 0"/></g>
+                <!-- Ears grow behind the skull, towards the torso instead of in front of the nose. -->
+                <path d="M-9-16 C-17-19-24-19-29-26 C-24-32-15-29-9-23Z" fill="#91664d" stroke="#664b3b" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M-13-20 Q-21-26-26-26" stroke="#dca6a2" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <path d="M9-16 C17-19 24-19 29-26 C24-32 15-29 9-23Z" fill="#91664d" stroke="#664b3b" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M13-20 Q21-26 26-26" stroke="#dca6a2" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <!-- Forehead and eyes are behind the extended muzzle. -->
+                <ellipse cx="0" cy="-25" rx="12" ry="15.5" fill="url(#newDonkeyFur)" stroke="#75523e" stroke-width="1.5"/>
+                <path d="M-6-34 Q0-37 6-34" stroke="#d9ab86" stroke-width="2" fill="none" opacity=".75"/>
+                <g class="donkey-blink" fill="none" stroke="#43342d" stroke-width="2" stroke-linecap="round"><path d="M-9 -29q4-3 7 0 M2-29q4-3 7 0"/></g>
+                <path d="M-7-35 Q-9-42-7-47 Q-5-51 0-51 Q5-51 7-47 Q9-42 7-35Z" fill="url(#newMuzzle)" stroke="#b99b86" stroke-width="1.1"/>
+                <ellipse cx="-3.2" cy="-46" rx="1.3" ry="1.8" fill="#826451"/><ellipse cx="3.2" cy="-46" rx="1.3" ry="1.8" fill="#826451"/>
                 <path d="M-6-15L0-8 6-15" fill="#35689d"/><path d="M0-7L-3 1 1 4 3 1Z" fill="#3e78aa"/>
                 <g class="donkey-sweat"><path d="M18-28q-4 6 0 8q4-2 0-8" fill="#50b7db"/></g>
                 <g class="donkey-sweat d2"><path d="M-20-19q-3 6 0 8q4-3 0-8" fill="#6cc6df"/></g>
