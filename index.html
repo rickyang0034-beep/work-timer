@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f7fe">
   <meta name="color-scheme" content="light">
-  <title>上班鼓勵器｜V5.10 驢子耳朵定位修正版（26～25結算／5日領薪）</title>
+  <title>上班鼓勵器｜V5.11.1 設定修正版｜輪播標語＋精簡加班總覽（26～25結算／5日領薪）</title>
   <style>
     :root{font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;color:#252947;background:#f7f7fe;--ink:#262b4f;--blue:#3156ce;--muted:#727a96;--line:#e8eaf5;--surface:#fff;--accent:#f05b3f}
     *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 110% -4%,#eeeaff 0,transparent 27rem),radial-gradient(circle at -10% 16%,#fff1e6 0,transparent 16rem),#f7f7fe}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:590px;margin:auto;padding:22px 17px 42px;padding-top:max(22px,env(safe-area-inset-top))}
@@ -157,17 +157,17 @@
                   <path d="M-6-11Q0-16 6-11 M-9 11Q0 17 9 11" stroke="#d0a684" stroke-width="3" opacity=".45" fill="none" stroke-linecap="round"/>
                   <path d="M-14 -1Q0 -7 14 -1" stroke="#445777" stroke-width="5" fill="none"/><circle cx="0" cy="-3" r="3.4" fill="#d3b15d"/>
                 </g>
-                <!-- Ears grow behind the skull, towards the torso instead of in front of the nose. -->
+                <!-- Ears are attached at the REAR of the skull (toward the torso), not sticking out in front of the nose. -->
                 <path d="M-9-16 C-17-19-24-19-29-26 C-24-32-15-29-9-23Z" fill="#91664d" stroke="#664b3b" stroke-width="1.8" stroke-linejoin="round"/>
                 <path d="M-13-20 Q-21-26-26-26" stroke="#dca6a2" stroke-width="3" stroke-linecap="round" fill="none"/>
                 <path d="M9-16 C17-19 24-19 29-26 C24-32 15-29 9-23Z" fill="#91664d" stroke="#664b3b" stroke-width="1.8" stroke-linejoin="round"/>
                 <path d="M13-20 Q21-26 26-26" stroke="#dca6a2" stroke-width="3" stroke-linecap="round" fill="none"/>
-                <!-- Forehead and eyes are behind the extended muzzle. -->
+                <!-- Forehead and eyes sit between ears and the forward-pointing muzzle. -->
                 <ellipse cx="0" cy="-25" rx="12" ry="15.5" fill="url(#newDonkeyFur)" stroke="#75523e" stroke-width="1.5"/>
                 <path d="M-6-34 Q0-37 6-34" stroke="#d9ab86" stroke-width="2" fill="none" opacity=".75"/>
                 <g class="donkey-blink" fill="none" stroke="#43342d" stroke-width="2" stroke-linecap="round"><path d="M-9 -29q4-3 7 0 M2-29q4-3 7 0"/></g>
-                <path d="M-7-35 Q-9-42-7-47 Q-5-51 0-51 Q5-51 7-47 Q9-42 7-35Z" fill="url(#newMuzzle)" stroke="#b99b86" stroke-width="1.1"/>
-                <ellipse cx="-3.2" cy="-46" rx="1.3" ry="1.8" fill="#826451"/><ellipse cx="3.2" cy="-46" rx="1.3" ry="1.8" fill="#826451"/>
+                <ellipse cx="0" cy="-42" rx="11.5" ry="8.5" fill="url(#newMuzzle)" stroke="#b99b86" stroke-width="1.1"/>
+                <ellipse cx="-4.3" cy="-44" rx="1.3" ry="1.8" fill="#826451"/><ellipse cx="4.3" cy="-44" rx="1.3" ry="1.8" fill="#826451"/>
                 <path d="M-6-15L0-8 6-15" fill="#35689d"/><path d="M0-7L-3 1 1 4 3 1Z" fill="#3e78aa"/>
                 <g class="donkey-sweat"><path d="M18-28q-4 6 0 8q4-2 0-8" fill="#50b7db"/></g>
                 <g class="donkey-sweat d2"><path d="M-20-19q-3 6 0 8q4-3 0-8" fill="#6cc6df"/></g>
@@ -208,14 +208,10 @@
     <div class="section-head"><b>正常月薪完成進度</b><span class="strong-blue" id="monthPercent">0%</span></div>
     <div class="progress-text" id="cycleHours">已完成 0 / 排定 0 小時；進度依本期正常工時計算</div>
     <div class="track"><div class="fill" id="monthProgress"></div></div>
-    <div class="salary-breakdown hide-home">
-      <div class="salary-cell"><small>本期已完成基本薪資（進度分攤）</small><b id="monthMoney">NT$ 0.00</b></div>
-      <div class="salary-cell"><small>本期已累積加班費</small><b id="otMonthMoney">NT$ 0.00</b><div class="minor" id="cycleStatsLabel">加班 0.00 小時</div></div>
+    <div class="salary-breakdown" id="otSummaryOnly">
+      <div class="salary-cell"><small>本期加班總時數</small><b id="cycleOTHours">0.00 小時</b><div class="minor">26 日～25 日累計</div></div>
+      <div class="salary-cell"><small>本期加班總金額</small><b id="cycleOTMoney">NT$ 0.00</b><div class="minor" id="cycleStatsLabel">含午休／晚間／休息日</div></div>
     </div>
-    <div class="pay-result"><div class="pay-kicker">📈 本期目前已累積估算（基本薪資進度＋已計加班）</div><div class="pay-big" id="accruedGross">NT$ 0.00</div><div class="pay-sub">此數字是工作鼓勵進度，不是當下可領或正式應發金額。</div></div>
-    <div class="pay-result highlight"><div class="pay-kicker">💰 本期完整月薪＋截至目前加班費（預估發薪總額）</div><div class="pay-big" id="forecastGross">NT$ 0.00</div><div class="pay-sub" id="forecastNote">預計次月 5 日發薪；後續加班、請假、獎金與扣款會影響實際金額。</div></div>
-    <div class="last-payout hide-home"><div class="pay-kicker" id="lastPayoutTitle">🗓️ 最近一期已結算（5日領薪參考）</div><div class="stat-value" id="lastPayoutGross">NT$ 0.00</div><div class="pay-sub" id="lastPayoutDetail">已結算期金額，方便 5 日領薪前核對。</div><button type="button" id="jumpPayoutPeriod" class="jump-payout">在日曆查看這一期與補登加班</button></div>
-    <p class="pay-forecast-explain hide-home">本期進度以 <b>26 日～25 日</b> 排定正常工時為分母，完成後基本薪資進度達 100%，對應完整月薪；<b>加班時薪</b>仍固定月薪 ÷ 30 ÷ 8，並依每日加班倍率另算。估算為<b>未扣款、未加獎金的金額</b>，不代表實領金額。</p>
     <div class="divider" style="margin:20px 0 15px"></div>
     <div class="stats">
       <div class="stat"><div class="stat-label">公司換算時薪（月薪÷30÷8）</div><div class="stat-value sm" id="hourWage">NT$ 0.00</div></div>
@@ -264,7 +260,7 @@
     <div class="ot-calendar-total" id="calendarOTTotal">本期加班合計 0.00 小時</div>
     <div class="warning" id="manualWarning" hidden></div>
   </section>
-  <p class="foot">時薪＝月薪 ÷30÷8；每日薪資＝月薪 ÷30（不是時薪）。今日逐秒計時僅為鼓勵用換算；本期完整月薪進度依 26～25 日排定正常工作時段分攤至 100%，不是每天月薪÷30累積。<br>平常日午休及晚間加班按當日合計前 2h ×1.34、其後 ×1.67；休息日出勤前 2h ×1.34、3～8h ×1.67、9～12h ×2.67。倍率為方便估算的近似值，不等同法定精確分數。<br>儲存預定下班時間後，計時到點自動停止；休息日要先在日曆安排出勤。星期日預設例假日，不自動以休息日倍率計算，國定假日及特殊變形工時請另行核對法定分類。<br>系統依手機日期時間重算，離線可用；每位同事的薪資及加班紀錄只儲存在各自裝置的瀏覽器內，分享此檔案不會包含個人設定。基本月薪進度和加班費統一按上月 26 日～當月 25 日結算；預估次月 5 日領薪。勞健保、稅款、請假、獎金及其他薪資項目須另核對；本程式不是正式打卡與薪資結算依據。</p>
+
 </main>
 <div class="modal" id="dayModal" hidden role="dialog" aria-modal="true" aria-labelledby="dayModalTitle">
   <div class="sheet">
@@ -319,6 +315,33 @@
   const STORAGE_KEY='yidong_colleague_salary_v53'; // 與先前同事分享版共用本機儲存設定
   const defaults={salary:0,start:'08:00',end:'17:00',breakStart:'12:00',breakEnd:'13:00',weekdays:[1,2,3,4,5],mode:'auto',fixedDays:22,showSalary:false,overrides:{},overtimeEntries:{},lunchOvertimeEntries:{},plannedEnds:{},dayTypes:{},restDayPlans:{},restDayStarts:{},restHoursEntries:{}};
   const $=id=>document.getElementById(id);
+  // 網路常見上班族勵志／幽默文案主題整理後改寫，供主畫面輪播使用。
+  const ENCOURAGEMENTS=[
+    "💪 每秒都在累積，今天的努力會變成月底的底氣。",
+    "✨ 上班先撐住，薪水和下班都會來。",
+    "🧧 存摺不會一夜暴富，但會一秒一秒變厚。",
+    "☕ 先把今天顧好，下班才有真正的自由。",
+    "😎 拿多少錢做多少事，穩穩做也很厲害。",
+    "🚶 慢慢做沒關係，今天有前進就算贏。",
+    "🌤️ 今天不一定輕鬆，但可以很踏實。",
+    "🎯 先完成眼前一件事，比空想一百件更有用。",
+    "💼 你不是混日子，你是在把生活撐起來。",
+    "📈 現在撐住的每一秒，都是下個目標的材料。",
+    "🔥 不必燃燒自己，穩定輸出就是高手。",
+    "🪙 薪水像磨盤，一圈一圈慢慢滾進來。",
+    "😌 今天先別想太遠，先把這一小時做好。",
+    "🛠️ 工作不一定浪漫，但能把日子修得更穩。",
+    "🌈 大笑一下再繼續，今天還是可以好好過。",
+    "🧠 精力留給重要的事，下班才有心情生活。",
+    "🐴 社畜也有尊嚴：準時、穩定、把事情做好。",
+    "📅 不怕今天忙，只怕月底看不到成果；現在就在累積。",
+    "🪫 累了就放慢，不要放棄；進度還是在前進。",
+    "🫡 今天來上班，不是輸給生活，是在照顧生活。",
+    "💸 每一秒不是白過，是在幫未來買一點安心。",
+    "🥹 先把班上完，夢想和休息都排在後面等你。",
+    "🚀 不用衝第一，穩穩到站也很了不起。",
+    "🌟 今天再撐一下，明天的自己會感謝現在的你。"
+  ];
   let config=loadConfig();let currentMonthKey='';let toastTimer;let calendarView=null;let calendarRenderMinute='';let editingDayKey='';let lastPlanInputKey='';
   function loadConfig(){try{let o=JSON.parse(localStorage.getItem(STORAGE_KEY));if(o&&typeof o==='object')return {...defaults,...o,overrides:o.overrides&&typeof o.overrides==='object'?o.overrides:{},weekdays:Array.isArray(o.weekdays)?o.weekdays:defaults.weekdays,overtimeEntries:o.overtimeEntries&&typeof o.overtimeEntries==='object'?o.overtimeEntries:{},lunchOvertimeEntries:o.lunchOvertimeEntries&&typeof o.lunchOvertimeEntries==='object'?o.lunchOvertimeEntries:{},plannedEnds:o.plannedEnds&&typeof o.plannedEnds==='object'?o.plannedEnds:{},dayTypes:o.dayTypes&&typeof o.dayTypes==='object'?o.dayTypes:{},restDayPlans:o.restDayPlans&&typeof o.restDayPlans==='object'?o.restDayPlans:{},restDayStarts:o.restDayStarts&&typeof o.restDayStarts==='object'?o.restDayStarts:{},restHoursEntries:o.restHoursEntries&&typeof o.restHoursEntries==='object'?o.restHoursEntries:{}};}catch(e){}return {...defaults,overrides:{},overtimeEntries:{},lunchOvertimeEntries:{},plannedEnds:{},dayTypes:{},restDayPlans:{},restDayStarts:{},restHoursEntries:{},weekdays:[1,2,3,4,5]};}
   function saveConfig(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(config));return true;}catch(e){return false;}}
@@ -572,21 +595,15 @@
     else planNote.textContent=`✅ 已到預定 ${formatClock(c.plannedEnd)}，今日晚間加班已自動停止累積。`;
     $('monthTitle').textContent=`${c.currentCycle.end.y} 年 ${c.currentCycle.end.m} 月結算`;
     $('payPeriodNote').textContent=`結算期間 ${periodLabel(c.currentCycle)}｜預估 ${payoutLabel(c.currentCycle)} 發薪`;
-    $('monthMoney').textContent=money(c.currentCycleStats.money);
     $('monthPercent').textContent=`${fmt(c.currentCycleStats.fraction*100,1)}%`;
     $('cycleHours').textContent=`已完成 ${fmt(c.currentCycleStats.completedSeconds/3600)} / 排定 ${fmt(c.currentCycleStats.scheduledSeconds/3600)} 小時（${c.currentCycleStats.workdays} 個正常工作日；不含加班）`;
     $('monthProgress').style.width=Math.max(0,Math.min(100,c.currentCycleStats.fraction*100))+'%';
     $('hourWage').textContent=money(c.hourRate);
     $('baseRate').textContent=money(c.rate,4);
     $('otHourRate').textContent=`${money(c.hourRate*1.34)} / ${money(c.hourRate*1.67)} / ${money(c.hourRate*2.67)}`;
-    $('otMonthMoney').textContent=money(c.monthOTMoney);
-    $('cycleStatsLabel').textContent=`本期 ${fmt(c.monthOTSeconds/3600)} 小時`;
-    $('accruedGross').textContent=money(c.currentCycleStats.accrued);
-    $('forecastGross').textContent=money(c.currentCycleStats.forecast);
-    $('forecastNote').textContent=`預估 ${payoutLabel(c.currentCycle)} 領薪｜完整基本月薪＋截至現在已計加班 ${money(c.currentCycleStats.ot.money)}；尚未加入未來加班，也未扣勞健保及請假等項目。`;
-    $('lastPayoutTitle').textContent=`🗓️ 最近已結算：${periodLabel(c.lastCycle)}｜${payoutLabel(c.lastCycle)} 發薪`;
-    $('lastPayoutGross').textContent=money(c.lastCycleStats.forecast);
-    $('lastPayoutDetail').textContent=`基本月薪＋該期已記錄加班 ${fmt(c.lastCycleStats.ot.seconds/3600)} 小時（${money(c.lastCycleStats.ot.money)}）。屬稅前估算，未計請假、獎金及扣款。`;
+    $('cycleOTHours').textContent=`${fmt(c.monthOTSeconds/3600)} 小時`;
+    $('cycleOTMoney').textContent=money(c.monthOTMoney);
+    $('cycleStatsLabel').textContent='含午休／晚間／休息日';
     $('todayOTMoney').textContent=money(c.otTodayMoney);
     $('todayOTHours').textContent=fmt(c.otToday/3600,2)+' 小時';
     $('otHoursSplit').textContent=c.resting?`休息日實際／推估 ${fmt(c.restToday/3600)}h`:`🍱 午休 ${fmt(c.lunchToday/3600)}h ＋ 🌙 晚間 ${fmt(c.eveningToday/3600)}h`;
@@ -597,7 +614,7 @@
     $('fullDay').textContent=money(c.fullDay);
     // 工作日曆目前可能切到上期，工作天數由 renderCalendar() 依所選結算期設定。
     $('otRuleText').textContent=c.resting?'休息日 1.34 / 1.67 / 2.67':'平日 1.34 / 1.67';
-    $('encouragement').textContent=c.resting?'🟠 休息日加班會依累積時數分段，儲存預計下班時間後自動停止。':status==='加班中'?'🌙 預定下班時間到點停止計費，不用自己按結束！':status==='上班中'?'💪 每一秒都在累積！也要記得安全第一。':status==='午休加班中'?'🍱 午休有工作，已列入加班時數。':'🌟 按照排班與預定時間，自動記錄每一天。';
+    $('encouragement').textContent=ENCOURAGEMENTS[Math.floor(Date.now()/5000)%ENCOURAGEMENTS.length];
     const warning=$('manualWarning');
     if(c.count===0){warning.hidden=false;warning.textContent='本月尚未設定工作日，請到設定選擇星期，或點月曆標記上班日。公司時薪仍固定以月薪 ÷30÷8 計算。';}
     else warning.hidden=true;
@@ -744,9 +761,12 @@
   $('prevMonth').addEventListener('click',()=>shiftCalendarMonth(-1));
   $('nextMonth').addEventListener('click',()=>shiftCalendarMonth(1));
   $('returnMonth').addEventListener('click',()=>{const t=taipeiNow(),closing=closingMonthFor(t.y,t.m,t.d);calendarView={y:closing.y,m:closing.m,followToday:true};calendarRenderMinute='';renderCalendar();});
-  $('jumpPayoutPeriod').addEventListener('click',()=>{
+  // V5.11 已移除「最近已結算」跳轉按鈕，不能再向不存在的元素註冊事件。
+  // 未來若恢復這個按鈕，仍可安全綁定，不中斷設定等其他功能。
+  const payoutJumpButton=$('jumpPayoutPeriod');
+  if(payoutJumpButton) payoutJumpButton.addEventListener('click',()=>{
     const c=calculate(new Date());calendarView={y:c.lastCycle.y,m:c.lastCycle.m,followToday:false};calendarRenderMinute='';renderCalendar(c);
-    document.querySelector('[aria-label="本月工作日設定"]').scrollIntoView({behavior:'smooth',block:'start'});
+    document.querySelector('[aria-label="本月工作日設定"]')?.scrollIntoView({behavior:'smooth',block:'start'});
   });
   $('closeDay').addEventListener('click',closeDayEditor);
   $('dayModal').addEventListener('click',e=>{if(e.target===$('dayModal'))closeDayEditor();});
