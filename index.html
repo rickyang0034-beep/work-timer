@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f7fe">
   <meta name="color-scheme" content="light">
-  <title>上班鼓勵器｜V5.15 金幣慢速飄散版｜輪播標語＋精簡加班總覽（26～25結算／5日領薪）</title>
+  <title>上班鼓勵器｜V5.17 翻轉直上金幣版｜輪播標語＋精簡加班總覽（26～25結算／5日領薪）</title>
   <style>
     :root{font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;color:#252947;background:#f7f7fe;--ink:#262b4f;--blue:#3156ce;--muted:#727a96;--line:#e8eaf5;--surface:#fff;--accent:#f05b3f}
     *{box-sizing:border-box} body{margin:0;min-height:100vh;overflow-x:clip;background:radial-gradient(circle at 110% -4%,#eeeaff 0,transparent 27rem),radial-gradient(circle at -10% 16%,#fff1e6 0,transparent 16rem),#f7f7fe}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:590px;margin:auto;padding:22px 17px 42px;padding-top:max(22px,env(safe-area-inset-top))}
@@ -103,17 +103,19 @@
     /* Game-loot overlay: can escape the donkey's card without expanding page width or intercepting touches. */
     .hero,.hero-rate-row,.donkey-widget,.donkey-scene{overflow:visible}
     .loot-layer{position:absolute;inset:0;z-index:8;overflow:visible;pointer-events:none;user-select:none}
-    .loot-drop{position:absolute;left:58%;top:48%;display:block;font-size:23px;line-height:1;opacity:0;
+    .loot-drop{position:absolute;left:var(--left,58%);top:var(--top,76%);display:block;font-size:23px;line-height:1;opacity:0;
       transform-origin:center;pointer-events:none;will-change:transform,opacity;
       filter:drop-shadow(0 2px 2px rgba(86,60,15,.22));
-      animation:lootScatter 7.2s ease-out var(--delay) infinite}
-    /* Gold-only drops: 7.2s vs. previous 3.6s = half the flying speed. */
-    @keyframes lootScatter{
-      0%{opacity:0;transform:translate(-50%,-50%) translate3d(0,0,0) rotate(0deg) scale(.28)}
-      9%{opacity:.98;transform:translate(-50%,-50%) translate3d(0,-15px,0) rotate(10deg) scale(.85)}
-      35%{opacity:1;transform:translate(-50%,-50%) translate3d(var(--dx),var(--dy),0) rotate(var(--rot)) scale(1.07)}
-      67%{opacity:.65;transform:translate(-50%,-50%) translate3d(var(--dx),var(--dy),0) rotate(var(--rot)) scale(1.12)}
-      100%{opacity:0;transform:translate(-50%,-50%) translate3d(var(--dx),var(--dy),0) rotate(var(--rot)) scale(.9)}
+      animation:lootRise 7.2s ease-out var(--delay) infinite}
+    /* Three vertical lanes: cleaner look, coins rise straight upward one after another. */
+    @keyframes lootRise{
+      0%{opacity:0;transform:translate(-50%,-50%) translate3d(0,0,0) rotate(0deg) scale(.32) scaleX(1)}
+      10%{opacity:.98;transform:translate(-50%,-50%) translate3d(0,-14px,0) rotate(0deg) scale(.88) scaleX(1)}
+      22%{opacity:1;transform:translate(-50%,-50%) translate3d(0,calc(var(--dy)*.35),0) rotate(0deg) scale(.96) scaleX(-1)}
+      38%{opacity:1;transform:translate(-50%,-50%) translate3d(0,var(--dy),0) rotate(0deg) scale(1.03) scaleX(1)}
+      54%{opacity:.82;transform:translate(-50%,-50%) translate3d(0,var(--dy),0) rotate(0deg) scale(1.06) scaleX(-1)}
+      70%{opacity:.62;transform:translate(-50%,-50%) translate3d(0,var(--dy),0) rotate(0deg) scale(1.06) scaleX(1)}
+      100%{opacity:0;transform:translate(-50%,-50%) translate3d(0,var(--dy),0) rotate(0deg) scale(.92) scaleX(-1)}
     }
     @media(max-width:360px){.loot-drop{font-size:20px}}
     @media(prefers-reduced-motion:reduce){.loot-layer{display:none!important}}
@@ -199,21 +201,18 @@
             <path d="M18 22l3-7 M24 23l5-5" fill="none" stroke="#ffffff" stroke-width="2.5" opacity=".55" stroke-linecap="round"/>
           </svg>
           <div class="loot-layer" aria-hidden="true">
-            <span class="loot-drop coin" style="--dx:-165px;--dy:-164px;--rot:-35deg;--delay:-0.00s;">🪙</span>
-            <span class="loot-drop coin" style="--dx:88px;--dy:-185px;--rot:34deg;--delay:-0.60s;">🪙</span>
-            <span class="loot-drop coin" style="--dx:-98px;--dy:-172px;--rot:-32deg;--delay:-1.20s;">🪙</span>
-            <span class="loot-drop coin" style="--dx:58px;--dy:-135px;--rot:40deg;--delay:-1.80s;">🪙</span>
-            <span class="loot-drop coin" style="--dx:-192px;--dy:-91px;--rot:-45deg;--delay:-2.40s;">🪙</span>
-            <span class="loot-drop coin" style="--dx:105px;--dy:-152px;--rot:36deg;--delay:-3.00s;">🪙</span>
-            <span class="loot-drop coin" style="--dx:-72px;--dy:-210px;--rot:-56deg;--delay:-3.60s;">🪙</span>
-            <span class="loot-drop coin" style="--dx:-140px;--dy:-128px;--rot:-30deg;--delay:-4.20s;">🪙</span>
-            <span class="loot-drop coin" style="--dx:120px;--dy:-80px;--rot:62deg;--delay:-4.80s;">🪙</span>
-            <span class="loot-drop coin" style="--dx:-38px;--dy:-198px;--rot:-15deg;--delay:-5.40s;">🪙</span>
-            <span class="loot-drop coin" style="--dx:88px;--dy:-225px;--rot:38deg;--delay:-6.00s;">🪙</span>
-            <span class="loot-drop coin" style="--dx:-198px;--dy:-182px;--rot:-62deg;--delay:-6.60s;">🪙</span>
+            <span class="loot-drop coin" style="--left:60%;--top:77%;--dy:-176px;--delay:-0.00s;">🪙</span>
+            <span class="loot-drop coin" style="--left:74%;--top:77%;--dy:-192px;--delay:-0.55s;">🪙</span>
+            <span class="loot-drop coin" style="--left:88%;--top:77%;--dy:-184px;--delay:-1.10s;">🪙</span>
+            <span class="loot-drop coin" style="--left:60%;--top:77%;--dy:-176px;--delay:-2.05s;">🪙</span>
+            <span class="loot-drop coin" style="--left:74%;--top:77%;--dy:-192px;--delay:-2.60s;">🪙</span>
+            <span class="loot-drop coin" style="--left:88%;--top:77%;--dy:-184px;--delay:-3.15s;">🪙</span>
+            <span class="loot-drop coin" style="--left:60%;--top:77%;--dy:-176px;--delay:-4.10s;">🪙</span>
+            <span class="loot-drop coin" style="--left:74%;--top:77%;--dy:-192px;--delay:-4.65s;">🪙</span>
+            <span class="loot-drop coin" style="--left:88%;--top:77%;--dy:-184px;--delay:-5.20s;">🪙</span>
           </div>
         </div>
-        <div class="donkey-caption">🫏 驢子努力賺金幣<small>慢速飛散・金幣飄遠後淡出</small></div>
+        <div class="donkey-caption">🫏 驢子努力賺金幣<small>左右翻轉・再三線直上</small></div>
       </div>
     </div>
     <div class="pep" id="encouragement">薪水不是等下班才出現，每一秒都算數！</div>
