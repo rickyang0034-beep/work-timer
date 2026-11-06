@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f7fe">
   <meta name="color-scheme" content="light">
-  <title>上班鼓勵器｜V5.11.1 設定修正版｜輪播標語＋精簡加班總覽（26～25結算／5日領薪）</title>
+  <title>上班鼓勵器｜V5.14 遊戲掉寶版｜輪播標語＋精簡加班總覽（26～25結算／5日領薪）</title>
   <style>
     :root{font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;color:#252947;background:#f7f7fe;--ink:#262b4f;--blue:#3156ce;--muted:#727a96;--line:#e8eaf5;--surface:#fff;--accent:#f05b3f}
-    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 110% -4%,#eeeaff 0,transparent 27rem),radial-gradient(circle at -10% 16%,#fff1e6 0,transparent 16rem),#f7f7fe}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:590px;margin:auto;padding:22px 17px 42px;padding-top:max(22px,env(safe-area-inset-top))}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;overflow-x:clip;background:radial-gradient(circle at 110% -4%,#eeeaff 0,transparent 27rem),radial-gradient(circle at -10% 16%,#fff1e6 0,transparent 16rem),#f7f7fe}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:590px;margin:auto;padding:22px 17px 42px;padding-top:max(22px,env(safe-area-inset-top))}
     header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:11px}.logo{width:54px;height:54px;display:grid;place-items:center;background:#fff0d5;border-radius:19px;font-size:31px;box-shadow:0 5px 18px #f3deb95a}h1{font-size:clamp(18px,5vw,25px);letter-spacing:.4px;margin:0;font-weight:880;line-height:1.24}.tagline{font-size:12px;color:#7d819c;margin:5px 0 0}.iconbtn{border:1px solid #ebeaf6;background:white;color:#353c6d;border-radius:16px;width:47px;height:47px;font-size:22px;box-shadow:0 4px 18px #2529530a}
     .datebar{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;background:#eeedfb;border:1px solid #eae8fb;border-radius:16px;padding:12px 15px;color:#555d84;font-size:13px;font-weight:680;margin-bottom:16px;font-variant-numeric:tabular-nums}
     .card{border-radius:27px;background:#fff;box-shadow:0 16px 44px rgba(48,53,104,.075);padding:23px 21px;margin:16px 0}.hero{padding-top:23px}.status-line{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.status-title{font-size:36px;font-weight:850;color:var(--blue);line-height:1.3;letter-spacing:.5px}.status-sub{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.6}.mascot{width:84px;height:84px;display:grid;place-items:center;border-radius:28px;background:#eef1ff;font-size:53px;flex-shrink:0;transform:rotate(3deg)}.money-label{margin:26px 0 7px;color:#7c6580;background:#fff0ec;border-radius:100px;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;font-size:14px;font-weight:730}.amount{font-size:clamp(30px,7.9vw,49px);line-height:1.13;color:var(--accent);font-weight:890;letter-spacing:-1.5px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.currency{font-size:.47em;vertical-align:10%;letter-spacing:0;margin-right:5px}.rate{display:flex;gap:9px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:13px;color:#555e83;font-weight:650;font-size:13px}.rate strong{font-size:16px;font-variant-numeric:tabular-nums;color:#384fb7}.pep{background:#f2f0ff;border-radius:14px;color:#55537b;padding:12px 13px;margin:23px 0 0;font-size:13px;line-height:1.65}.divider{height:1px;background:var(--line);margin:23px 0}.section-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.section-head b{font-size:16px}.strong-blue{font-weight:850;color:var(--blue);font-size:18px;font-variant-numeric:tabular-nums}.progress-text{color:var(--muted);font-size:13px;margin:9px 0 12px;font-variant-numeric:tabular-nums}.track{background:#e7eafd;height:11px;border-radius:100px;overflow:hidden}.fill{height:100%;width:0%;border-radius:100px;background:linear-gradient(90deg,#358af6,#4350d4);transition:width .2s linear}
@@ -75,19 +75,19 @@
     
     .hide-home{display:none!important}
 
-    .hero-rate-row{display:grid;grid-template-columns:minmax(0,1fr) 152px;gap:10px;align-items:center;margin-top:10px}
+    .hero-rate-row{display:grid;grid-template-columns:minmax(0,1fr) 152px;gap:10px;align-items:center;margin-top:10px;overflow:visible}
     .hero-rate-row .rate{margin:0;height:auto;min-height:97px;display:flex;flex-direction:column;justify-content:center;min-width:0}
     .hero-rate-row .rate strong{overflow-wrap:anywhere}
-    .donkey-widget{min-width:0;overflow:hidden;background:linear-gradient(160deg,#fffaf0,#f6e7ce);border:1px solid #ebd3ae;border-radius:17px;padding:6px 5px 7px;box-shadow:0 6px 14px #a9783416}
-    .donkey-scene{position:relative;background:linear-gradient(180deg,#dff2fa 0%,#faf2de 55%,#ebd4ac 100%);height:99px;overflow:hidden;border-radius:12px}
-    .donkey-scene svg{width:100%;height:100%;display:block;overflow:hidden}
+    .donkey-widget{position:relative;z-index:2;min-width:0;overflow:visible;background:linear-gradient(160deg,#fffaf0,#f6e7ce);border:1px solid #ebd3ae;border-radius:17px;padding:6px 5px 7px;box-shadow:0 6px 14px #a9783416}
+    .donkey-scene{position:relative;background:linear-gradient(180deg,#dff2fa 0%,#faf2de 55%,#ebd4ac 100%);height:99px;overflow:visible;border-radius:12px}
+    .donkey-scene svg{width:100%;height:100%;display:block;overflow:visible}
     .donkey-caption{text-align:center;color:#80522b;font-weight:900;font-size:11px;line-height:1.25;margin-top:5px}
     .donkey-caption small{display:block;font-size:10px;color:#a17047;margin-top:2px;font-weight:650}
     /* One rigid axle: donkey + tether turn around the same center. */
-    .donkey-orbit,.donkey-grooves{transform-box:view-box;transform-origin:120px 80px;animation:donkeyCircle 12s linear infinite}
-    .donkey-trot-a,.donkey-trot-b{transform-box:fill-box;transform-origin:center;animation:donkeyTrot .75s ease-in-out infinite alternate}
+    .donkey-orbit,.donkey-grooves{transform-box:view-box;transform-origin:120px 80px;animation:donkeyCircle 6s linear infinite}
+    .donkey-trot-a,.donkey-trot-b{transform-box:fill-box;transform-origin:center;animation:donkeyTrot .48s ease-in-out infinite alternate}
     .donkey-trot-b{animation-direction:alternate-reverse}
-    .donkey-torso{transform-box:fill-box;transform-origin:center;animation:donkeyBreathe .75s ease-in-out infinite}
+    .donkey-torso{transform-box:fill-box;transform-origin:center;animation:donkeyBreathe .48s ease-in-out infinite}
     .donkey-sad-tail{transform-box:fill-box;transform-origin:50% 0%;animation:donkeySwish 2.3s ease-in-out infinite}
     .donkey-sweat{animation:donkeySweat 2.4s ease-out infinite;opacity:0}
     .donkey-sweat.d2{animation-delay:1.2s}
@@ -98,6 +98,38 @@
     @keyframes donkeySwish{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(10deg)}}
     @keyframes donkeySweat{0%{transform:translate(0,-3px);opacity:0}20%{opacity:.9}80%{opacity:.5}100%{transform:translate(4px,13px);opacity:0}}
     @keyframes donkeyBlink{0%,40%,44%,100%{transform:scaleY(1)}42%{transform:scaleY(.12)}}
+
+    html,body{overflow-x:clip!important}
+    /* Game-loot overlay: can escape the donkey's card without expanding page width or intercepting touches. */
+    .hero,.hero-rate-row,.donkey-widget,.donkey-scene{overflow:visible}
+    .loot-layer{position:absolute;inset:0;z-index:8;overflow:visible;pointer-events:none;user-select:none}
+    .loot-drop{position:absolute;left:58%;top:48%;display:block;font-size:22px;line-height:1;opacity:0;
+      transform-origin:center;pointer-events:none;will-change:transform,opacity;
+      filter:drop-shadow(0 2px 2px rgba(86,60,15,.22));
+      animation:lootScatter 3.6s ease-out var(--delay) infinite}
+    .loot-drop.bill,.loot-drop.bag{font-size:25px}
+    .loot-drop.gem,.loot-drop.rare{font-size:26px}
+    .loot-drop.spark{font-size:18px}
+    .loot-bonus{position:absolute;top:9%;left:18%;z-index:3;opacity:0;
+      padding:3px 7px;border:1px solid #edc769;border-radius:99px;
+      background:linear-gradient(90deg,#fff5bb,#ffdc74);color:#8a5100;
+      box-shadow:0 4px 12px #ce9e3260;font-size:11px;font-weight:900;white-space:nowrap;
+      animation:lootBonus 6s ease-out infinite;pointer-events:none}
+    @keyframes lootScatter{
+      0%{opacity:0;transform:translate(-50%,-50%) translate3d(0,0,0) rotate(0deg) scale(.28)}
+      9%{opacity:.98;transform:translate(-50%,-50%) translate3d(0,-15px,0) rotate(10deg) scale(.85)}
+      35%{opacity:1;transform:translate(-50%,-50%) translate3d(var(--dx),var(--dy),0) rotate(var(--rot)) scale(1.07)}
+      67%{opacity:.65;transform:translate(-50%,-50%) translate3d(var(--dx),var(--dy),0) rotate(var(--rot)) scale(1.12)}
+      100%{opacity:0;transform:translate(-50%,-50%) translate3d(var(--dx),var(--dy),0) rotate(var(--rot)) scale(.9)}
+    }
+    @keyframes lootBonus{
+      0%,13%,84%,100%{opacity:0;transform:translate(0,8px) scale(.55)}
+      19%{opacity:1;transform:translate(-14px,-4px) scale(1.1)}
+      29%{opacity:1;transform:translate(-22px,-25px) scale(1)}
+      44%{opacity:0;transform:translate(-28px,-48px) scale(.88)}
+    }
+    @media(max-width:360px){.loot-drop{font-size:19px}.loot-drop.bill,.loot-drop.bag,.loot-drop.gem,.loot-drop.rare{font-size:21px}}
+    @media(prefers-reduced-motion:reduce){.loot-layer{display:none!important}}
     @media(max-width:420px){.hero-rate-row{grid-template-columns:minmax(0,1fr) 148px;gap:8px}.donkey-scene{height:93px}.donkey-widget{padding:5px 4px 6px}}
     @media(max-width:360px){.hero-rate-row{grid-template-columns:minmax(0,1fr) 134px;gap:6px}.donkey-scene{height:86px}.donkey-caption{font-size:10px}.donkey-caption small{font-size:9px}}
     @media(prefers-reduced-motion:reduce){.donkey-widget *{animation:none!important}}
@@ -125,6 +157,8 @@
               <linearGradient id="newMuzzle" x2="0" y2="1"><stop stop-color="#fff2e2"/><stop offset="1" stop-color="#cfaa8c"/></linearGradient>
               <radialGradient id="newStone"><stop stop-color="#e6e4dd"/><stop offset=".67" stop-color="#b6b4ae"/><stop offset="1" stop-color="#868c8c"/></radialGradient>
               <linearGradient id="newWood" x2="0" y2="1"><stop stop-color="#bb9164"/><stop offset="1" stop-color="#6e4d33"/></linearGradient>
+              <radialGradient id="coinGold"><stop stop-color="#fff8b7"/><stop offset=".55" stop-color="#ffd85a"/><stop offset="1" stop-color="#d69b12"/></radialGradient>
+              <linearGradient id="billGreen" x1="0" x2="1"><stop stop-color="#dff6c8"/><stop offset=".5" stop-color="#9adf81"/><stop offset="1" stop-color="#5bb85a"/></linearGradient>
             </defs>
             <ellipse cx="121" cy="90" rx="108" ry="55" fill="#f0dfbe" opacity=".76"/>
             <circle cx="120" cy="80" r="48" fill="none" stroke="#c8aa7a" stroke-width="6" opacity=".42"/>
@@ -177,8 +211,24 @@
             <circle cx="120" cy="80" r="8" fill="#5e6466"/><circle cx="120" cy="80" r="4" fill="#dad4c3"/>
             <path d="M18 22l3-7 M24 23l5-5" fill="none" stroke="#ffffff" stroke-width="2.5" opacity=".55" stroke-linecap="round"/>
           </svg>
+          <div class="loot-layer" aria-hidden="true">
+            <span class="loot-drop coin" style="--dx:-165px;--dy:-164px;--rot:-35deg;--delay:-0.10s;" aria-hidden="true">🪙</span>
+            <span class="loot-drop bill" style="--dx:88px;--dy:-185px;--rot:34deg;--delay:-0.40s;" aria-hidden="true">💵</span>
+            <span class="loot-drop gem" style="--dx:-98px;--dy:-172px;--rot:-32deg;--delay:-0.70s;" aria-hidden="true">💎</span>
+            <span class="loot-drop spark" style="--dx:58px;--dy:-135px;--rot:40deg;--delay:-1.00s;" aria-hidden="true">✨</span>
+            <span class="loot-drop coin" style="--dx:-192px;--dy:-91px;--rot:-45deg;--delay:-1.30s;" aria-hidden="true">🪙</span>
+            <span class="loot-drop bag" style="--dx:105px;--dy:-152px;--rot:36deg;--delay:-1.60s;" aria-hidden="true">💰</span>
+            <span class="loot-drop spark" style="--dx:-72px;--dy:-210px;--rot:-56deg;--delay:-1.90s;" aria-hidden="true">⭐</span>
+            <span class="loot-drop bill" style="--dx:-140px;--dy:-128px;--rot:-30deg;--delay:-2.20s;" aria-hidden="true">💵</span>
+            <span class="loot-drop coin" style="--dx:120px;--dy:-80px;--rot:62deg;--delay:-2.50s;" aria-hidden="true">🪙</span>
+            <span class="loot-drop gem" style="--dx:-38px;--dy:-198px;--rot:-15deg;--delay:-2.80s;" aria-hidden="true">💎</span>
+            <span class="loot-drop rare" style="--dx:88px;--dy:-225px;--rot:38deg;--delay:-3.10s;" aria-hidden="true">🎁</span>
+            <span class="loot-drop coin" style="--dx:-198px;--dy:-182px;--rot:-62deg;--delay:-3.40s;" aria-hidden="true">🪙</span>
+            <span class="loot-drop spark" style="--dx:145px;--dy:-120px;--rot:30deg;--delay:-3.58s;" aria-hidden="true">✨</span>
+            <span class="loot-bonus">✨稀有掉寶！</span>
+          </div>
         </div>
-        <div class="donkey-caption">🫏 驢子繞圈拉磨中<small>磨一圈，薪水又多一點</small></div>
+        <div class="donkey-caption">🫏 驢子高速刷寶中<small>金幣、鈔票、稀有寶物連續噴出</small></div>
       </div>
     </div>
     <div class="pep" id="encouragement">薪水不是等下班才出現，每一秒都算數！</div>
