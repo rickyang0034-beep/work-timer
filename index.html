@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f7fe">
   <meta name="color-scheme" content="light">
-  <title>上班鼓勵器｜V5.17 翻轉直上金幣版｜輪播標語＋精簡加班總覽（26～25結算／5日領薪）</title>
+  <title>上班鼓勵器｜V5.17.1 預估薪資版｜輪播標語＋加班總覽（26～25結算／5日領薪）</title>
   <style>
     :root{font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;color:#252947;background:#f7f7fe;--ink:#262b4f;--blue:#3156ce;--muted:#727a96;--line:#e8eaf5;--surface:#fff;--accent:#f05b3f}
     *{box-sizing:border-box} body{margin:0;min-height:100vh;overflow-x:clip;background:radial-gradient(circle at 110% -4%,#eeeaff 0,transparent 27rem),radial-gradient(circle at -10% 16%,#fff1e6 0,transparent 16rem),#f7f7fe}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:590px;margin:auto;padding:22px 17px 42px;padding-top:max(22px,env(safe-area-inset-top))}
@@ -29,6 +29,10 @@
     .salary-cell{background:#f6f7ff;border-radius:14px;padding:12px;min-width:0}
     .salary-cell b{font-size:17px;color:#344569;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
     .salary-cell small{display:block;font-size:11px;color:#8189a1;margin-bottom:7px;line-height:1.5}
+    .gross-forecast{background:linear-gradient(120deg,#fff6e9,#fff1dc);border:1px solid #f3dbb2;border-radius:16px;padding:16px 15px;margin:13px 0 5px}
+    .gross-forecast-label{font-size:13px;font-weight:780;color:#805523}
+    .gross-forecast-amount{font-weight:900;font-size:clamp(24px,6vw,33px);letter-spacing:-.4px;color:#af5726;font-variant-numeric:tabular-nums;margin:7px 0 4px;overflow-wrap:anywhere}
+    .gross-forecast-note{font-size:11px;line-height:1.5;color:#9b7959}
     .last-payout{background:#fff9ef;border:1px solid #f2e2c7;border-radius:15px;padding:14px 13px;margin-top:18px}
     .last-payout .stat-value{color:#885117;margin-top:5px}
     .jump-payout{margin-top:10px;border:1px solid #ecd6b7;background:#fff;border-radius:10px;color:#8e531c;font-weight:760;padding:8px 12px;font-size:12px}
@@ -245,6 +249,11 @@
     <div class="salary-breakdown" id="otSummaryOnly">
       <div class="salary-cell"><small>本期加班總時數</small><b id="cycleOTHours">0.00 小時</b><div class="minor">26 日～25 日累計</div></div>
       <div class="salary-cell"><small>本期加班總金額</small><b id="cycleOTMoney">NT$ 0.00</b><div class="minor" id="cycleStatsLabel">含午休／晚間／休息日</div></div>
+    </div>
+    <div class="gross-forecast" role="status" aria-live="off">
+      <div class="gross-forecast-label">💰 本期預估薪資（月薪＋加班費）</div>
+      <div class="gross-forecast-amount" id="estimatedSalary">NT$ 0.00</div>
+      <div class="gross-forecast-note">依 26 日～次月 25 日結算，未扣勞健保、請假等款項，亦不含其他獎金津貼。</div>
     </div>
     <div class="divider" style="margin:20px 0 15px"></div>
     <div class="stats">
@@ -637,6 +646,7 @@
     $('otHourRate').textContent=`${money(c.hourRate*1.34)} / ${money(c.hourRate*1.67)} / ${money(c.hourRate*2.67)}`;
     $('cycleOTHours').textContent=`${fmt(c.monthOTSeconds/3600)} 小時`;
     $('cycleOTMoney').textContent=money(c.monthOTMoney);
+    $('estimatedSalary').textContent=money(c.currentCycleStats.forecast);
     $('cycleStatsLabel').textContent='含午休／晚間／休息日';
     $('todayOTMoney').textContent=money(c.otTodayMoney);
     $('todayOTHours').textContent=fmt(c.otToday/3600,2)+' 小時';
