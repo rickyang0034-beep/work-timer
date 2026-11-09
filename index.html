@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f7fe">
   <meta name="color-scheme" content="light">
-  <title>上班鼓勵器｜V5.19 下班驢子睡覺版｜預估薪資＋加班總覽（26～25結算／5日領薪）</title>
+  <title>上班鼓勵器｜V5.20 外出修繕津貼版｜驢子下班睡覺＋預估薪資（26～25結算／5日領薪）</title>
   <style>
     :root{font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;color:#252947;background:#f7f7fe;--ink:#262b4f;--blue:#3156ce;--muted:#727a96;--line:#e8eaf5;--surface:#fff;--accent:#f05b3f}
     *{box-sizing:border-box} body{margin:0;min-height:100vh;overflow-x:clip;background:radial-gradient(circle at 110% -4%,#eeeaff 0,transparent 27rem),radial-gradient(circle at -10% 16%,#fff1e6 0,transparent 16rem),#f7f7fe}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:590px;margin:auto;padding:22px 17px 42px;padding-top:max(22px,env(safe-area-inset-top))}
@@ -33,6 +33,22 @@
     .gross-forecast-label{font-size:13px;font-weight:780;color:#805523}
     .gross-forecast-amount{font-weight:900;font-size:clamp(24px,6vw,33px);letter-spacing:-.4px;color:#af5726;font-variant-numeric:tabular-nums;margin:7px 0 4px;overflow-wrap:anywhere}
     .gross-forecast-note{font-size:11px;line-height:1.5;color:#9b7959}
+    /* Per-trip repair allowance, one tap to record a visit; local browser storage only. */
+    .repair-panel{border:1px solid #dbe8f2;border-radius:16px;padding:14px 13px;margin:15px 0 7px;background:linear-gradient(145deg,#f6fbff,#f3f9fa)}
+    .repair-panel-title{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#345577;font-weight:850;font-size:14px}
+    .repair-unit{background:#e0eff8;color:#315779;border-radius:9px;padding:5px 8px;font-size:11px;white-space:nowrap}
+    .repair-totals{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:11px 0}
+    .repair-total{background:white;border-radius:12px;padding:11px 10px;min-width:0}
+    .repair-total small{display:block;color:#667a90;font-size:11px;margin-bottom:5px}
+    .repair-total strong{font-weight:850;color:#294e77;font-size:17px;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+    .repair-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .repair-actions button{border:1px solid #adc8df;border-radius:11px;background:white;color:#23537f;font-weight:800;padding:10px 11px;font-size:13px;min-height:43px}
+    .repair-actions button.add{background:#2b67a0;border-color:#2b67a0;color:white;flex:1;white-space:nowrap}
+    .repair-actions button:disabled{opacity:.45;cursor:not-allowed}
+    .repair-today{font-size:12px;font-weight:780;color:#4c6c85}
+    .repair-note{font-size:11px;line-height:1.65;color:#687c8f;margin:10px 0 0}
+    .day .repair-mini{font-size:10px;font-weight:850;color:#236e86;line-height:12px}
+    .repair-day-preview{padding:9px 12px;margin:9px 0;border-radius:10px;color:#275a7e;background:#e9f6ff;font-size:13px;font-weight:780}
     .last-payout{background:#fff9ef;border:1px solid #f2e2c7;border-radius:15px;padding:14px 13px;margin-top:18px}
     .last-payout .stat-value{color:#885117;margin-top:5px}
     .jump-payout{margin-top:10px;border:1px solid #ecd6b7;background:#fff;border-radius:10px;color:#8e531c;font-weight:760;padding:8px 12px;font-size:12px}
@@ -290,10 +306,23 @@
       <div class="salary-cell"><small>本期加班總時數</small><b id="cycleOTHours">0.00 小時</b><div class="minor">26 日～25 日累計</div></div>
       <div class="salary-cell"><small>本期加班總金額</small><b id="cycleOTMoney">NT$ 0.00</b><div class="minor" id="cycleStatsLabel">含午休／晚間／休息日</div></div>
     </div>
+    <div class="repair-panel" aria-label="外出修繕津貼登記">
+      <div class="repair-panel-title"><span>🛠️ 外出修繕／出差津貼</span><span class="repair-unit">每次 NT$ 600</span></div>
+      <div class="repair-totals">
+        <div class="repair-total"><small>本期外出次數</small><strong id="cycleRepairTrips">0 次</strong></div>
+        <div class="repair-total"><small>本期修繕津貼</small><strong id="cycleRepairMoney">NT$ 0.00</strong></div>
+      </div>
+      <div class="repair-actions">
+        <button type="button" id="removeTodayRepair" aria-label="取消今天一次外出修繕">−1</button>
+        <span class="repair-today" id="todayRepairCount">今天 0 次</span>
+        <button class="add" type="button" id="addTodayRepair">＋ 今日外出 1 次</button>
+      </div>
+      <p class="repair-note">每次 600 元，不會計入時薪或加班時數。若要補登、改次數或記錄前一期，請點下方結算日曆的日期。僅計入已發生的外出。</p>
+    </div>
     <div class="gross-forecast" role="status" aria-live="off">
-      <div class="gross-forecast-label">💰 本期預估薪資（月薪＋加班費）</div>
+      <div class="gross-forecast-label">💰 本期預估薪資（月薪＋加班費＋修繕津貼）</div>
       <div class="gross-forecast-amount" id="estimatedSalary">NT$ 0.00</div>
-      <div class="gross-forecast-note">依 26 日～次月 25 日結算，未扣勞健保、請假等款項，亦不含其他獎金津貼。</div>
+      <div class="gross-forecast-note">依 26 日～次月 25 日結算；外出修繕每次 600 元。未扣勞健保、請假等款項，未包含其他獎金津貼。</div>
     </div>
     <div class="divider" style="margin:20px 0 15px"></div>
     <div class="stats">
@@ -336,11 +365,11 @@
       <button type="button" id="returnMonth" class="month-today">本期</button>
     </div>
     <div class="cycle-notice" id="cycleNotice">💼 薪資及加班費同一結算期：<strong>26 日～次月 25 日</strong>。可切換到已結算期補登，對應每月 5 日領薪。</div>
-    <p class="smallnote">點日期可切換<b>平常工作日／休息日／例假或休假</b>，並設定預計下班時間。完整月薪進度與加班費使用同一個 26～25 日結算期；歷史期間也能補登。注意：<b>首頁進度固定顯示正在進行的結算期</b>，下方日曆可切到上一期。</p>
+    <p class="smallnote">點日期可登記外出修繕次數、修改加班，並切換<b>平常工作日／休息日／例假或休假</b>，並設定預計下班時間。完整月薪進度與加班費使用同一個 26～25 日結算期；歷史期間也能補登。注意：<b>首頁進度固定顯示正在進行的結算期</b>，下方日曆可切到上一期。</p>
     <div class="weekdays"><div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div></div>
     <div id="calendar" class="days"></div>
-    <div class="legend"><span><i class="dot"></i>工作日</span><span><i class="dot gray"></i>例假／休假</span><span>🟠 休息日</span><span><i class="dot orange"></i>已登記加班</span><span><i class="dot green"></i>今日加班即時累計</span></div>
-    <div class="ot-calendar-total" id="calendarOTTotal">本期加班合計 0.00 小時</div>
+    <div class="legend"><span><i class="dot"></i>工作日</span><span><i class="dot gray"></i>例假／休假</span><span>🟠 休息日</span><span><i class="dot orange"></i>已登記加班</span><span><i class="dot green"></i>今日加班即時累計</span><span>🛠️ 已登記外出修繕</span></div>
+    <div class="ot-calendar-total" id="calendarOTTotal">本期加班合計 0.00 小時／修繕津貼 0 元</div>
     <div class="warning" id="manualWarning" hidden></div>
   </section>
 
@@ -366,9 +395,14 @@
         <p class="form-note" id="dayOTHelp">此欄不含午休，晚間加班 1 小時 30 分填 1.5；輸入 0 表示 17:00 後沒有加班。</p>
       </div>
       <div class="field" id="restHoursWrap" hidden><label for="dayRestHours">休息日實際工作時數（手動修正，可留空）</label><input id="dayRestHours" type="number" min="0" max="12" step="0.01" inputmode="decimal" placeholder="留空＝依設定的起訖時間自動計算"><p class="form-note">例如工作 9.5 小時輸入 9.5；儲存後以手動紀錄為準。最多 12 小時。</p></div>
+      <div class="field" style="margin-top:19px"><label for="dayRepairTrips">🛠️ 當天外出修繕次數（每次 NT$ 600）</label>
+        <input id="dayRepairTrips" type="number" inputmode="numeric" min="0" max="99" step="1" placeholder="0（沒有外出）">
+        <p class="form-note">一天可登記多次，填整數；0 表示刪除當天津貼。休假日也能登記。不能預先登記未來出差。</p>
+      </div>
+      <div class="repair-day-preview" id="dayRepairEstimate">當日修繕津貼 NT$ 0.00</div>
       <div class="ot-day-summary" id="dayOTEstimate">加班費預估 NT$ 0.00</div>
       <div class="error" id="dayFormError" role="alert"></div>
-      <button type="submit" class="btn primary">儲存這一天，更新加班費</button>
+      <button type="submit" class="btn primary">儲存這一天，更新加班費及津貼</button>
       <button type="button" id="clearDayOT" class="btn secondary" style="width:100%;margin-top:10px">清除這一天手動加班紀錄（保留預計時間）</button>
     </form>
   </div>
@@ -396,7 +430,7 @@
 'use strict';
 (function(){
   const STORAGE_KEY='yidong_colleague_salary_v53'; // 與先前同事分享版共用本機儲存設定
-  const defaults={salary:0,start:'08:00',end:'17:00',breakStart:'12:00',breakEnd:'13:00',weekdays:[1,2,3,4,5],mode:'auto',fixedDays:22,showSalary:false,overrides:{},overtimeEntries:{},lunchOvertimeEntries:{},plannedEnds:{},dayTypes:{},restDayPlans:{},restDayStarts:{},restHoursEntries:{}};
+  const defaults={salary:0,start:'08:00',end:'17:00',breakStart:'12:00',breakEnd:'13:00',weekdays:[1,2,3,4,5],mode:'auto',fixedDays:22,showSalary:false,overrides:{},overtimeEntries:{},lunchOvertimeEntries:{},plannedEnds:{},dayTypes:{},restDayPlans:{},restDayStarts:{},restHoursEntries:{},repairTrips:{}};
   const $=id=>document.getElementById(id);
   // 網路常見上班族勵志／幽默文案主題整理後改寫，供主畫面輪播使用。
   const ENCOURAGEMENTS=[
@@ -426,7 +460,7 @@
     "🌟 今天再撐一下，明天的自己會感謝現在的你。"
   ];
   let config=loadConfig();let currentMonthKey='';let toastTimer;let calendarView=null;let calendarRenderMinute='';let editingDayKey='';let lastPlanInputKey='';
-  function loadConfig(){try{let o=JSON.parse(localStorage.getItem(STORAGE_KEY));if(o&&typeof o==='object')return {...defaults,...o,overrides:o.overrides&&typeof o.overrides==='object'?o.overrides:{},weekdays:Array.isArray(o.weekdays)?o.weekdays:defaults.weekdays,overtimeEntries:o.overtimeEntries&&typeof o.overtimeEntries==='object'?o.overtimeEntries:{},lunchOvertimeEntries:o.lunchOvertimeEntries&&typeof o.lunchOvertimeEntries==='object'?o.lunchOvertimeEntries:{},plannedEnds:o.plannedEnds&&typeof o.plannedEnds==='object'?o.plannedEnds:{},dayTypes:o.dayTypes&&typeof o.dayTypes==='object'?o.dayTypes:{},restDayPlans:o.restDayPlans&&typeof o.restDayPlans==='object'?o.restDayPlans:{},restDayStarts:o.restDayStarts&&typeof o.restDayStarts==='object'?o.restDayStarts:{},restHoursEntries:o.restHoursEntries&&typeof o.restHoursEntries==='object'?o.restHoursEntries:{}};}catch(e){}return {...defaults,overrides:{},overtimeEntries:{},lunchOvertimeEntries:{},plannedEnds:{},dayTypes:{},restDayPlans:{},restDayStarts:{},restHoursEntries:{},weekdays:[1,2,3,4,5]};}
+  function loadConfig(){try{let o=JSON.parse(localStorage.getItem(STORAGE_KEY));if(o&&typeof o==='object')return {...defaults,...o,overrides:o.overrides&&typeof o.overrides==='object'?o.overrides:{},weekdays:Array.isArray(o.weekdays)?o.weekdays:defaults.weekdays,overtimeEntries:o.overtimeEntries&&typeof o.overtimeEntries==='object'?o.overtimeEntries:{},lunchOvertimeEntries:o.lunchOvertimeEntries&&typeof o.lunchOvertimeEntries==='object'?o.lunchOvertimeEntries:{},plannedEnds:o.plannedEnds&&typeof o.plannedEnds==='object'?o.plannedEnds:{},dayTypes:o.dayTypes&&typeof o.dayTypes==='object'?o.dayTypes:{},restDayPlans:o.restDayPlans&&typeof o.restDayPlans==='object'?o.restDayPlans:{},restDayStarts:o.restDayStarts&&typeof o.restDayStarts==='object'?o.restDayStarts:{},restHoursEntries:o.restHoursEntries&&typeof o.restHoursEntries==='object'?o.restHoursEntries:{},repairTrips:o.repairTrips&&typeof o.repairTrips==='object'&&!Array.isArray(o.repairTrips)?o.repairTrips:{}};}catch(e){}return {...defaults,overrides:{},overtimeEntries:{},lunchOvertimeEntries:{},plannedEnds:{},dayTypes:{},restDayPlans:{},restDayStarts:{},restHoursEntries:{},repairTrips:{},weekdays:[1,2,3,4,5]};}
   function saveConfig(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(config));return true;}catch(e){return false;}}
   function taipeiNow(now=new Date()){const t=new Date(now.getTime()+8*3600*1000);return {y:t.getUTCFullYear(),m:t.getUTCMonth()+1,d:t.getUTCDate(),h:t.getUTCHours(),mi:t.getUTCMinutes(),s:t.getUTCSeconds(),ms:t.getUTCMilliseconds(),weekday:t.getUTCDay()};}
   const pad=n=>String(n).padStart(2,'0');
@@ -490,9 +524,20 @@
     return {y:dt.getUTCFullYear(),m:dt.getUTCMonth()+1,d:dt.getUTCDate()};
   }
   function payoutLabel(period){const dt=payoutDate(period);return `${dt.y}/${pad(dt.m)}/${pad(dt.d)}`;}
+  const REPAIR_ALLOWANCE=600;
+  function repairTripsOn(key){const n=Number(config.repairTrips[key]);return Number.isInteger(n)&&n>=0&&n<=99?n:0;}
+  function cycleRepairStats(period,t){
+    const today=dateKey(t.y,t.m,t.d);let trips=0,days=0;
+    for(const dt of cycleDays(period)){
+      const key=dateKey(dt.y,dt.m,dt.d);
+      if(key>today)continue; // prevent counting future allowances
+      const count=repairTripsOn(key);if(count>0){trips+=count;days++;}
+    }
+    return {trips,days,money:trips*REPAIR_ALLOWANCE};
+  }
   function cyclePayStats(period,t,nowSec,rate){
-    const base=cycleBaseSalaryStats(period,t,nowSec),ot=cycleOvertimeStats(period,t,nowSec,rate);
-    return {...base,ot,accrued:base.money+ot.money,forecast:config.salary+ot.money};
+    const base=cycleBaseSalaryStats(period,t,nowSec),ot=cycleOvertimeStats(period,t,nowSec,rate),repair=cycleRepairStats(period,t);
+    return {...base,ot,repair,accrued:base.money+ot.money+repair.money,forecast:config.salary+ot.money+repair.money};
   }
   const toSec=s=>{let [h,m]=s.split(':').map(Number);return (h*60+m)*60;};
   function schedule(){let start=toSec(config.start),end=toSec(config.end),a=toSec(config.breakStart),b=toSec(config.breakEnd);return {start,end,a,b,duration:end-start-(b-a),segments:b>a?[[start,a],[b,end]]:[[start,end]]};}
@@ -697,6 +742,12 @@
     $('otHourRate').textContent=`${money(c.hourRate*1.34)} / ${money(c.hourRate*1.67)} / ${money(c.hourRate*2.67)}`;
     $('cycleOTHours').textContent=`${fmt(c.monthOTSeconds/3600)} 小時`;
     $('cycleOTMoney').textContent=money(c.monthOTMoney);
+    $('cycleRepairTrips').textContent=`${c.currentCycleStats.repair.trips} 次`;
+    $('cycleRepairMoney').textContent=money(c.currentCycleStats.repair.money);
+    const todayTrips=repairTripsOn(dateKey(t.y,t.m,t.d));
+    $('todayRepairCount').textContent=`今天 ${todayTrips} 次`;
+    $('removeTodayRepair').disabled=todayTrips===0;
+    $('addTodayRepair').disabled=todayTrips>=99;
     $('estimatedSalary').textContent=money(c.currentCycleStats.forecast);
     $('cycleStatsLabel').textContent='含午休／晚間／休息日';
     $('todayOTMoney').textContent=money(c.otTodayMoney);
@@ -743,7 +794,7 @@
     $('workingDays').textContent=`本期 ${workCount} 天工作日`;
     const first=dayOfWeek(period.start.y,period.start.m,period.start.d);
     for(let i=0;i<first;i++){const el=document.createElement('div');el.className='day empty';grid.appendChild(el);}
-    let otTotal=0,otMoney=0,confirmedDays=0;
+    let otTotal=0,otMoney=0,confirmedDays=0,repairTotal=0;
     const regularRate=config.salary/(30*8*3600);
     for(const dt of days){
       const {y,m,d}=dt,key=dateKey(y,m,d),type=dayType(y,m,d),isToday=key===nowKey,isFuture=key>nowKey;
@@ -751,7 +802,7 @@
       const recorded=type==='rest'?Number.isFinite(config.restHoursEntries[key]):Number.isFinite(config.overtimeEntries[key])||Number(config.lunchOvertimeEntries[key])>0;
       const secs=!isFuture?dailyOvertimeSeconds(y,m,d,isToday,c.nowSec):0;
       if(recorded&&!isFuture)confirmedDays++;
-      if(!isFuture){otTotal+=secs;otMoney+=overtimePay(secs,regularRate,type);}
+      if(!isFuture){otTotal+=secs;otMoney+=overtimePay(secs,regularRate,type);repairTotal+=repairTripsOn(key);}
       const btn=document.createElement('button');btn.type='button';btn.className='day'+(type==='rest'?' rest':type==='leave'?' leave':'')+(isToday?' today':'')+(config.dayTypes[key]?' changed':'');
       const num=document.createElement('span');num.className='day-num';num.textContent=d;btn.appendChild(num);
       if(d===26||d===1){const monthTag=document.createElement('span');monthTag.className='month-mini';monthTag.textContent=`${m}月`;btn.appendChild(monthTag);}
@@ -763,11 +814,13 @@
       else{mini.textContent=type==='rest'?'休息日':'—';mini.classList.add('zero');}
       btn.appendChild(mini);
       if(Number(config.lunchOvertimeEntries[key])>0&&type!=='leave'){const tag=document.createElement('span');tag.className='ot-lunch-mini';tag.textContent='🍱';btn.appendChild(tag);}
+      const repairCount=isFuture?0:repairTripsOn(key);
+      if(repairCount>0){const tag=document.createElement('span');tag.className='repair-mini';tag.textContent=`🛠️${repairCount}`;btn.appendChild(tag);}
       const category=type==='work'?'平常工作日':type==='rest'?'休息日':'例假／休假';
-      btn.title=`${key} ${category} 加班 ${fmt(secs/3600,2)} 小時，點選可編輯`;btn.setAttribute('aria-label',btn.title);
+      btn.title=`${key} ${category} 加班 ${fmt(secs/3600,2)} 小時，修繕 ${repairCount} 次，點選可編輯`;btn.setAttribute('aria-label',btn.title);
       btn.onclick=()=>openDayEditor(key);grid.appendChild(btn);
     }
-    $('calendarOTTotal').textContent=`本期 ${periodLabel(period)}：加班 ${fmt(otTotal/3600,2)} 小時｜估算加班費 ${money(otMoney)}（手動登記 ${confirmedDays} 天）`;
+    $('calendarOTTotal').textContent=`本期 ${periodLabel(period)}：加班 ${fmt(otTotal/3600,2)} 小時｜加班費 ${money(otMoney)}｜修繕 ${repairTotal} 次 ${money(repairTotal*REPAIR_ALLOWANCE)}（加班手動登記 ${confirmedDays} 天）`;
   }
   function openDayEditor(key){
     editingDayKey=key;
@@ -783,6 +836,7 @@
     $('dayRestHours').value=Number.isFinite(config.restHoursEntries[key])?String(Number((config.restHoursEntries[key]/3600).toFixed(4))):'';
     $('dayOTHours').value=recordedEvening?String(Number(eveningHours.toFixed(4))):'';
     $('dayLunchOT').value=Number(config.lunchOvertimeEntries[key])>0?String(Number((config.lunchOvertimeEntries[key]/3600).toFixed(4))):'';
+    $('dayRepairTrips').value=String(repairTripsOn(key));
     $('dayLunchOT').max=(lunchDuration()/3600).toFixed(4);
     $('dayLunchHelp').textContent=`午休 ${config.breakStart}～${config.breakEnd}；休息日有工作可填 ${fmt(lunchDuration()/3600)}，會把午休也算入全天工時。`;
     $('dayFormError').textContent='';
@@ -800,10 +854,13 @@
     $('dayLunchOT').disabled=type==='leave'||!past||lunchDuration()<=0;
     $('dayRestHours').disabled=!rest||!past;
     $('dayRestStart').disabled=!rest;$('dayRestPlanEnabled').disabled=!rest;
+    $('dayRepairTrips').disabled=!past;
     $('dayOTHelp').textContent='平常日 17:00 後實際加班，可留空依預定下班時間自動結算；輸入 0 表示沒有晚間加班。';
   }
   function closeDayEditor(){$('dayModal').hidden=true;editingDayKey='';document.body.style.overflow='';}
   function updateDayEstimate(){
+    const rawTrips=$('dayRepairTrips').value.trim(),trips=Number(rawTrips);
+    $('dayRepairEstimate').textContent=rawTrips!==''&&Number.isInteger(trips)&&trips>=0&&trips<=99?`🛠️ 當日修繕 ${trips} 次 × 600 ＝ ${money(trips*REPAIR_ALLOWANCE)}`:'🛠️ 外出修繕次數請填 0～99 的整數';
     const type=$('dayTypeSelect').value,rate=config.salary/(30*8*3600);
     const evening=Number($('dayOTHours').value)||0,lunch=Number($('dayLunchOT').value)||0;
     if(type==='rest'){
@@ -872,6 +929,7 @@
   $('dayRestStart').addEventListener('input',updateDayEstimate);$('dayRestPlanEnabled').addEventListener('change',updateDayEstimate);
   $('dayRestHours').addEventListener('input',updateDayEstimate);
   $('dayOTHours').addEventListener('input',updateDayEstimate);
+  $('dayRepairTrips').addEventListener('input',updateDayEstimate);
   $('dayLunchOT').addEventListener('input',updateDayEstimate);
   $('todayLunchToggle').addEventListener('click',()=>{
     const t=taipeiNow(),key=dateKey(t.y,t.m,t.d);
@@ -888,17 +946,18 @@
   $('dayForm').addEventListener('submit',e=>{
     e.preventDefault();
     const key=editingDayKey,kind=$('dayTypeSelect').value;
-    const raw=$('dayOTHours').value.trim(),lunchRaw=$('dayLunchOT').value.trim(),restRaw=$('dayRestHours').value.trim();
+    const raw=$('dayOTHours').value.trim(),lunchRaw=$('dayLunchOT').value.trim(),restRaw=$('dayRestHours').value.trim(),repairRaw=$('dayRepairTrips').value.trim();
     const t=taipeiNow(),todayStr=dateKey(t.y,t.m,t.d),nowSec=t.h*3600+t.mi*60+t.s+t.ms/1000;
     const [y,m,d]=key.split('-').map(Number),val=$('dayPlannedEnd').value;
     const end=val?toSec(val):NaN,restStart=toSec($('dayRestStart').value||config.start);
     let error='';
     const numeric=(s)=>s===''?null:Number(s);
-    const evening=numeric(raw),lunch=numeric(lunchRaw),restHours=numeric(restRaw);
+    const evening=numeric(raw),lunch=numeric(lunchRaw),restHours=numeric(restRaw),repairCount=repairRaw===''?0:Number(repairRaw);
     if(!key||d<1||d>monthLength(y,m))error='日期無效。';
     else if(kind==='work'&&(!Number.isFinite(end)||end<OVERTIME_START||end>86340))error='平常日預計下班時間須在 17:00～23:59。';
     else if(kind==='rest'&&$('dayRestPlanEnabled').checked&&(!Number.isFinite(end)||end<=restStart||end>86340))error='休息日的預定下班時間必須晚於開始時間。';
-    else if(key>todayStr&&(raw!==''||lunchRaw!==''||restRaw!==''))error='未來日期只可安排預計時間，不可預先登記實際工作時數。';
+    else if(key>todayStr&&(raw!==''||lunchRaw!==''||restRaw!==''||repairCount>0))error='未來日期只可安排預計時間，不可預先登記實際出差或工作時數。';
+    else if(!Number.isInteger(repairCount)||repairCount<0||repairCount>99)error='外出修繕次數請輸入 0～99 的整數。';
     else if(raw!==''&&(!Number.isFinite(evening)||evening<0||evening>7))error='平常日晚間加班時數請填 0～7。';
     else if(lunchRaw!==''&&(!Number.isFinite(lunch)||lunch<0||lunch*3600>lunchDuration()+.01))error='午休加班時數不可超過午休長度。';
     else if(restRaw!==''&&(!Number.isFinite(restHours)||restHours<0||restHours>12))error='休息日實際工作時數不可超過 12 小時。';
@@ -917,14 +976,24 @@
       if(restRaw==='')delete config.restHoursEntries[key];else config.restHoursEntries[key]=restHours*3600;
       if(lunchRaw==='')delete config.lunchOvertimeEntries[key];else config.lunchOvertimeEntries[key]=lunch*3600;
     }
+    if(repairCount>0)config.repairTrips[key]=repairCount;else delete config.repairTrips[key];
     const saved=saveConfig();closeDayEditor();calendarRenderMinute='';render();
-    toast(saved?'日期類型、預定時間與加班資料已儲存':'已更新，但目前瀏覽器不允許永久儲存');
+    toast(saved?'當日加班及外出修繕津貼已儲存':'已更新，但目前瀏覽器不允許永久儲存');
   });
   $('clearDayOT').addEventListener('click',()=>{
     if(!editingDayKey)return;
     delete config.overtimeEntries[editingDayKey];delete config.lunchOvertimeEntries[editingDayKey];delete config.restHoursEntries[editingDayKey];const saved=saveConfig();closeDayEditor();calendarRenderMinute='';renderCalendar();render();
     toast(saved?'加班紀錄已清除':'已清除，但瀏覽器不允許永久儲存');
   });
+  function adjustTodayRepair(delta){
+    const t=taipeiNow(),key=dateKey(t.y,t.m,t.d),old=repairTripsOn(key),next=Math.max(0,Math.min(99,old+delta));
+    if(next===old)return;
+    if(next>0)config.repairTrips[key]=next;else delete config.repairTrips[key];
+    const saved=saveConfig();calendarRenderMinute='';render();
+    toast(saved?`🛠️ 今日外出 ${next} 次，津貼 ${money(next*REPAIR_ALLOWANCE)}`:'已更新，但瀏覽器不允許永久儲存');
+  }
+  $('addTodayRepair').addEventListener('click',()=>adjustTodayRepair(1));
+  $('removeTodayRepair').addEventListener('click',()=>adjustTodayRepair(-1));
   $('setupSalaryBanner').addEventListener('click',openSettings);
   $('settingsBtn').addEventListener('click',openSettings);$('closeBtn').addEventListener('click',closeSettings);
   $('settingsModal').addEventListener('click',e=>{if(e.target===$('settingsModal'))closeSettings();});
@@ -945,7 +1014,7 @@
   render();setInterval(()=>render(),100);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)render();});
   // Public helper for automated smoke tests. V5.3 uses capped estimated end-times.
-  window.__salaryTimerTest={calculate,overtimePay,overtimeRateAt,taipeiNow,isWorkday,isRestday,dayType,countWorkdays,paidSecondsAt,lunchOvertimeSeconds,dailyOvertimeSeconds,restDaySeconds,restTimeWorkedUntil,renderCalendar,openDayEditor,plannedEndForDay,closingMonthFor,cycleForClosing,cycleForToday,cycleDays,cycleOvertimeStats,cycleBaseSalaryStats,cyclePayStats,lastClosedCycle,payoutDate,payoutLabel};
+  window.__salaryTimerTest={calculate,overtimePay,overtimeRateAt,taipeiNow,isWorkday,isRestday,dayType,countWorkdays,paidSecondsAt,lunchOvertimeSeconds,dailyOvertimeSeconds,restDaySeconds,restTimeWorkedUntil,renderCalendar,openDayEditor,plannedEndForDay,closingMonthFor,cycleForClosing,cycleForToday,cycleDays,cycleOvertimeStats,cycleBaseSalaryStats,cyclePayStats,cycleRepairStats,repairTripsOn,lastClosedCycle,payoutDate,payoutLabel};
 })();
 </script>
 </body>
