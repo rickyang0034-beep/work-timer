@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f7fe">
   <meta name="color-scheme" content="light">
-  <title>上班鼓勵器｜V5.22 外出彈性工時版｜驢子下班睡覺＋預估薪資（26～25結算／5日領薪）</title>
+  <title>上班鼓勵器｜V5.23 上期薪資查詢版｜外出彈性工時＋歷史加班總覽（26～25結算／5日領薪）</title>
   <style>
     :root{font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;color:#252947;background:#f7f7fe;--ink:#262b4f;--blue:#3156ce;--muted:#727a96;--line:#e8eaf5;--surface:#fff;--accent:#f05b3f}
     *{box-sizing:border-box} body{margin:0;min-height:100vh;overflow-x:clip;background:radial-gradient(circle at 110% -4%,#eeeaff 0,transparent 27rem),radial-gradient(circle at -10% 16%,#fff1e6 0,transparent 16rem),#f7f7fe}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:590px;margin:auto;padding:22px 17px 42px;padding-top:max(22px,env(safe-area-inset-top))}
@@ -33,6 +33,19 @@
     .gross-forecast-label{font-size:13px;font-weight:780;color:#805523}
     .gross-forecast-amount{font-weight:900;font-size:clamp(24px,6vw,33px);letter-spacing:-.4px;color:#af5726;font-variant-numeric:tabular-nums;margin:7px 0 4px;overflow-wrap:anywhere}
     .gross-forecast-note{font-size:11px;line-height:1.5;color:#9b7959}
+    .previous-pay-panel{border:1px solid #dfe7f1;border-radius:15px;background:#f8faff;padding:13px 14px;margin:13px 0 4px}
+    .previous-pay-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+    .previous-pay-title{font-size:14px;font-weight:850;color:#354d70}
+    .previous-pay-period{font-size:11px;color:#71809a}
+    .previous-pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .previous-pay-item{background:#fff;border:1px solid #e8edf5;border-radius:10px;padding:9px 10px;min-width:0}
+    .previous-pay-item small{display:block;color:#8290a5;font-size:10px;margin-bottom:4px}
+    .previous-pay-item b{display:block;color:#354b6c;font-size:14px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+    .previous-pay-total{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid #e2e9f2;margin-top:10px;padding-top:10px}
+    .previous-pay-total span{font-size:12px;font-weight:800;color:#536681}
+    .previous-pay-total strong{font-size:20px;font-weight:900;color:#3158a8;font-variant-numeric:tabular-nums}
+    .previous-pay-note{font-size:10px;color:#8b96a8;line-height:1.45;margin-top:8px}
+    @media(max-width:360px){.previous-pay-grid{gap:6px}.previous-pay-item{padding:8px}.previous-pay-item b{font-size:12px}.previous-pay-total strong{font-size:17px}}
     /* Compact repair allowance: one check per day, editable rate in Settings. */
     .repair-panel{border:1px solid #dfe9f4;border-radius:14px;padding:11px 12px;margin:13px 0 10px;background:#f8fbff}
     .repair-panel-title{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;font-weight:850;color:#38577a;flex-wrap:wrap}
@@ -315,6 +328,20 @@
       <div class="gross-forecast-label">💰 本期預估薪資（月薪＋加班費＋修繕津貼）</div>
       <div class="gross-forecast-amount" id="estimatedSalary">NT$ 0.00</div>
       <div class="gross-forecast-note">依 26 日～次月 25 日結算；外出修繕每天最多一筆。未扣勞健保、請假等款項，未含其他獎金津貼。</div>
+    </div>
+    <div class="previous-pay-panel" aria-label="上期薪資與加班查詢">
+      <div class="previous-pay-head">
+        <span class="previous-pay-title">🧾 上期薪資查詢</span>
+        <span class="previous-pay-period" id="previousPayPeriod">上期結算期間</span>
+      </div>
+      <div class="previous-pay-grid">
+        <div class="previous-pay-item"><small>上期月薪（目前設定）</small><b id="previousBaseSalary">NT$ 0.00</b></div>
+        <div class="previous-pay-item"><small>上期加班總時數</small><b id="previousOTHours">0.00 小時</b></div>
+        <div class="previous-pay-item"><small>上期加班費</small><b id="previousOTMoney">NT$ 0.00</b></div>
+        <div class="previous-pay-item"><small>上期修繕津貼</small><b id="previousRepairMoney">NT$ 0.00</b></div>
+      </div>
+      <div class="previous-pay-total"><span>上期預估薪資合計</span><strong id="previousPayTotal">NT$ 0.00</strong></div>
+      <div class="previous-pay-note">依上期 26 日～25 日紀錄估算；月薪使用目前設定值，非歷史薪資快照。未扣勞健保、請假等款項及其他獎金。</div>
     </div>
     <div class="divider" style="margin:20px 0 15px"></div>
     <div class="stats">
@@ -785,6 +812,12 @@
     $('toggleTodayRepair').setAttribute('aria-pressed',String(todayHasRepair));
     $('repairTodayState').textContent=todayHasRepair?'✓ 已登記':`未登記 · +${money(repairAllowance(),0)}`;
     $('estimatedSalary').textContent=money(c.currentCycleStats.forecast);
+    $('previousPayPeriod').textContent=periodLabel(c.lastCycle);
+    $('previousBaseSalary').textContent=money(c.lastCycleStats.base.money);
+    $('previousOTHours').textContent=fmt(c.lastCycleStats.ot.seconds/3600,2)+' 小時';
+    $('previousOTMoney').textContent=money(c.lastCycleStats.ot.money);
+    $('previousRepairMoney').textContent=money(c.lastCycleStats.repair.money);
+    $('previousPayTotal').textContent=money(c.lastCycleStats.forecast);
     $('cycleStatsLabel').textContent='含外出修繕超時、午休／晚間／休息日';
     $('todayOTMoney').textContent=money(c.otTodayMoney);
     $('todayOTHours').textContent=fmt(c.otToday/3600,2)+' 小時';
